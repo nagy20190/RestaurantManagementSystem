@@ -17,9 +17,11 @@ namespace DeliveryManagementSystem.Core.Entities
         // Navigation properties for relationships
         public virtual Resturant Resturant { get; set; }
         public virtual ICollection<OrderItem> OrderItems { get; set; }
+        public virtual ICollection<Inventory> Inventories { get; set; }
         public Meal()
         {
             OrderItems = new HashSet<OrderItem>();
+            Inventories = new HashSet<Inventory>();
         }
     }
 }

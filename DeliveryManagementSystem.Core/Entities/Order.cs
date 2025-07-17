@@ -25,10 +25,7 @@ namespace DeliveryManagementSystem.Core.Entities
         // Navigation properties
         [ForeignKey("UserID")]
         public virtual User User { get; set; }
-
-        [ForeignKey("DriverID")]
-        public virtual User Driver { get; set; }
-
+        public  virtual Payment Payment { get; set; }
         public virtual ICollection<OrderItem> OrderItems { get; set; }
 
         public Order()

@@ -18,6 +18,9 @@ namespace DeliveryManagementSystem.Core.Entities
         // navigation properties for relationships
         public virtual Category Category { get; set; }
         public virtual ICollection<RestaurantMenuCategory> ResturantCategories { get; set; }
+        public virtual ICollection<Table> Tables { get; set; }
+        public virtual ICollection<Review> Reviews { get; set; }
+        public virtual ICollection<Meal> Meals { get; set; }
 
 
     }

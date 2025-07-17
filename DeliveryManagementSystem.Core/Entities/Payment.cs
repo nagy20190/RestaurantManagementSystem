@@ -11,7 +11,8 @@ namespace DeliveryManagementSystem.Core.Entities
         public int ID { get; set; }
         public decimal Amount { get; set; }
         public DateTime PaymentDate { get; set; }
-        public PaymentMethod Method { get; set; } // e.g., Credit Card, Cash, etc.
+        public PaymentMethod PaymentMethod { get; set; } // e.g., Credit Card, Cash, etc.
+        public PaymentStatus Status { get; set; } // e.g., Pending, Confirmed, Failed, etc.
         public int OrderID { get; set; } // Foreign key to Order
         public string TransactionID { get; set; } // Unique identifier for the transaction
        

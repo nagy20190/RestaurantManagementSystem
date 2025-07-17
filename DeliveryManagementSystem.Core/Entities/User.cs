@@ -21,13 +21,13 @@ namespace DeliveryManagementSystem.Core.Entities
         // Navigation properties for relationships
 
          public virtual ICollection<Order> Orders { get; set; }
-         public virtual ICollection<Review> Review { get; set; }
+         public virtual ICollection<Review> Reviews { get; set; }
          public virtual ICollection<Reservation> Reservations { get; set; }
 
         public User()
         {
             Orders = new HashSet<Order>();
-            Review = new HashSet<Review>();
+            Reviews = new HashSet<Review>();
             Reservations = new HashSet<Reservation>();
         }
 

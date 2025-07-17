@@ -1,10 +1,12 @@
 D:\1 - DotNet\DEPI & Courses\12 - Projects\5 - Elaraby\DeliveryManagementSystem\DeliveryManagementSystem\DeliveryManagementSystem.Core\bin\Debug\net8.0\DeliveryManagementSystem.Core.deps.json
 D:\1 - DotNet\DEPI & Courses\12 - Projects\5 - Elaraby\DeliveryManagementSystem\DeliveryManagementSystem\DeliveryManagementSystem.Core\bin\Debug\net8.0\DeliveryManagementSystem.Core.dll
 D:\1 - DotNet\DEPI & Courses\12 - Projects\5 - Elaraby\DeliveryManagementSystem\DeliveryManagementSystem\DeliveryManagementSystem.Core\bin\Debug\net8.0\DeliveryManagementSystem.Core.pdb
+D:\1 - DotNet\DEPI & Courses\12 - Projects\5 - Elaraby\DeliveryManagementSystem\DeliveryManagementSystem\DeliveryManagementSystem.Core\obj\Debug\net8.0\DeliveryManagementSystem.Core.csproj.AssemblyReference.cache
 D:\1 - DotNet\DEPI & Courses\12 - Projects\5 - Elaraby\DeliveryManagementSystem\DeliveryManagementSystem\DeliveryManagementSystem.Core\obj\Debug\net8.0\DeliveryManagementSystem.Core.GeneratedMSBuildEditorConfig.editorconfig
 D:\1 - DotNet\DEPI & Courses\12 - Projects\5 - Elaraby\DeliveryManagementSystem\DeliveryManagementSystem\DeliveryManagementSystem.Core\obj\Debug\net8.0\DeliveryManagementSystem.Core.AssemblyInfoInputs.cache
 D:\1 - DotNet\DEPI & Courses\12 - Projects\5 - Elaraby\DeliveryManagementSystem\DeliveryManagementSystem\DeliveryManagementSystem.Core\obj\Debug\net8.0\DeliveryManagementSystem.Core.AssemblyInfo.cs
 D:\1 - DotNet\DEPI & Courses\12 - Projects\5 - Elaraby\DeliveryManagementSystem\DeliveryManagementSystem\DeliveryManagementSystem.Core\obj\Debug\net8.0\DeliveryManagementSystem.Core.csproj.CoreCompileInputs.cache
+D:\1 - DotNet\DEPI & Courses\12 - Projects\5 - Elaraby\DeliveryManagementSystem\DeliveryManagementSystem\DeliveryManagementSystem.Core\obj\Debug\net8.0\DeliveryManagementSystem.Core.sourcelink.json
 D:\1 - DotNet\DEPI & Courses\12 - Projects\5 - Elaraby\DeliveryManagementSystem\DeliveryManagementSystem\DeliveryManagementSystem.Core\obj\Debug\net8.0\DeliveryManagementSystem.Core.dll
 D:\1 - DotNet\DEPI & Courses\12 - Projects\5 - Elaraby\DeliveryManagementSystem\DeliveryManagementSystem\DeliveryManagementSystem.Core\obj\Debug\net8.0\refint\DeliveryManagementSystem.Core.dll
 D:\1 - DotNet\DEPI & Courses\12 - Projects\5 - Elaraby\DeliveryManagementSystem\DeliveryManagementSystem\DeliveryManagementSystem.Core\obj\Debug\net8.0\DeliveryManagementSystem.Core.pdb

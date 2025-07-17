@@ -14,9 +14,11 @@ namespace DeliveryManagementSystem.Core.Entities
         public bool IsAvailable { get; set; }
         // Navigation property for relationships
         public virtual Resturant Resturant { get; set; }
+        public virtual ICollection<Reservation> Reservations { get; set; }
         public Table()
         {
             IsAvailable = true; // Default value for availability
+            Reservations = new HashSet<Reservation>(); // Initialize the collection to avoid null reference issues
         }
 
 
