@@ -11,6 +11,7 @@ namespace DeliveryManagementSystem.Core.EntitiesConfigs
 {
     public class CategoryConfiguration : IEntityTypeConfiguration<Category>
     {
+
         public void Configure(EntityTypeBuilder<Category> builder)
         {
             // 
@@ -34,7 +35,7 @@ namespace DeliveryManagementSystem.Core.EntitiesConfigs
             builder.HasMany(p => p.Resturants)
                 .WithOne(c => c.Category)
                 .HasForeignKey(x => x.CategoryID)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
 
         }
     }

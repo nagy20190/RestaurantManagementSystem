@@ -30,9 +30,30 @@ namespace DeliveryManagementSystem.Core.EntitiesConfigs
                 .IsRequired()
                 .HasMaxLength(100);
 
+            builder.Property(p => p.PaymentToken)
+            .HasMaxLength(1000)
+            .IsRequired(false); 
+
+            builder.Property(p => p.BillingAddress)
+                .HasMaxLength(500)
+                .IsRequired(false);
+
+            builder.Property(p => p.GatewayResponse)
+                .HasMaxLength(1000)
+                .IsRequired(false);
+
+
             builder.HasOne(p => p.Order)
-                .WithOne(o => o.Payment)
-                .HasForeignKey<Payment>(p => p.OrderID);
+             .WithOne(o => o.Payment)
+             .HasForeignKey<Payment>(p => p.OrderID)
+             .OnDelete(DeleteBehavior.NoAction);
+
+            builder.HasOne(p => p.CreatedByUser)
+                .WithMany()
+                .HasForeignKey(p => p.CreatedBy)
+                .OnDelete(DeleteBehavior.NoAction);
+
+
 
 
         }

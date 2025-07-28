@@ -14,7 +14,14 @@ namespace DeliveryManagementSystem.BLL.Healpers
         public MappingProfiles()
         {
             CreateMap<User, UserDTO>().ReverseMap();
+            CreateMap<RegisterUserDTO, User>();
             CreateMap<Payment, PaymentDTO>().ReverseMap();
+            CreateMap<Category, CategoryDTO>().ReverseMap();
+            CreateMap<Category, CreateCategoryDTO>().ReverseMap();
+            CreateMap<Category, UpdateCategoryDTO>().ReverseMap();
+
+
+
         }
     }
 }

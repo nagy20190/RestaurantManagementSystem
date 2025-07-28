@@ -23,5 +23,6 @@ namespace DeliveryManagementSystem.Core.Entities
             OrderItems = new HashSet<OrderItem>();
             Inventories = new HashSet<Inventory>();
         }
+        
     }
 }

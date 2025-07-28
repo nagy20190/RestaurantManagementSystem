@@ -42,7 +42,8 @@ namespace DeliveryManagementSystem.Core.EntitiesConfigs
             // Relationships
             builder.HasOne(o => o.User)
                 .WithMany(u => u.Orders)
-                .HasForeignKey(o => o.UserID);
+                .HasForeignKey(o => o.UserID)
+                .OnDelete(DeleteBehavior.NoAction);
 
             builder.HasOne(o => o.Payment)
                 .WithOne(p => p.Order)

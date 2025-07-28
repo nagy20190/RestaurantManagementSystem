@@ -13,40 +13,13 @@ namespace DeliveryManagementSystem.Core.EntitiesConfigs
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
-            builder.HasKey(a => a.ID);
-
-            builder.Property(a => a.Name)
-                .IsRequired()
-                .HasMaxLength(100);
-
-
-            builder.Property(a => a.Email)
-                .IsRequired()
-                .HasMaxLength(100);
-
-            builder.Property(a => a.PasswordHash)
-                .IsRequired()
-                .HasMaxLength(256);
-
-            builder.HasIndex(e => e.Email).IsUnique();
-
-            builder.Property(a => a.Phone)
-                .IsRequired()
-                .HasMaxLength(15);
-
             builder.Property(a => a.Address)
-                .IsRequired()
+                .IsRequired(false)
                 .HasMaxLength(200);
 
-
             builder.Property(a => a.CreditCardNumber)
-                .IsRequired()
+                .IsRequired(false)
                 .HasMaxLength(20);
-
-            builder.Property(a => a.Role)
-                .IsRequired()
-                .HasConversion<string>()
-                .HasMaxLength(15);
 
             builder.Property(a => a.ProfileImageUrl)
                 .IsRequired(false)

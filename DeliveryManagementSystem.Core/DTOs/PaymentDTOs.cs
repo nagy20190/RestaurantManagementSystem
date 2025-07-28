@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace DeliveryManagementSystem.Core.DTOs
 {
@@ -32,12 +33,38 @@ namespace DeliveryManagementSystem.Core.DTOs
     // DTO for payment processing
     public class ProcessPaymentDTO
     {
+        [Required]
+        [Range(1, int.MaxValue, ErrorMessage = "OrderID must be greater than 0")]
         public int OrderID { get; set; }
-        public PaymentMethod Method { get; set; }
-        public string PaymentToken { get; set; }
-        public string BillingAddress { get; set; }
-    }
 
+        [Required]
+        public PaymentMethod Method { get; set; }
+
+        public string PaymentToken { get; set; } // Required for card/online payments
+
+        [MaxLength(500)]
+        public string BillingAddress { get; set; }
+
+        [Required]
+        [Range(0.01, double.MaxValue, ErrorMessage = "Amount must be greater than 0")]
+        public decimal Amount { get; set; }
+
+        // Optional: Customer details for gateway
+        public string CustomerEmail { get; set; }
+        public string CustomerPhone { get; set; }
+    }
+    public class PaymentValidationResult
+    {
+        public bool IsValid { get; set; }
+        public string ErrorMessage { get; set; }
+    }
+    public class PaymentGatewayResult
+    {
+        public bool IsSuccess { get; set; }
+        public string ErrorMessage { get; set; }
+        public string ResponseMessage { get; set; }
+        public string GatewayTransactionId { get; set; }
+    }
     // DTO for payment response
     public class PaymentResponseDTO
     {
