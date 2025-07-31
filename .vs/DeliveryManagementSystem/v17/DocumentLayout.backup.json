@@ -3,20 +3,16 @@
   "WorkspaceRootPath": "D:\\1 - DotNet\\DEPI \u0026 Courses\\10 - Projects\\5 - Elaraby\\DeliveryManagementSystem\\DeliveryManagementSystem\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{4A597229-99F4-4047-9C9F-2AA230BC0883}|DeliveryManagementSystem\\DeliveryManagementSystem.API.csproj|d:\\1 - dotnet\\depi \u0026 courses\\10 - projects\\5 - elaraby\\deliverymanagementsystem\\deliverymanagementsystem\\deliverymanagementsystem\\controllers\\mealcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4A597229-99F4-4047-9C9F-2AA230BC0883}|DeliveryManagementSystem\\DeliveryManagementSystem.API.csproj|solutionrelative:deliverymanagementsystem\\controllers\\mealcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DC796EBB-A51D-4783-800E-DFD6EE26E330}|DeliveryManagementSystem.Core\\DeliveryManagementSystem.Core.csproj|d:\\1 - dotnet\\depi \u0026 courses\\10 - projects\\5 - elaraby\\deliverymanagementsystem\\deliverymanagementsystem\\deliverymanagementsystem.core\\dtos\\mealdtos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{DC796EBB-A51D-4783-800E-DFD6EE26E330}|DeliveryManagementSystem.Core\\DeliveryManagementSystem.Core.csproj|solutionrelative:deliverymanagementsystem.core\\dtos\\mealdtos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DC796EBB-A51D-4783-800E-DFD6EE26E330}|DeliveryManagementSystem.Core\\DeliveryManagementSystem.Core.csproj|d:\\1 - dotnet\\depi \u0026 courses\\10 - projects\\5 - elaraby\\deliverymanagementsystem\\deliverymanagementsystem\\deliverymanagementsystem.core\\entities\\meal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{DC796EBB-A51D-4783-800E-DFD6EE26E330}|DeliveryManagementSystem.Core\\DeliveryManagementSystem.Core.csproj|solutionrelative:deliverymanagementsystem.core\\entities\\meal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{9CEFF4BE-5525-4C64-9FD1-BD5848C57F6B}|DeliveryManagementSystem.BLL\\DeliveryManagementSystem.BLL.csproj|d:\\1 - dotnet\\depi \u0026 courses\\10 - projects\\5 - elaraby\\deliverymanagementsystem\\deliverymanagementsystem\\deliverymanagementsystem.bll\\healpers\\mappingprofiles.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9CEFF4BE-5525-4C64-9FD1-BD5848C57F6B}|DeliveryManagementSystem.BLL\\DeliveryManagementSystem.BLL.csproj|solutionrelative:deliverymanagementsystem.bll\\healpers\\mappingprofiles.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4A597229-99F4-4047-9C9F-2AA230BC0883}|DeliveryManagementSystem\\DeliveryManagementSystem.API.csproj|d:\\1 - dotnet\\depi \u0026 courses\\10 - projects\\5 - elaraby\\deliverymanagementsystem\\deliverymanagementsystem\\deliverymanagementsystem\\.gitignore||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{4A597229-99F4-4047-9C9F-2AA230BC0883}|DeliveryManagementSystem\\DeliveryManagementSystem.API.csproj|solutionrelative:deliverymanagementsystem\\.gitignore||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4A597229-99F4-4047-9C9F-2AA230BC0883}|DeliveryManagementSystem\\DeliveryManagementSystem.API.csproj|d:\\1 - dotnet\\depi \u0026 courses\\10 - projects\\5 - elaraby\\deliverymanagementsystem\\deliverymanagementsystem\\deliverymanagementsystem\\controllers\\ordercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4A597229-99F4-4047-9C9F-2AA230BC0883}|DeliveryManagementSystem\\DeliveryManagementSystem.API.csproj|solutionrelative:deliverymanagementsystem\\controllers\\ordercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{4A597229-99F4-4047-9C9F-2AA230BC0883}|DeliveryManagementSystem\\DeliveryManagementSystem.API.csproj|d:\\1 - dotnet\\depi \u0026 courses\\10 - projects\\5 - elaraby\\deliverymanagementsystem\\deliverymanagementsystem\\deliverymanagementsystem\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -42,65 +38,52 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Meal.cs",
-              "DocumentMoniker": "D:\\1 - DotNet\\DEPI \u0026 Courses\\10 - Projects\\5 - Elaraby\\DeliveryManagementSystem\\DeliveryManagementSystem\\DeliveryManagementSystem.Core\\Entities\\Meal.cs",
-              "RelativeDocumentMoniker": "DeliveryManagementSystem.Core\\Entities\\Meal.cs",
-              "ToolTip": "D:\\1 - DotNet\\DEPI \u0026 Courses\\10 - Projects\\5 - Elaraby\\DeliveryManagementSystem\\DeliveryManagementSystem\\DeliveryManagementSystem.Core\\Entities\\Meal.cs",
-              "RelativeToolTip": "DeliveryManagementSystem.Core\\Entities\\Meal.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAAAgAAAARAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-31T01:07:53.707Z",
+              "DocumentIndex": 1,
+              "Title": ".gitignore",
+              "DocumentMoniker": "D:\\1 - DotNet\\DEPI \u0026 Courses\\10 - Projects\\5 - Elaraby\\DeliveryManagementSystem\\DeliveryManagementSystem\\DeliveryManagementSystem\\.gitignore",
+              "RelativeDocumentMoniker": "DeliveryManagementSystem\\.gitignore",
+              "ToolTip": "D:\\1 - DotNet\\DEPI \u0026 Courses\\10 - Projects\\5 - Elaraby\\DeliveryManagementSystem\\DeliveryManagementSystem\\DeliveryManagementSystem\\.gitignore",
+              "RelativeToolTip": "DeliveryManagementSystem\\.gitignore",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "Icon": "00000000-0000-0000-0000-000000000000.000000|iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAF8SURBVDhPjVNLTgJBEG1lwpoFB3GNK9fieA48hD8iwT/ihwgSDAIHgAGXXsEV18CNzL/LquqZdsYM6kteXqcy3fWqpmpNRBgOhyABBEgpAFVKPIMUcYzUyOU\u002BXM/b2qtU3vkSfRjjZTCAMAw1A2LwzdFoBPP5HNqdzuL27n4juibWI\u002BUshBA1DIkhEx9iEorFotgslQqGYbxxAGFEqt1MxmPWJLbLZdZ\u002Bv89q5PMFPiTR6z2zdaxR0fXA0XTBcVywkb4fwHXjRteecIDNQ7UmExVYAdPcxYaqclN46na5WenMKjtlVnTYwcXlVYaDqImW9beD5N/TeGy32QHXm6hZ03ZgiSQHp2fnWQ4oBmJqWSqwAqZpZjt4aLXAD4J0VqyZsmoubfB8H2r1eoaD6NXZ9HcHO\u002BSA3f4AjifXl8rItOETM8ckB9WTWpYD9RdeZ1PWVWAHWXPQaDb59f/w8LiqHeh1pvGkCaP6qB8yXusoxmuNZ7XmII4O9vGuEF86osuDYRkpYQAAAABJRU5ErkJggg==",
+              "WhenOpened": "2025-07-31T01:35:32.625Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "MealDTOs.cs",
-              "DocumentMoniker": "D:\\1 - DotNet\\DEPI \u0026 Courses\\10 - Projects\\5 - Elaraby\\DeliveryManagementSystem\\DeliveryManagementSystem\\DeliveryManagementSystem.Core\\DTOs\\MealDTOs.cs",
-              "RelativeDocumentMoniker": "DeliveryManagementSystem.Core\\DTOs\\MealDTOs.cs",
-              "ToolTip": "D:\\1 - DotNet\\DEPI \u0026 Courses\\10 - Projects\\5 - Elaraby\\DeliveryManagementSystem\\DeliveryManagementSystem\\DeliveryManagementSystem.Core\\DTOs\\MealDTOs.cs",
-              "RelativeToolTip": "DeliveryManagementSystem.Core\\DTOs\\MealDTOs.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAqwBEAAAABAAAAAAAAAA==",
+              "DocumentIndex": 2,
+              "Title": "OrderController.cs",
+              "DocumentMoniker": "D:\\1 - DotNet\\DEPI \u0026 Courses\\10 - Projects\\5 - Elaraby\\DeliveryManagementSystem\\DeliveryManagementSystem\\DeliveryManagementSystem\\Controllers\\OrderController.cs",
+              "RelativeDocumentMoniker": "DeliveryManagementSystem\\Controllers\\OrderController.cs",
+              "ToolTip": "D:\\1 - DotNet\\DEPI \u0026 Courses\\10 - Projects\\5 - Elaraby\\DeliveryManagementSystem\\DeliveryManagementSystem\\DeliveryManagementSystem\\Controllers\\OrderController.cs",
+              "RelativeToolTip": "DeliveryManagementSystem\\Controllers\\OrderController.cs",
+              "ViewState": "AgIAABoAAAAAAAAAAAAQwJ8BAAA2AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-31T00:56:21.299Z",
+              "WhenOpened": "2025-07-31T01:15:15.253Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "MealController.cs",
-              "DocumentMoniker": "D:\\1 - DotNet\\DEPI \u0026 Courses\\10 - Projects\\5 - Elaraby\\DeliveryManagementSystem\\DeliveryManagementSystem\\DeliveryManagementSystem\\Controllers\\MealController.cs",
-              "RelativeDocumentMoniker": "DeliveryManagementSystem\\Controllers\\MealController.cs",
-              "ToolTip": "D:\\1 - DotNet\\DEPI \u0026 Courses\\10 - Projects\\5 - Elaraby\\DeliveryManagementSystem\\DeliveryManagementSystem\\DeliveryManagementSystem\\Controllers\\MealController.cs",
-              "RelativeToolTip": "DeliveryManagementSystem\\Controllers\\MealController.cs",
-              "ViewState": "AgIAACUAAAAAAAAAAAAvwBgAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-30T23:57:41.818Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
               "Title": "MappingProfiles.cs",
               "DocumentMoniker": "D:\\1 - DotNet\\DEPI \u0026 Courses\\10 - Projects\\5 - Elaraby\\DeliveryManagementSystem\\DeliveryManagementSystem\\DeliveryManagementSystem.BLL\\Healpers\\MappingProfiles.cs",
               "RelativeDocumentMoniker": "DeliveryManagementSystem.BLL\\Healpers\\MappingProfiles.cs",
               "ToolTip": "D:\\1 - DotNet\\DEPI \u0026 Courses\\10 - Projects\\5 - Elaraby\\DeliveryManagementSystem\\DeliveryManagementSystem\\DeliveryManagementSystem.BLL\\Healpers\\MappingProfiles.cs",
               "RelativeToolTip": "DeliveryManagementSystem.BLL\\Healpers\\MappingProfiles.cs",
-              "ViewState": "AgIAABMAAAAAAAAAAAAgwCMAAABbAAAAAAAAAA==",
+              "ViewState": "AgIAABMAAAAAAAAAAAAgwBgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-29T20:21:44.911Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 3,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\1 - DotNet\\DEPI \u0026 Courses\\10 - Projects\\5 - Elaraby\\DeliveryManagementSystem\\DeliveryManagementSystem\\DeliveryManagementSystem\\Program.cs",
               "RelativeDocumentMoniker": "DeliveryManagementSystem\\Program.cs",
               "ToolTip": "D:\\1 - DotNet\\DEPI \u0026 Courses\\10 - Projects\\5 - Elaraby\\DeliveryManagementSystem\\DeliveryManagementSystem\\DeliveryManagementSystem\\Program.cs",
               "RelativeToolTip": "DeliveryManagementSystem\\Program.cs",
-              "ViewState": "AgIAABMAAAAAAAAAAAAqwCEAAAA0AAAAAAAAAA==",
+              "ViewState": "AgIAALsAAAAAAAAAAAAAAMAAAAA7AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-24T18:24:22.021Z",
               "EditorCaption": ""
