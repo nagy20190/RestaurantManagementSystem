@@ -16,7 +16,7 @@ namespace DeliveryManagementSystem.Core.Entities
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         // Navigation properties for relationships
         public virtual User User { get; set; }
-        public virtual Resturant Resturant { get; set; }
+        public virtual Restaurant Resturant { get; set; }
         
     }
 }

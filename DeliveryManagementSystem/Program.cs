@@ -18,7 +18,7 @@ namespace DeliveryManagementSystem
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
             builder.Services.AddAuthorization();
@@ -31,7 +31,12 @@ namespace DeliveryManagementSystem
             builder.Services.AddAutoMapper(typeof(MappingProfiles).Assembly);
 
             builder.Services.AddScoped<EmailServices>();
+            builder.Services.AddScoped<JWTReader>();
 
+            builder.Configuration
+              .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+            
             var jwtSettings = builder.Configuration.GetSection("JwtSettings");
             builder.Services.Configure<JwtSettings>(jwtSettings);
 
@@ -42,7 +47,7 @@ namespace DeliveryManagementSystem
             builder.Services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new() { Title = "DeliveryManagementSystem API", Version = "v1" });
-
+                c.UseInlineDefinitionsForEnums();
                 // JWT Auth config
                 c.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
                 {
@@ -71,7 +76,6 @@ namespace DeliveryManagementSystem
                 });
             });
 
-
             builder.Services.AddFluentValidationAutoValidation();
             //builder.Services.AddValidatorsFromAssemblyContaining<RegisterUserValidator>();
             //builder.Services.AddValidatorsFromAssemblyContaining<BookingValidator>();
@@ -79,9 +83,6 @@ namespace DeliveryManagementSystem
             // Add Identity
 
 
-            builder.Configuration
-              .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
 
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
            options.UseSqlServer(builder.Configuration.GetConnectionString("Connection")));
@@ -182,7 +183,23 @@ namespace DeliveryManagementSystem
                 app.UseAuthentication();
                 app.UseAuthorization();
                 app.MapControllers();
+                app.Run();
 
-                app.Run();   
-    }   }
+
+            using (var scope = app.Services.CreateScope())
+            {
+                var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+                string[] roles = { "User", "RestaurantOwner", "SuperAdmin" };
+
+                foreach (var role in roles)
+                {
+                    var roleExists = await roleManager.RoleExistsAsync(role);
+                    if (!roleExists)
+                    {
+                        await roleManager.CreateAsync(new IdentityRole(role));
+                    }
+                }
+            }
+        }   }
 }

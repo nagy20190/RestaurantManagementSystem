@@ -1,5 +1,7 @@
+using DeliveryManagementSystem.Core.Entities;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace DeliveryManagementSystem.Core.DTOs
 {
@@ -20,14 +22,23 @@ namespace DeliveryManagementSystem.Core.DTOs
     }
 
     // DTO for creating a new review
+
     public class CreateReviewDTO
     {
-        public int UserID { get; set; }
-        public int RestaurantID { get; set; }
+
+
+        [Required(ErrorMessage = "Comment is required.")]
+        [StringLength(500, ErrorMessage = "Comment cannot exceed 500 characters.")]
         public string Comment { get; set; }
+
+        [Required(ErrorMessage = "Rating is required.")]
+        [Range(1, 5, ErrorMessage = "Rating must be between 1 and 5.")]
         public int Rating { get; set; }
+
+        // Optional: You can add a custom validation later if needed.
         public int? OrderID { get; set; }
     }
+
 
     // DTO for updating review
     public class UpdateReviewDTO

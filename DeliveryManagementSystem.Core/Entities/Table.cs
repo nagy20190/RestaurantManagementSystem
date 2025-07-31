@@ -13,7 +13,7 @@ namespace DeliveryManagementSystem.Core.Entities
         public int Capacity { get; set; }
         public bool IsAvailable { get; set; }
         // Navigation property for relationships
-        public virtual Resturant Resturant { get; set; }
+        public virtual Restaurant Resturant { get; set; }
         public virtual ICollection<Reservation> Reservations { get; set; }
         public Table()
         {

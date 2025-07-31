@@ -13,10 +13,10 @@ namespace DeliveryManagementSystem.Core.Entities
         public string Description { get; set; }
         public string ImageUrl { get; set; }
         // Navigation properties for relationships
-        public virtual ICollection<Resturant> Resturants { get; set; }
+        public virtual ICollection<Restaurant> Resturants { get; set; }
         public Category()
         {
-            Resturants = new HashSet<Resturant>();
+            Resturants = new HashSet<Restaurant>();
         }
     }
 }

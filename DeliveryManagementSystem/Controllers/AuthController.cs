@@ -3,6 +3,7 @@ using DeliveryManagementSystem.BLL.Services;
 using DeliveryManagementSystem.Core.DTOs;
 using DeliveryManagementSystem.Core.Entities;
 using DeliveryManagementSystem.Core.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -158,14 +159,6 @@ namespace DeliveryManagementSystem.API.Controllers
                         Errors = errors
                     });
                 }
-                if (!string.IsNullOrEmpty(registerUserDTO.Role))
-                {
-                    var roleExists = await _roleManager.RoleExistsAsync(registerUserDTO.Role);
-                    if (roleExists)
-                    {
-                        await _userManager.AddToRoleAsync(user, registerUserDTO.Role);
-                    }
-                }
                 else
                 {
                     // Assign default role
@@ -295,7 +288,50 @@ namespace DeliveryManagementSystem.API.Controllers
             }
         }
 
+        [HttpPost("logout")]
+        [Authorize] // Ensure only authenticated users can logout
+        public async Task<IActionResult> Logout()
+        {
+            try
+            {
+                // Sign out the user
+                await _signInManager.SignOutAsync();
 
+                // Optional: Log the logout event
+                // _logger.LogInformation("User {UserId} ({UserName}) logged out successfully at {Timestamp}",
+                // userId, userName, DateTime.UtcNow);
 
+                foreach (var cookieName in new[] { "RememberMe", "PreferredLanguage", "Theme" })
+                {
+                    if (Request.Cookies.ContainsKey(cookieName))
+                    {
+                        Response.Cookies.Delete(cookieName);
+                    }
+                }
+                return Ok(new
+                {
+                    message = "Logged out successfully",
+                    timestamp = DateTime.UtcNow,
+                    success = true
+                });
+            }
+
+            catch (Exception ex)
+            {
+                // _logger.LogError(ex, "Error occurred during logout for user {UserId}",
+                // User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+
+                // Even if logout fails, we should still return success to prevent user confusion
+                // The client should treat this as successful logout
+                return Ok(new
+                {
+                    message = "Logout completed",
+                    success = true
+                });
+            }
+
+        }   
+    
+    
     }
 }

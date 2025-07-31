@@ -14,13 +14,13 @@ namespace DeliveryManagementSystem.Core.Entities
         public PaymentMethod PaymentMethod { get; set; }
         public PaymentStatus Status { get; set; }
         public int OrderID { get; set; }
-        public string TransactionID { get; set; }
+        public string TransactionID { get; set; } = string.Empty;
 
         // Additional fields for better tracking
         public string? PaymentToken { get; set; } // For tokenized payments
         public string? BillingAddress { get; set; }
         public string? GatewayResponse { get; set; } // Response from payment gateway
-        public string GatewayTransactionId { get; set; } // Gateway's transaction ID
+        public string? GatewayTransactionId { get; set; } // Gateway's transaction ID
         public DateTime CreatedAt { get; set; }
         public DateTime? ProcessedAt { get; set; }
         public int CreatedBy { get; set; } // User who initiated payment

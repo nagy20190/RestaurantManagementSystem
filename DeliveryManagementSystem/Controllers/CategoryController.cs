@@ -27,7 +27,7 @@ namespace DeliveryManagementSystem.API.Controllers
             _logger = logger;
         }
 
-        [Authorize(Roles = "SuperAdmin, Admin")]
+        [Authorize(Roles = "SuperAdmin")]
         [HttpPost]
         public async Task<ActionResult<Category>> CreateCategory(CreateCategoryDTO categoryDTO)
         {
@@ -144,7 +144,7 @@ namespace DeliveryManagementSystem.API.Controllers
             }
         }
 
-        [Authorize(Roles = "SuperAdmin, Admin")]
+        [Authorize(Roles = "SuperAdmin")]
         [HttpPut("{id:int}")]
         public async Task<IActionResult>
             UpdateCategory([FromRoute] int id, [FromBody] UpdateCategoryDTO updateCategoryDTO)
@@ -195,7 +195,7 @@ namespace DeliveryManagementSystem.API.Controllers
             }
         }
 
-        [Authorize(Roles = "SuperAdmin, Admin")]
+        [Authorize(Roles = "SuperAdmin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> HardDeleteCategory([FromRoute] int id)
         {

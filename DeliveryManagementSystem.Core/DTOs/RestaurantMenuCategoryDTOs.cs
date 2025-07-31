@@ -6,7 +6,6 @@ namespace DeliveryManagementSystem.Core.DTOs
     public class RestaurantMenuCategoryDTO
     {
         public string Name { get; set; }
-        public int RestaurantID { get; set; }
         public string RestaurantName { get; set; }
         public string URLPhoto { get; set; }
         public int MealCount { get; set; }

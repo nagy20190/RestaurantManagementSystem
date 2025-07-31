@@ -391,7 +391,7 @@ namespace DeliveryManagementSystem.API.Controllers
         }
 
         [HttpGet("{id}")]
-        [Authorize(Roles = "SuperAdmin, Admin")]
+        [Authorize(Roles = "SuperAdmin, RestaurantOwner")]
         public async Task<IActionResult> GetUserById([FromRoute] int id, [FromQuery] bool includeInactive = false)
         {
             if (id <= 0)

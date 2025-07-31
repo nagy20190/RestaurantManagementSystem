@@ -10,7 +10,7 @@ namespace DeliveryManagementSystem.Core.Entities
         public int ID { get; set; }
         public string OrderNumber { get; set; }
         public int UserID { get; set; }
-
+        public int ResturantID { get; set; }
         public decimal TotalAmount { get; set; }
         public OrderStatus Status { get; set; }
         public DateTime OrderDate { get; set; } = DateTime.UtcNow;
@@ -26,6 +26,7 @@ namespace DeliveryManagementSystem.Core.Entities
         [ForeignKey("UserID")]
         public virtual User User { get; set; }
         public  virtual Payment Payment { get; set; }
+        public virtual Restaurant Resturant { get; set; }
         public virtual ICollection<OrderItem> OrderItems { get; set; }
 
         public Order()

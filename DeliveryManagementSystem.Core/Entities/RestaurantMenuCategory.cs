@@ -12,7 +12,8 @@ namespace DeliveryManagementSystem.Core.Entities
         public string Name { get; set; }
         public int ResturantID { get; set; }
         public string URLPhoto { get; set; }
-        public virtual Resturant Resturant { get; set; }
+        public virtual ICollection<Meal> Meals { get; set; } = new List<Meal>();
+        public virtual Restaurant Resturant { get; set; }
 
     }
 }

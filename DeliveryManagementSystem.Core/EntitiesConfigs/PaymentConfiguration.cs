@@ -42,6 +42,17 @@ namespace DeliveryManagementSystem.Core.EntitiesConfigs
                 .HasMaxLength(1000)
                 .IsRequired(false);
 
+            builder.Property(p => p.GatewayTransactionId)
+                .HasMaxLength(100)
+                .IsRequired(false);
+
+            builder.Property(p => p.ProcessedAt)
+                .IsRequired(false);
+
+
+            builder.Property(p => p.CreatedAt)
+                .IsRequired()
+                .HasDefaultValueSql("GETUTCDATE()");
 
             builder.HasOne(p => p.Order)
              .WithOne(o => o.Payment)

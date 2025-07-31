@@ -25,7 +25,7 @@ namespace DeliveryManagementSystem.DAL.Contexts
         public DbSet<Payment> Payments { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<RestaurantMenuCategory> RestaurantMenuCategories { get; set; }
-        public DbSet<Resturant> Resturants { get; set; }
+        public DbSet<Restaurant> Resturants { get; set; }
         public DbSet<Review> Reviews { get; set; }
         public DbSet<Table> Tables { get; set; }
         public DbSet<User> Users { get; set; }

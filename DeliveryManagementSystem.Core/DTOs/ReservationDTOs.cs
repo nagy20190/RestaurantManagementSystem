@@ -16,8 +16,6 @@ namespace DeliveryManagementSystem.Core.DTOs
         public ReservationStatus Status { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public int RestaurantID { get; set; }
-        public string RestaurantName { get; set; }
     }
 
     // DTO for creating a new reservation

@@ -39,6 +39,18 @@ namespace DeliveryManagementSystem.Core.EntitiesConfigs
                 .WithOne(c => c.Meal)
                 .HasForeignKey(v => v.MealId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasMany(p => p.Inventories)
+                .WithOne(c => c.Meal)
+                .HasForeignKey(v => v.MealID)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasOne(p => p.RestaurantMenuCategory)
+                .WithMany(c => c.Meals)
+                .HasForeignKey(e => e.RestaurantMenuCategoryID)
+                .OnDelete(DeleteBehavior.NoAction);
+
+
         }
     }
 }

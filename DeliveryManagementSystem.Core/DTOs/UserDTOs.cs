@@ -7,6 +7,7 @@ namespace DeliveryManagementSystem.Core.DTOs
     // Basic User DTO for general use
     public class UserDTO
     {
+        public int UserId { get; set; } 
         public string Name { get; set; }
         public string Email { get; set; }
         public Role Role { get; set; }
@@ -114,7 +115,7 @@ namespace DeliveryManagementSystem.Core.DTOs
 
         public string? UserName { get; set; }
         public string? PhoneNumber { get; set; }
-        public string? Role { get; set; } // Optional role assignment
+        //public string? Role { get; set; } // Optional role assignment
     }
     public class ResendConfirmationDTO
     {

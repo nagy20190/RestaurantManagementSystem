@@ -15,7 +15,7 @@ namespace DeliveryManagementSystem.Core.DTOs
         public string OrderNumber { get; set; }
         public string TransactionID { get; set; }
         public PaymentStatus Status { get; set; }
-        public string CardType { get; set; }
+        public OrderDTO Order { get; set; }
     }
 
     // DTO for creating a new payment
