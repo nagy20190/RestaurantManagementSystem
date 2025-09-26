@@ -24,3 +24,16 @@ D:\1 - DotNet\DEPI & Courses\10 - Projects\5 - Elaraby\DeliveryManagementSystem\
 D:\1 - DotNet\DEPI & Courses\10 - Projects\5 - Elaraby\DeliveryManagementSystem\DeliveryManagementSystem\DeliveryManagementSystem.Core\obj\Debug\net8.0\refint\DeliveryManagementSystem.Core.dll
 D:\1 - DotNet\DEPI & Courses\10 - Projects\5 - Elaraby\DeliveryManagementSystem\DeliveryManagementSystem\DeliveryManagementSystem.Core\obj\Debug\net8.0\DeliveryManagementSystem.Core.pdb
 D:\1 - DotNet\DEPI & Courses\10 - Projects\5 - Elaraby\DeliveryManagementSystem\DeliveryManagementSystem\DeliveryManagementSystem.Core\obj\Debug\net8.0\ref\DeliveryManagementSystem.Core.dll
+D:\C# & dotNet\Projects\RestaurantManagementSystem\DeliveryManagementSystem.Core\bin\Debug\net8.0\DeliveryManagementSystem.Core.deps.json
+D:\C# & dotNet\Projects\RestaurantManagementSystem\DeliveryManagementSystem.Core\bin\Debug\net8.0\DeliveryManagementSystem.Core.dll
+D:\C# & dotNet\Projects\RestaurantManagementSystem\DeliveryManagementSystem.Core\bin\Debug\net8.0\DeliveryManagementSystem.Core.pdb
+D:\C# & dotNet\Projects\RestaurantManagementSystem\DeliveryManagementSystem.Core\obj\Debug\net8.0\DeliveryManagementSystem.Core.csproj.AssemblyReference.cache
+D:\C# & dotNet\Projects\RestaurantManagementSystem\DeliveryManagementSystem.Core\obj\Debug\net8.0\DeliveryManagementSystem.Core.GeneratedMSBuildEditorConfig.editorconfig
+D:\C# & dotNet\Projects\RestaurantManagementSystem\DeliveryManagementSystem.Core\obj\Debug\net8.0\DeliveryManagementSystem.Core.AssemblyInfoInputs.cache
+D:\C# & dotNet\Projects\RestaurantManagementSystem\DeliveryManagementSystem.Core\obj\Debug\net8.0\DeliveryManagementSystem.Core.AssemblyInfo.cs
+D:\C# & dotNet\Projects\RestaurantManagementSystem\DeliveryManagementSystem.Core\obj\Debug\net8.0\DeliveryManagementSystem.Core.csproj.CoreCompileInputs.cache
+D:\C# & dotNet\Projects\RestaurantManagementSystem\DeliveryManagementSystem.Core\obj\Debug\net8.0\DeliveryManagementSystem.Core.sourcelink.json
+D:\C# & dotNet\Projects\RestaurantManagementSystem\DeliveryManagementSystem.Core\obj\Debug\net8.0\DeliveryManagementSystem.Core.dll
+D:\C# & dotNet\Projects\RestaurantManagementSystem\DeliveryManagementSystem.Core\obj\Debug\net8.0\refint\DeliveryManagementSystem.Core.dll
+D:\C# & dotNet\Projects\RestaurantManagementSystem\DeliveryManagementSystem.Core\obj\Debug\net8.0\DeliveryManagementSystem.Core.pdb
+D:\C# & dotNet\Projects\RestaurantManagementSystem\DeliveryManagementSystem.Core\obj\Debug\net8.0\ref\DeliveryManagementSystem.Core.dll

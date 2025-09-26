@@ -28,15 +28,16 @@ namespace DeliveryManagementSystem
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            builder.Services.AddAutoMapper(typeof(MappingProfiles).Assembly);
+            builder.Services.AddAutoMapper(typeof(DeliveryManagementSystem.BLL.Healpers.MappingProfiles).Assembly);
 
+            
             builder.Services.AddScoped<EmailServices>();
             builder.Services.AddScoped<JWTReader>();
 
             builder.Configuration
               .SetBasePath(Directory.GetCurrentDirectory())
             .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
-            
+
             var jwtSettings = builder.Configuration.GetSection("JwtSettings");
             builder.Services.Configure<JwtSettings>(jwtSettings);
 
@@ -169,21 +170,21 @@ namespace DeliveryManagementSystem
 
             builder.Services.AddAuthorization();
 
-                var app = builder.Build();
+            var app = builder.Build();
 
-                // Configure the HTTP request pipeline.
-                if (app.Environment.IsDevelopment())
-                {
-                    app.UseSwagger();
-                    app.UseSwaggerUI();
-                }
+            // Configure the HTTP request pipeline.
+            if (app.Environment.IsDevelopment())
+            {
+                app.UseSwagger();
+                app.UseSwaggerUI();
+            }
 
-                app.UseRouting();
-                app.UseCors("AllowAll");
-                app.UseAuthentication();
-                app.UseAuthorization();
-                app.MapControllers();
-                app.Run();
+            app.UseRouting();
+            app.UseCors("AllowAll");
+            app.UseAuthentication();
+            app.UseAuthorization();
+            app.MapControllers();
+            app.Run();
 
 
             using (var scope = app.Services.CreateScope())
@@ -201,5 +202,6 @@ namespace DeliveryManagementSystem
                     }
                 }
             }
-        }   }
+        }
+    }
 }

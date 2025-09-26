@@ -34,3 +34,21 @@ D:\1 - DotNet\DEPI & Courses\10 - Projects\5 - Elaraby\DeliveryManagementSystem\
 D:\1 - DotNet\DEPI & Courses\10 - Projects\5 - Elaraby\DeliveryManagementSystem\DeliveryManagementSystem\DeliveryManagementSystem.DAL\obj\Debug\net8.0\DeliveryManagementSystem.DAL.pdb
 D:\1 - DotNet\DEPI & Courses\10 - Projects\5 - Elaraby\DeliveryManagementSystem\DeliveryManagementSystem\DeliveryManagementSystem.DAL\obj\Debug\net8.0\DeliveryManagementSystem.DAL.genruntimeconfig.cache
 D:\1 - DotNet\DEPI & Courses\10 - Projects\5 - Elaraby\DeliveryManagementSystem\DeliveryManagementSystem\DeliveryManagementSystem.DAL\obj\Debug\net8.0\ref\DeliveryManagementSystem.DAL.dll
+D:\C# & dotNet\Projects\RestaurantManagementSystem\DeliveryManagementSystem.DAL\bin\Debug\net8.0\DeliveryManagementSystem.DAL.deps.json
+D:\C# & dotNet\Projects\RestaurantManagementSystem\DeliveryManagementSystem.DAL\bin\Debug\net8.0\DeliveryManagementSystem.DAL.runtimeconfig.json
+D:\C# & dotNet\Projects\RestaurantManagementSystem\DeliveryManagementSystem.DAL\bin\Debug\net8.0\DeliveryManagementSystem.DAL.dll
+D:\C# & dotNet\Projects\RestaurantManagementSystem\DeliveryManagementSystem.DAL\bin\Debug\net8.0\DeliveryManagementSystem.DAL.pdb
+D:\C# & dotNet\Projects\RestaurantManagementSystem\DeliveryManagementSystem.DAL\bin\Debug\net8.0\DeliveryManagementSystem.Core.dll
+D:\C# & dotNet\Projects\RestaurantManagementSystem\DeliveryManagementSystem.DAL\bin\Debug\net8.0\DeliveryManagementSystem.Core.pdb
+D:\C# & dotNet\Projects\RestaurantManagementSystem\DeliveryManagementSystem.DAL\obj\Debug\net8.0\DeliveryManagementSystem.DAL.csproj.AssemblyReference.cache
+D:\C# & dotNet\Projects\RestaurantManagementSystem\DeliveryManagementSystem.DAL\obj\Debug\net8.0\DeliveryManagementSystem.DAL.GeneratedMSBuildEditorConfig.editorconfig
+D:\C# & dotNet\Projects\RestaurantManagementSystem\DeliveryManagementSystem.DAL\obj\Debug\net8.0\DeliveryManagementSystem.DAL.AssemblyInfoInputs.cache
+D:\C# & dotNet\Projects\RestaurantManagementSystem\DeliveryManagementSystem.DAL\obj\Debug\net8.0\DeliveryManagementSystem.DAL.AssemblyInfo.cs
+D:\C# & dotNet\Projects\RestaurantManagementSystem\DeliveryManagementSystem.DAL\obj\Debug\net8.0\DeliveryManagementSystem.DAL.csproj.CoreCompileInputs.cache
+D:\C# & dotNet\Projects\RestaurantManagementSystem\DeliveryManagementSystem.DAL\obj\Debug\net8.0\DeliveryManagementSystem.DAL.sourcelink.json
+D:\C# & dotNet\Projects\RestaurantManagementSystem\DeliveryManagementSystem.DAL\obj\Debug\net8.0\Delivery.DB381C7E.Up2Date
+D:\C# & dotNet\Projects\RestaurantManagementSystem\DeliveryManagementSystem.DAL\obj\Debug\net8.0\DeliveryManagementSystem.DAL.dll
+D:\C# & dotNet\Projects\RestaurantManagementSystem\DeliveryManagementSystem.DAL\obj\Debug\net8.0\refint\DeliveryManagementSystem.DAL.dll
+D:\C# & dotNet\Projects\RestaurantManagementSystem\DeliveryManagementSystem.DAL\obj\Debug\net8.0\DeliveryManagementSystem.DAL.pdb
+D:\C# & dotNet\Projects\RestaurantManagementSystem\DeliveryManagementSystem.DAL\obj\Debug\net8.0\DeliveryManagementSystem.DAL.genruntimeconfig.cache
+D:\C# & dotNet\Projects\RestaurantManagementSystem\DeliveryManagementSystem.DAL\obj\Debug\net8.0\ref\DeliveryManagementSystem.DAL.dll

@@ -2,22 +2,6 @@
   "version": 3,
   "targets": {
     "net8.0": {
-      "AutoMapper/13.0.1": {
-        "type": "package",
-        "dependencies": {
-          "Microsoft.Extensions.Options": "6.0.0"
-        },
-        "compile": {
-          "lib/net6.0/AutoMapper.dll": {
-            "related": ".xml"
-          }
-        },
-        "runtime": {
-          "lib/net6.0/AutoMapper.dll": {
-            "related": ".xml"
-          }
-        }
-      },
       "Microsoft.AspNetCore.Cryptography.Internal/8.0.0": {
         "type": "package",
         "compile": {
@@ -458,21 +442,6 @@
     }
   },
   "libraries": {
-    "AutoMapper/13.0.1": {
-      "sha512": "/Fx1SbJ16qS7dU4i604Sle+U9VLX+WSNVJggk6MupKVkYvvBm4XqYaeFuf67diHefHKHs50uQIS2YEDFhPCakQ==",
-      "type": "package",
-      "path": "automapper/13.0.1",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "README.md",
-        "automapper.13.0.1.nupkg.sha512",
-        "automapper.nuspec",
-        "icon.png",
-        "lib/net6.0/AutoMapper.dll",
-        "lib/net6.0/AutoMapper.xml"
-      ]
-    },
     "Microsoft.AspNetCore.Cryptography.Internal/8.0.0": {
       "sha512": "buuMMCTxFcVkOkEftb2OafYxrveNGre9KJF4Oi1DkR4rxIj6oLam7Wq3g0Fp9hNVpJteKEPiupsxYnPrD/oUGA==",
       "type": "package",
@@ -1182,46 +1151,38 @@
   },
   "projectFileDependencyGroups": {
     "net8.0": [
-      "AutoMapper >= 13.0.1",
       "DeliveryManagementSystem.Core >= 1.0.0",
       "Microsoft.AspNetCore.Http.Abstractions >= 2.3.0",
       "SendGrid >= 9.29.3"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\MG\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\pc\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\1 - DotNet\\DEPI & Courses\\10 - Projects\\5 - Elaraby\\DeliveryManagementSystem\\DeliveryManagementSystem\\DeliveryManagementSystem.BLL\\DeliveryManagementSystem.BLL.csproj",
+      "projectUniqueName": "D:\\C# & dotNet\\Projects\\RestaurantManagementSystem\\DeliveryManagementSystem.BLL\\DeliveryManagementSystem.BLL.csproj",
       "projectName": "DeliveryManagementSystem.BLL",
-      "projectPath": "D:\\1 - DotNet\\DEPI & Courses\\10 - Projects\\5 - Elaraby\\DeliveryManagementSystem\\DeliveryManagementSystem\\DeliveryManagementSystem.BLL\\DeliveryManagementSystem.BLL.csproj",
-      "packagesPath": "C:\\Users\\MG\\.nuget\\packages\\",
-      "outputPath": "D:\\1 - DotNet\\DEPI & Courses\\10 - Projects\\5 - Elaraby\\DeliveryManagementSystem\\DeliveryManagementSystem\\DeliveryManagementSystem.BLL\\obj\\",
+      "projectPath": "D:\\C# & dotNet\\Projects\\RestaurantManagementSystem\\DeliveryManagementSystem.BLL\\DeliveryManagementSystem.BLL.csproj",
+      "packagesPath": "C:\\Users\\pc\\.nuget\\packages\\",
+      "outputPath": "D:\\C# & dotNet\\Projects\\RestaurantManagementSystem\\DeliveryManagementSystem.BLL\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\MG\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\pc\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "D:\\1 - DotNet\\DEPI & Courses\\10 - Projects\\5 - Elaraby\\DeliveryManagementSystem\\DeliveryManagementSystem\\DeliveryManagementSystem.Core\\DeliveryManagementSystem.Core.csproj": {
-              "projectPath": "D:\\1 - DotNet\\DEPI & Courses\\10 - Projects\\5 - Elaraby\\DeliveryManagementSystem\\DeliveryManagementSystem\\DeliveryManagementSystem.Core\\DeliveryManagementSystem.Core.csproj"
+            "D:\\C# & dotNet\\Projects\\RestaurantManagementSystem\\DeliveryManagementSystem.Core\\DeliveryManagementSystem.Core.csproj": {
+              "projectPath": "D:\\C# & dotNet\\Projects\\RestaurantManagementSystem\\DeliveryManagementSystem.Core\\DeliveryManagementSystem.Core.csproj"
             }
           }
         }
@@ -1235,17 +1196,12 @@
         "enableAudit": "true",
         "auditLevel": "low",
         "auditMode": "direct"
-      },
-      "SdkAnalysisLevel": "9.0.300"
+      }
     },
     "frameworks": {
       "net8.0": {
         "targetAlias": "net8.0",
         "dependencies": {
-          "AutoMapper": {
-            "target": "Package",
-            "version": "[13.0.1, )"
-          },
           "Microsoft.AspNetCore.Http.Abstractions": {
             "target": "Package",
             "version": "[2.3.0, )"
@@ -1271,7 +1227,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.302/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.413/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

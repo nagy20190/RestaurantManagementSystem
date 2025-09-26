@@ -53,8 +53,9 @@ namespace DeliveryManagementSystem.BLL.Healpers
             CreateMap<RestaurantMenuCategory, RestaurantMenuCategoryDTO>();
             CreateMap<Review, ReviewDTO>();
             CreateMap<Review, CreateReviewDTO>().ReverseMap();
-            // CreateMap<Reservation, ReservationDTO>();
 
+            // Reservation Mappings
+            CreateMap<Reservation, ReservationDTO>().ReverseMap();
             CreateMap<Reservation, ReservationDTO>()
           .ForMember(dest => dest.TableNumber, opt => opt.MapFrom(src => src.Table.ID))
             .ForMember(dest => dest.UserID, opt => opt.MapFrom(src => src.User.Id))
