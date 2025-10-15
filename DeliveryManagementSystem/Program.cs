@@ -30,7 +30,7 @@ namespace DeliveryManagementSystem
 
             builder.Services.AddAutoMapper(typeof(DeliveryManagementSystem.BLL.Healpers.MappingProfiles).Assembly);
 
-            
+
             builder.Services.AddScoped<EmailServices>();
             builder.Services.AddScoped<JWTReader>();
 
@@ -83,11 +83,8 @@ namespace DeliveryManagementSystem
             //builder.Services.AddValidatorsFromAssemblyContaining<CreateBookingDTOValidator>();
             // Add Identity
 
-
-
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
            options.UseSqlServer(builder.Configuration.GetConnectionString("Connection")));
-
 
             builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
@@ -170,35 +167,83 @@ namespace DeliveryManagementSystem
 
             builder.Services.AddAuthorization();
 
+            builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
+
+            // Seed default admin user and roles on startup
+            // builder.Services.AddTransient<IStartupFilter, AdminUserSeedStartupFilter>();
+
+
             var app = builder.Build();
-
-            // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
-            {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
-
-            app.UseRouting();
-            app.UseCors("AllowAll");
-            app.UseAuthentication();
-            app.UseAuthorization();
-            app.MapControllers();
-            app.Run();
-
-
+            // Seed admin user
             using (var scope = app.Services.CreateScope())
             {
-                var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+                var services = scope.ServiceProvider;
+                await SeedAdminUserAsync(services);
+            }
 
-                string[] roles = { "User", "RestaurantOwner", "SuperAdmin" };
+            async Task SeedAdminUserAsync(IServiceProvider services)
+            {
+                var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
+                var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
 
-                foreach (var role in roles)
+                string adminEmail = "mostafanagy679@gmail.com";
+                string adminPassword = "nagy10@@";
+                string roleName = "Admin";
+
+                // Create role if not exists
+                if (!await roleManager.RoleExistsAsync(roleName))
                 {
-                    var roleExists = await roleManager.RoleExistsAsync(role);
-                    if (!roleExists)
+                    await roleManager.CreateAsync(new IdentityRole(roleName));
+                }
+
+                // Create admin user if not exists
+                var adminUser = await userManager.FindByEmailAsync(adminEmail);
+                if (adminUser == null)
+                {
+                    adminUser = new IdentityUser
                     {
-                        await roleManager.CreateAsync(new IdentityRole(role));
+                        UserName = adminEmail,
+                        Email = adminEmail,
+                        EmailConfirmed = true
+                    };
+                    var result = await userManager.CreateAsync(adminUser, adminPassword);
+                    if (result.Succeeded)
+                    {
+                        await userManager.AddToRoleAsync(adminUser, roleName);
+                    }
+                }
+
+
+                // Configure the HTTP request pipeline.
+                if (app.Environment.IsDevelopment())
+                {
+                    app.UseSwagger();
+                    app.UseSwaggerUI();
+                }
+
+                app.UseRouting();
+                app.UseCors("AllowAll");
+                app.UseAuthentication();
+                app.UseAuthorization();
+                app.MapControllers();
+                app.Run();
+
+
+                using (var scope = app.Services.CreateScope())
+                {
+                    var rolemanager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+                    string[] roles = { "User", "RestaurantOwner", "SuperAdmin" };
+
+                    foreach (var role in roles)
+                    {
+                        var roleExists = await rolemanager.RoleExistsAsync(role);
+                        if (!roleExists)
+                        {
+                            await rolemanager.CreateAsync(new IdentityRole(role));
+                        }
                     }
                 }
             }

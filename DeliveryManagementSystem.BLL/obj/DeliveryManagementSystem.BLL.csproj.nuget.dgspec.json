@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\C# & dotNet\\Projects\\RestaurantManagementSystem\\DeliveryManagementSystem.BLL\\DeliveryManagementSystem.BLL.csproj": {}
+    "D:\\1 - C# & dotNet\\Projects\\RestaurantManagementSystem\\DeliveryManagementSystem.BLL\\DeliveryManagementSystem.BLL.csproj": {}
   },
   "projects": {
-    "D:\\C# & dotNet\\Projects\\RestaurantManagementSystem\\DeliveryManagementSystem.BLL\\DeliveryManagementSystem.BLL.csproj": {
+    "D:\\1 - C# & dotNet\\Projects\\RestaurantManagementSystem\\DeliveryManagementSystem.BLL\\DeliveryManagementSystem.BLL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\C# & dotNet\\Projects\\RestaurantManagementSystem\\DeliveryManagementSystem.BLL\\DeliveryManagementSystem.BLL.csproj",
+        "projectUniqueName": "D:\\1 - C# & dotNet\\Projects\\RestaurantManagementSystem\\DeliveryManagementSystem.BLL\\DeliveryManagementSystem.BLL.csproj",
         "projectName": "DeliveryManagementSystem.BLL",
-        "projectPath": "D:\\C# & dotNet\\Projects\\RestaurantManagementSystem\\DeliveryManagementSystem.BLL\\DeliveryManagementSystem.BLL.csproj",
+        "projectPath": "D:\\1 - C# & dotNet\\Projects\\RestaurantManagementSystem\\DeliveryManagementSystem.BLL\\DeliveryManagementSystem.BLL.csproj",
         "packagesPath": "C:\\Users\\pc\\.nuget\\packages\\",
-        "outputPath": "D:\\C# & dotNet\\Projects\\RestaurantManagementSystem\\DeliveryManagementSystem.BLL\\obj\\",
+        "outputPath": "D:\\1 - C# & dotNet\\Projects\\RestaurantManagementSystem\\DeliveryManagementSystem.BLL\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\pc\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -26,8 +26,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "D:\\C# & dotNet\\Projects\\RestaurantManagementSystem\\DeliveryManagementSystem.Core\\DeliveryManagementSystem.Core.csproj": {
-                "projectPath": "D:\\C# & dotNet\\Projects\\RestaurantManagementSystem\\DeliveryManagementSystem.Core\\DeliveryManagementSystem.Core.csproj"
+              "D:\\1 - C# & dotNet\\Projects\\RestaurantManagementSystem\\DeliveryManagementSystem.Core\\DeliveryManagementSystem.Core.csproj": {
+                "projectPath": "D:\\1 - C# & dotNet\\Projects\\RestaurantManagementSystem\\DeliveryManagementSystem.Core\\DeliveryManagementSystem.Core.csproj"
               }
             }
           }
@@ -41,7 +41,8 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
-        }
+        },
+        "SdkAnalysisLevel": "9.0.300"
       },
       "frameworks": {
         "net8.0": {
@@ -67,23 +68,37 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[8.0.20, 8.0.20]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[8.0.20, 8.0.20]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Ref",
+              "version": "[8.0.20, 8.0.20]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.413/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\C# & dotNet\\Projects\\RestaurantManagementSystem\\DeliveryManagementSystem.Core\\DeliveryManagementSystem.Core.csproj": {
+    "D:\\1 - C# & dotNet\\Projects\\RestaurantManagementSystem\\DeliveryManagementSystem.Core\\DeliveryManagementSystem.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\C# & dotNet\\Projects\\RestaurantManagementSystem\\DeliveryManagementSystem.Core\\DeliveryManagementSystem.Core.csproj",
+        "projectUniqueName": "D:\\1 - C# & dotNet\\Projects\\RestaurantManagementSystem\\DeliveryManagementSystem.Core\\DeliveryManagementSystem.Core.csproj",
         "projectName": "DeliveryManagementSystem.Core",
-        "projectPath": "D:\\C# & dotNet\\Projects\\RestaurantManagementSystem\\DeliveryManagementSystem.Core\\DeliveryManagementSystem.Core.csproj",
+        "projectPath": "D:\\1 - C# & dotNet\\Projects\\RestaurantManagementSystem\\DeliveryManagementSystem.Core\\DeliveryManagementSystem.Core.csproj",
         "packagesPath": "C:\\Users\\pc\\.nuget\\packages\\",
-        "outputPath": "D:\\C# & dotNet\\Projects\\RestaurantManagementSystem\\DeliveryManagementSystem.Core\\obj\\",
+        "outputPath": "D:\\1 - C# & dotNet\\Projects\\RestaurantManagementSystem\\DeliveryManagementSystem.Core\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\pc\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -109,7 +124,8 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
-        }
+        },
+        "SdkAnalysisLevel": "9.0.300"
       },
       "frameworks": {
         "net8.0": {
@@ -139,12 +155,26 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[8.0.20, 8.0.20]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[8.0.20, 8.0.20]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Ref",
+              "version": "[8.0.20, 8.0.20]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.413/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

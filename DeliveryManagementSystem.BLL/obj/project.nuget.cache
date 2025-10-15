@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "q7PU1gJavJQ=",
+  "dgSpecHash": "jrPuq8FFhHM=",
   "success": true,
-  "projectFilePath": "D:\\C# & dotNet\\Projects\\RestaurantManagementSystem\\DeliveryManagementSystem.BLL\\DeliveryManagementSystem.BLL.csproj",
+  "projectFilePath": "D:\\1 - C# & dotNet\\Projects\\RestaurantManagementSystem\\DeliveryManagementSystem.BLL\\DeliveryManagementSystem.BLL.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\pc\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\8.0.0\\microsoft.aspnetcore.cryptography.internal.8.0.0.nupkg.sha512",
     "C:\\Users\\pc\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\8.0.0\\microsoft.aspnetcore.cryptography.keyderivation.8.0.0.nupkg.sha512",
@@ -28,7 +28,10 @@
     "C:\\Users\\pc\\.nuget\\packages\\sendgrid\\9.29.3\\sendgrid.9.29.3.nupkg.sha512",
     "C:\\Users\\pc\\.nuget\\packages\\starkbank-ecdsa\\1.3.3\\starkbank-ecdsa.1.3.3.nupkg.sha512",
     "C:\\Users\\pc\\.nuget\\packages\\system.componentmodel.annotations\\5.0.0\\system.componentmodel.annotations.5.0.0.nupkg.sha512",
-    "C:\\Users\\pc\\.nuget\\packages\\system.text.encodings.web\\8.0.0\\system.text.encodings.web.8.0.0.nupkg.sha512"
+    "C:\\Users\\pc\\.nuget\\packages\\system.text.encodings.web\\8.0.0\\system.text.encodings.web.8.0.0.nupkg.sha512",
+    "C:\\Users\\pc\\.nuget\\packages\\microsoft.netcore.app.ref\\8.0.20\\microsoft.netcore.app.ref.8.0.20.nupkg.sha512",
+    "C:\\Users\\pc\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\8.0.20\\microsoft.windowsdesktop.app.ref.8.0.20.nupkg.sha512",
+    "C:\\Users\\pc\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\8.0.20\\microsoft.aspnetcore.app.ref.8.0.20.nupkg.sha512"
   ],
   "logs": []
 }

@@ -46,3 +46,19 @@ D:\C# & dotNet\Projects\RestaurantManagementSystem\DeliveryManagementSystem.BLL\
 D:\C# & dotNet\Projects\RestaurantManagementSystem\DeliveryManagementSystem.BLL\obj\Debug\net8.0\refint\DeliveryManagementSystem.BLL.dll
 D:\C# & dotNet\Projects\RestaurantManagementSystem\DeliveryManagementSystem.BLL\obj\Debug\net8.0\DeliveryManagementSystem.BLL.pdb
 D:\C# & dotNet\Projects\RestaurantManagementSystem\DeliveryManagementSystem.BLL\obj\Debug\net8.0\ref\DeliveryManagementSystem.BLL.dll
+D:\1 - C# & dotNet\Projects\RestaurantManagementSystem\DeliveryManagementSystem.BLL\bin\Debug\net8.0\DeliveryManagementSystem.BLL.deps.json
+D:\1 - C# & dotNet\Projects\RestaurantManagementSystem\DeliveryManagementSystem.BLL\bin\Debug\net8.0\DeliveryManagementSystem.BLL.dll
+D:\1 - C# & dotNet\Projects\RestaurantManagementSystem\DeliveryManagementSystem.BLL\bin\Debug\net8.0\DeliveryManagementSystem.BLL.pdb
+D:\1 - C# & dotNet\Projects\RestaurantManagementSystem\DeliveryManagementSystem.BLL\bin\Debug\net8.0\DeliveryManagementSystem.Core.dll
+D:\1 - C# & dotNet\Projects\RestaurantManagementSystem\DeliveryManagementSystem.BLL\bin\Debug\net8.0\DeliveryManagementSystem.Core.pdb
+D:\1 - C# & dotNet\Projects\RestaurantManagementSystem\DeliveryManagementSystem.BLL\obj\Debug\net8.0\DeliveryManagementSystem.BLL.csproj.AssemblyReference.cache
+D:\1 - C# & dotNet\Projects\RestaurantManagementSystem\DeliveryManagementSystem.BLL\obj\Debug\net8.0\DeliveryManagementSystem.BLL.GeneratedMSBuildEditorConfig.editorconfig
+D:\1 - C# & dotNet\Projects\RestaurantManagementSystem\DeliveryManagementSystem.BLL\obj\Debug\net8.0\DeliveryManagementSystem.BLL.AssemblyInfoInputs.cache
+D:\1 - C# & dotNet\Projects\RestaurantManagementSystem\DeliveryManagementSystem.BLL\obj\Debug\net8.0\DeliveryManagementSystem.BLL.AssemblyInfo.cs
+D:\1 - C# & dotNet\Projects\RestaurantManagementSystem\DeliveryManagementSystem.BLL\obj\Debug\net8.0\DeliveryManagementSystem.BLL.csproj.CoreCompileInputs.cache
+D:\1 - C# & dotNet\Projects\RestaurantManagementSystem\DeliveryManagementSystem.BLL\obj\Debug\net8.0\DeliveryManagementSystem.BLL.sourcelink.json
+D:\1 - C# & dotNet\Projects\RestaurantManagementSystem\DeliveryManagementSystem.BLL\obj\Debug\net8.0\Delivery.FB6E029D.Up2Date
+D:\1 - C# & dotNet\Projects\RestaurantManagementSystem\DeliveryManagementSystem.BLL\obj\Debug\net8.0\DeliveryManagementSystem.BLL.dll
+D:\1 - C# & dotNet\Projects\RestaurantManagementSystem\DeliveryManagementSystem.BLL\obj\Debug\net8.0\refint\DeliveryManagementSystem.BLL.dll
+D:\1 - C# & dotNet\Projects\RestaurantManagementSystem\DeliveryManagementSystem.BLL\obj\Debug\net8.0\DeliveryManagementSystem.BLL.pdb
+D:\1 - C# & dotNet\Projects\RestaurantManagementSystem\DeliveryManagementSystem.BLL\obj\Debug\net8.0\ref\DeliveryManagementSystem.BLL.dll
