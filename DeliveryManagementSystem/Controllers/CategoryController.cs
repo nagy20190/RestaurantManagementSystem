@@ -121,18 +121,9 @@ namespace DeliveryManagementSystem.API.Controllers
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetCategoryById(int id)
         {
-            if (id <= 0)
-            {
-                return BadRequest(new { Message = "Invalid category ID." });
-            }
             try
             {
                 var category = await _categoryRepository.GetByIdAsync(id);
-
-                if (category == null)
-                {
-                    return NotFound(new { Message = $"No category found with ID {id}." });
-                }
 
                 var categoryDTO = _mapper.Map<CategoryDTO>(category);
                 return Ok(categoryDTO);

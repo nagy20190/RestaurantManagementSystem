@@ -14,6 +14,7 @@ namespace DeliveryManagementSystem.DAL.Repositories
     {
 
         private readonly ApplicationDbContext _context;
+        private readonly DbSet<T> entities;
         public GenericRepository(ApplicationDbContext context)
         {
             _context = context;
@@ -38,7 +39,7 @@ namespace DeliveryManagementSystem.DAL.Repositories
 
         public async Task<T> GetByIdAsync(int id)
         {
-            return await _context.Set<T>().FindAsync(id);
+            return await entities.FindAsync(id) ?? throw new KeyNotFoundException("Entity not found.");
         }
 
         public async Task UpdateAsync(T entity)

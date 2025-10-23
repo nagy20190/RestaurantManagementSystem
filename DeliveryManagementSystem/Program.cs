@@ -167,9 +167,9 @@ namespace DeliveryManagementSystem
 
             builder.Services.AddAuthorization();
 
-            builder.Services.AddIdentity<IdentityUser, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultTokenProviders();
+            // builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+            //     .AddEntityFrameworkStores<ApplicationDbContext>()
+            //     .AddDefaultTokenProviders();
 
             // Seed default admin user and roles on startup
             // builder.Services.AddTransient<IStartupFilter, AdminUserSeedStartupFilter>();
@@ -177,76 +177,78 @@ namespace DeliveryManagementSystem
 
             var app = builder.Build();
             // Seed admin user
-            using (var scope = app.Services.CreateScope())
+            // using (var scope = app.Services.CreateScope())
+            // {
+            //     var services = scope.ServiceProvider;
+            //     await SeedAdminUserAsync(services);
+            // }
+
+            // async Task SeedAdminUserAsync(IServiceProvider services)
+            // {
+            //     var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
+            //     var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+
+            //     string adminEmail = "mostafanagy679@gmail.com";
+            //     string adminPassword = "nagy10@@";
+            //     string roleName = "Admin";
+
+            //     // Create role if not exists
+            //     if (!await roleManager.RoleExistsAsync(roleName))
+            //     {
+            //         await roleManager.CreateAsync(new IdentityRole(roleName));
+            //     }
+
+            //     // Create admin user if not exists
+            //     var adminUser = await userManager.FindByEmailAsync(adminEmail);
+            //     if (adminUser == null)
+            //     {
+            //         adminUser = new IdentityUser
+            //         {
+            //             UserName = adminEmail,
+            //             Email = adminEmail,
+            //             EmailConfirmed = true
+            //         };
+            //         var result = await userManager.CreateAsync(adminUser, adminPassword);
+            //         if (result.Succeeded)
+            //         {
+            //             await userManager.AddToRoleAsync(adminUser, roleName);
+            //         }
+            //     }
+
+
+            // Configure the HTTP request pipeline.
+            if (app.Environment.IsDevelopment())
             {
-                var services = scope.ServiceProvider;
-                await SeedAdminUserAsync(services);
+                app.UseSwagger();
+                app.UseSwaggerUI();
             }
 
-            async Task SeedAdminUserAsync(IServiceProvider services)
+            app.UseRouting();
+            app.UseCors("AllowAll");
+            app.UseAuthentication();
+            app.UseAuthorization();
+            app.MapControllers();
+            app.Run();
+
+
+            using (var scope = app.Services.CreateScope())
             {
-                var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
-                var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+                var rolemanager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-                string adminEmail = "mostafanagy679@gmail.com";
-                string adminPassword = "nagy10@@";
-                string roleName = "Admin";
+                string[] roles = { "User", "RestaurantOwner", "SuperAdmin" };
 
-                // Create role if not exists
-                if (!await roleManager.RoleExistsAsync(roleName))
+                foreach (var role in roles)
                 {
-                    await roleManager.CreateAsync(new IdentityRole(roleName));
-                }
-
-                // Create admin user if not exists
-                var adminUser = await userManager.FindByEmailAsync(adminEmail);
-                if (adminUser == null)
-                {
-                    adminUser = new IdentityUser
+                    var roleExists = await rolemanager.RoleExistsAsync(role);
+                    if (!roleExists)
                     {
-                        UserName = adminEmail,
-                        Email = adminEmail,
-                        EmailConfirmed = true
-                    };
-                    var result = await userManager.CreateAsync(adminUser, adminPassword);
-                    if (result.Succeeded)
-                    {
-                        await userManager.AddToRoleAsync(adminUser, roleName);
-                    }
-                }
-
-
-                // Configure the HTTP request pipeline.
-                if (app.Environment.IsDevelopment())
-                {
-                    app.UseSwagger();
-                    app.UseSwaggerUI();
-                }
-
-                app.UseRouting();
-                app.UseCors("AllowAll");
-                app.UseAuthentication();
-                app.UseAuthorization();
-                app.MapControllers();
-                app.Run();
-
-
-                using (var scope = app.Services.CreateScope())
-                {
-                    var rolemanager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-
-                    string[] roles = { "User", "RestaurantOwner", "SuperAdmin" };
-
-                    foreach (var role in roles)
-                    {
-                        var roleExists = await rolemanager.RoleExistsAsync(role);
-                        if (!roleExists)
-                        {
-                            await rolemanager.CreateAsync(new IdentityRole(role));
-                        }
+                        await rolemanager.CreateAsync(new IdentityRole(role));
                     }
                 }
             }
         }
     }
 }
+
+
+

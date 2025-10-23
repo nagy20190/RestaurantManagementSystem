@@ -1,11 +1,1 @@
-{
-  "Version": 1,
-  "Hash": "SN++ZHRxRS62DD6YyhsgT+ViLfUdMLXfc3bTGqJW7UM=",
-  "Source": "DeliveryManagementSystem.API",
-  "BasePath": "_content/DeliveryManagementSystem.API",
-  "Mode": "Default",
-  "ManifestType": "Build",
-  "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
-  "Assets": []
-}
+{"Version":1,"Hash":"T99DvdbDs/YFrdAzqi2dD8+0I2774ncyEiar66Z03iM=","Source":"DeliveryManagementSystem.API","BasePath":"_content/DeliveryManagementSystem.API","Mode":"Default","ManifestType":"Build","ReferencedProjectsConfiguration":[],"DiscoveryPatterns":[],"Assets":[],"Endpoints":[]}
