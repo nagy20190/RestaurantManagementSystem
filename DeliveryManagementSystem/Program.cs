@@ -1,16 +1,15 @@
 ﻿using AutoMapper;
 using DeliveryManagementSystem.BLL.Healpers;
 using DeliveryManagementSystem.BLL.Services;
-using DeliveryManagementSystem.Core.DTOs;
 using DeliveryManagementSystem.Core.Entities;
 using DeliveryManagementSystem.Core.Interfaces;
 using DeliveryManagementSystem.DAL.Contexts;
 using DeliveryManagementSystem.DAL.Repositories;
+using DeliveryManagementSystem.Middleware.YourApp;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using System.Text;
@@ -176,6 +175,9 @@ namespace DeliveryManagementSystem
 
 
             var app = builder.Build();
+
+            app.UseMiddleware<ExceptionHandlerMiddleware>();
+
             // Seed admin user
             // using (var scope = app.Services.CreateScope())
             // {
@@ -222,6 +224,8 @@ namespace DeliveryManagementSystem
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
+
 
             app.UseRouting();
             app.UseCors("AllowAll");

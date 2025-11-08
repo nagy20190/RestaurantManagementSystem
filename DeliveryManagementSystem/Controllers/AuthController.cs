@@ -4,13 +4,10 @@ using DeliveryManagementSystem.Core.DTOs;
 using DeliveryManagementSystem.Core.Entities;
 using DeliveryManagementSystem.Core.Interfaces;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Cors;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.Win32;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -19,50 +16,33 @@ namespace DeliveryManagementSystem.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AuthController : ControllerBase
+    public class AuthController(
+        IGenericRepository<User> userRepository,
+        IGenericRepository<Roles> roleRepository,
+        EmailServices emailServices,
+        IMapper mapper,
+        UserManager<User> userManager,
+        RoleManager<Roles> roleManager,
+        SignInManager<User> signInManager, IOptions<JwtSettings> jwtOptions) : ControllerBase
     {
-        private readonly IMapper _mapper;
-        private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;
-        private readonly RoleManager<Roles> _roleManager;
-        private readonly IGenericRepository<User> _userRepository;
-        private readonly IGenericRepository<Roles> _roleRepository;
-        private readonly EmailServices _emailServices;
-        private readonly JwtSettings _jwtSettings;
+        private readonly IMapper _mapper = mapper;
+        private readonly UserManager<User> _userManager = userManager;
+        private readonly SignInManager<User> _signInManager = signInManager;
+        private readonly RoleManager<Roles> _roleManager = roleManager;
+        private readonly IGenericRepository<User> _userRepository = userRepository;
+        private readonly IGenericRepository<Roles> _roleRepository = roleRepository;
+        private readonly EmailServices _emailServices = emailServices;
+        private readonly JwtSettings _jwtSettings = jwtOptions.Value;
 
-        public AuthController(
-            IGenericRepository<User> userRepository,
-            IGenericRepository<Roles> roleRepository,
-            EmailServices emailServices,
-            IMapper mapper,
-            UserManager<User> userManager,
-            RoleManager<Roles> roleManager,
-            SignInManager<User> signInManager, IOptions<JwtSettings> jwtOptions)
-        {
-            _mapper = mapper;
-            _userRepository = userRepository;
-            _roleRepository = roleRepository;
-            _emailServices = emailServices;
-            _userManager = userManager;
-            _signInManager = signInManager;
-            _roleManager = roleManager;
-            _jwtSettings = jwtOptions.Value;
-        }
-        // Register - Logout - addRole - forgetPassword - resetPassword - changePassword  
 
         [HttpPost("Login")]
         public async Task<IActionResult> Login(LoginUserDTO loginUserDTO)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             var user = await _userManager.FindByEmailAsync(loginUserDTO.Email);
             if (user == null || !await _userManager.CheckPasswordAsync(user, loginUserDTO.Password))
             {
-                // to prevent user enumeration attacks
-                await Task.Delay(100); // Small delay to prevent timing attacks
+                // rate limiting
+                await Task.Delay(1000); // Small delay to prevent timing attacks
                 return Unauthorized(new { Message = "Invalid email or password" });
             }
 
@@ -82,20 +62,19 @@ namespace DeliveryManagementSystem.API.Controllers
 
                 return Ok(new
                 {
-                    token = token.TokenString,
-                    expiration = token.Expiration,
+                    token,
+                    expiration = DateTime.Now.AddDays(3),
                     user = _mapper.Map<UserDTO>(user)
                 });
             }
             catch (Exception ex)
             {
-                // _logger.LogError(ex, "Error generating JWT token for user {UserId}", user.Id);
+                Console.WriteLine(ex.Message);
                 return StatusCode(500, new { Message = "An error occurred during login" });
             }
         }
         
-        private async Task<(string TokenString, DateTime Expiration)> 
-            GenerateJwtTokenAsync(User user)
+        private async Task<string> GenerateJwtTokenAsync(User user)
         {
             var userClaims = new List<Claim>
             {
@@ -115,7 +94,7 @@ namespace DeliveryManagementSystem.API.Controllers
             // Get signing key from configuration (not hardcoded)
             var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Key));
             var credentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
-            var expiration = DateTime.UtcNow.AddDays(1);
+            var expiration = DateTime.UtcNow.AddDays(3);
 
             var token = new JwtSecurityToken(
                 issuer: _jwtSettings.Issuer,
@@ -126,17 +105,13 @@ namespace DeliveryManagementSystem.API.Controllers
                 notBefore: DateTime.UtcNow // Token not valid before this time
             );
             var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
-            return (tokenString, expiration);
+            return tokenString;
         }
 
         // Register
         [HttpPost("Register")]
         public async Task<IActionResult> Register(RegisterUserDTO registerUserDTO)
         {
-            if(!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
             try
             {
                 var isUserExist =

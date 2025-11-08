@@ -39,7 +39,8 @@ namespace DeliveryManagementSystem.DAL.Repositories
 
         public async Task<T> GetByIdAsync(int id)
         {
-            return await entities.FindAsync(id) ?? throw new KeyNotFoundException("Entity not found.");
+            var entity = await _context.Set<T>().FindAsync(id);
+            return entity ?? throw new KeyNotFoundException("Key not found");
         }
 
         public async Task UpdateAsync(T entity)

@@ -16,32 +16,22 @@ namespace DeliveryManagementSystem.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class MealController : ControllerBase
+    public class MealController(
+        IGenericRepository<Meal> mealRepository,
+        IGenericRepository<Restaurant> restaurantRepository,
+        IGenericRepository<RestaurantMenuCategory> categoryRepository,
+        IGenericRepository<OrderItem> orderItemRepository,
+        IMapper mapper) : ControllerBase
     {
-        private readonly IGenericRepository<Meal> _mealRepository;
-        private readonly IGenericRepository<Restaurant> _restaurantRepository;
-        private readonly IGenericRepository<RestaurantMenuCategory> _categoryRepository;
-        private readonly IGenericRepository<OrderItem> _orderItemRepository;
-        private readonly IMapper _mapper;
+        private readonly IGenericRepository<Meal> _mealRepository = mealRepository;
+        private readonly IGenericRepository<Restaurant> _restaurantRepository = restaurantRepository;
+        private readonly IGenericRepository<RestaurantMenuCategory> _categoryRepository = categoryRepository;
+        private readonly IGenericRepository<OrderItem> _orderItemRepository = orderItemRepository;
+        private readonly IMapper _mapper = mapper;
 
-        public MealController(
-            IGenericRepository<Meal> mealRepository,
-            IGenericRepository<Restaurant> restaurantRepository,
-            IGenericRepository<RestaurantMenuCategory> categoryRepository,
-            IGenericRepository<OrderItem> orderItemRepository,
-            IMapper mapper)
-        {
-            _mealRepository = mealRepository;
-            _restaurantRepository = restaurantRepository;
-            _categoryRepository = categoryRepository;
-            _orderItemRepository = orderItemRepository;
-            _mapper = mapper;
-        }
-
-        // GET: api/Meal
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<MealDTO>>> 
-            GetMeals([FromQuery] int page = 1, [FromQuery] int pageSize = 10)
+        public async Task<ActionResult<IEnumerable<MealDTO>>> GetMeals
+            ([FromQuery] int page = 1, [FromQuery] int pageSize = 10)
         {
             try
             {
@@ -58,18 +48,12 @@ namespace DeliveryManagementSystem.API.Controllers
             }
         }
 
-        // GET: api/Meal/5
         [HttpGet("{id}")]
         public async Task<ActionResult<MealDetailsDTO>> GetMeal(int id)
         {
             try
             {
                 var meal = await _mealRepository.GetByIdAsync(id);
-                if (meal == null)
-                {
-                    return NotFound($"Meal with ID {id} not found");
-                }
-
                 var mealDetailsDTO = _mapper.Map<MealDetailsDTO>(meal);
                 return Ok(mealDetailsDTO);
             }
@@ -79,34 +63,13 @@ namespace DeliveryManagementSystem.API.Controllers
             }
         }
 
-        // POST: api/Meal
         [Authorize(Roles = "SuperAdmin, RestaurantOwner")]
         [HttpPost]
         public async Task<ActionResult<MealDTO>> CreateMeal([FromBody] CreateMealDTO createMealDTO)
         {
             try
             {
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest(ModelState);
-                }
-
-                // Validate restaurant exists
                 var restaurant = await _restaurantRepository.GetByIdAsync(createMealDTO.RestaurantID);
-                if (restaurant == null)
-                {
-                    return BadRequest($"Restaurant with ID {createMealDTO.RestaurantID} not found");
-                }
-
-                // Validate category if provided
-                if (createMealDTO.MenuCategoryID.HasValue)
-                {
-                    var category = await _categoryRepository.GetByIdAsync(createMealDTO.MenuCategoryID.Value);
-                    if (category == null)
-                    {
-                        return BadRequest($"Menu category with ID {createMealDTO.MenuCategoryID.Value} not found");
-                    }
-                }
 
                 var meal = _mapper.Map<Meal>(createMealDTO);
                 meal.RestaurantMenuCategoryID = createMealDTO.MenuCategoryID ?? 0;
@@ -122,47 +85,18 @@ namespace DeliveryManagementSystem.API.Controllers
             }
         }
 
-        // PUT: api/Meal/5
         [Authorize(Roles = "SuperAdmin, RestaurantOwner")]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateMeal(int id, [FromBody] UpdateMealDTO updateMealDTO)
         {
             try
             {
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest(ModelState);
-                }
-
                 var existingMeal = await _mealRepository.GetByIdAsync(id);
-                if (existingMeal == null)
-                {
-                    return NotFound($"Meal with ID {id} not found");
-                }
-
-                // Validate category if provided
-                if (updateMealDTO.MenuCategoryID.HasValue)
-                {
-                    var category = await _categoryRepository.GetByIdAsync(updateMealDTO.MenuCategoryID.Value);
-                    if (category == null)
-                    {
-                        return BadRequest($"Menu category with ID {updateMealDTO.MenuCategoryID.Value} not found");
-                    }
-                }
 
                 // Update properties
-                existingMeal.Name = updateMealDTO.Name;
-                existingMeal.Description = updateMealDTO.Description;
-                existingMeal.Price = updateMealDTO.Price;
-                existingMeal.URLPhoto = updateMealDTO.URLPhoto;
-                if (updateMealDTO.MenuCategoryID.HasValue)
-                {
-                    existingMeal.RestaurantMenuCategoryID = updateMealDTO.MenuCategoryID.Value;
-                }
-
+                _mapper.Map(updateMealDTO, existingMeal);
                 await _mealRepository.UpdateAsync(existingMeal);
-
-                return NoContent();
+                return Ok("updated succefully");
             }
             catch (Exception ex)
             {
@@ -170,7 +104,6 @@ namespace DeliveryManagementSystem.API.Controllers
             }
         }
 
-        // DELETE: api/Meal/5
         [Authorize(Roles = "SuperAdmin, RestaurantOwner")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteMeal(int id)
@@ -178,13 +111,8 @@ namespace DeliveryManagementSystem.API.Controllers
             try
             {
                 var meal = await _mealRepository.GetByIdAsync(id);
-                if (meal == null)
-                {
-                    return NotFound($"Meal with ID {id} not found");
-                }
-
                 await _mealRepository.DeleteAsync(meal);
-                return NoContent();
+                return Ok("Deleted Succefully");
             }
             catch (Exception ex)
             {
@@ -192,7 +120,6 @@ namespace DeliveryManagementSystem.API.Controllers
             }
         }
 
-        // GET: api/Meal/search
         [HttpGet("search")]
         public async Task<ActionResult<IEnumerable<MealDTO>>>
             SearchMeals([FromQuery] MealSearchDTO searchDTO)
@@ -260,7 +187,6 @@ namespace DeliveryManagementSystem.API.Controllers
             }
         }
 
-        // GET: api/Meal/restaurant/{restaurantId}
         [HttpGet("restaurant/{restaurantId}")]
         public async Task<ActionResult<IEnumerable<MealDTO>>> GetMealsByRestaurant(int restaurantId)
         {
@@ -279,7 +205,6 @@ namespace DeliveryManagementSystem.API.Controllers
             }
         }
 
-        // GET: api/Meal/category/{categoryId}
         [HttpGet("category/{categoryId}")]
         public async Task<ActionResult<IEnumerable<MealDTO>>> GetMealsByCategory(int categoryId)
         {
@@ -298,7 +223,6 @@ namespace DeliveryManagementSystem.API.Controllers
             }
         }
 
-        // GET: api/Meal/popular
         [HttpGet("popular")]
         public async Task<ActionResult<IEnumerable<PopularMealDTO>>> GetPopularMeals([FromQuery] int count = 10)
         {
@@ -340,14 +264,11 @@ namespace DeliveryManagementSystem.API.Controllers
             }
         }
 
-        // GET: api/Meal/available
         [HttpGet("available")]
         public async Task<ActionResult<IEnumerable<MealDTO>>> GetAvailableMeals()
         {
             try
             {
-                // This assumes you have an IsAvailable field or you can determine availability
-                // For now, returning all meals. You might want to add availability logic
                 var meals = _mealRepository.GetAll()
                     .Include(m => m.Resturant)
                     .Include(m => m.RestaurantMenuCategory);
@@ -360,5 +281,9 @@ namespace DeliveryManagementSystem.API.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+
+
+
+
     }
 }

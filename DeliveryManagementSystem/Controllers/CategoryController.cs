@@ -121,18 +121,10 @@ namespace DeliveryManagementSystem.API.Controllers
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetCategoryById(int id)
         {
-            try
-            {
-                var category = await _categoryRepository.GetByIdAsync(id);
+            var category = await _categoryRepository.GetByIdAsync(id);
 
-                var categoryDTO = _mapper.Map<CategoryDTO>(category);
-                return Ok(categoryDTO);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error retrieving category with ID: {CategoryId}", id);
-                return StatusCode(500, new { Message = "An error occurred while retrieving the category." });
-            }
+            var categoryDTO = _mapper.Map<CategoryDTO>(category);
+            return Ok(categoryDTO);
         }
 
         [Authorize(Roles = "SuperAdmin")]
