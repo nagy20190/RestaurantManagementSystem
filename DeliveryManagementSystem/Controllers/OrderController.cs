@@ -52,7 +52,7 @@ namespace DeliveryManagementSystem.API.Controllers
             {
                 var orders = _orderRepository.GetPaged(page, pageSize)
                     .Include(o => o.User)
-                    .Include(o => o.Resturant)
+                    .Include(o => o.Restaurant)
                     .Include(o => o.OrderItems)
                     .ThenInclude(oi => oi.Meal);
 
@@ -73,7 +73,7 @@ namespace DeliveryManagementSystem.API.Controllers
             {
                 var order = _orderRepository.GetAll()
                     .Include(o => o.User)
-                    .Include(o => o.Resturant)
+                    .Include(o => o.Restaurant)
                     .Include(o => o.Payment)
                     .Include(o => o.OrderItems)
                     .ThenInclude(oi => oi.Meal)
@@ -127,9 +127,9 @@ namespace DeliveryManagementSystem.API.Controllers
 
                     if (restaurantId == 0)
                     {
-                        restaurantId = meal.ResturantID;
+                        restaurantId = meal.RestaurantID;
                     }
-                    else if (restaurantId != meal.ResturantID)
+                    else if (restaurantId != meal.RestaurantID)
                     {
                         return BadRequest("All meals must be from the same restaurant");
                     }
@@ -151,7 +151,7 @@ namespace DeliveryManagementSystem.API.Controllers
                 {
                     OrderNumber = GenerateOrderNumber(),
                     UserID = createOrderDTO.UserID,
-                    ResturantID = restaurantId,
+                    RestaurantID = restaurantId,
                     TotalAmount = totalAmount,
                     Status = Core.Entities.OrderStatus.Pending,
                     DeliveryAddress = createOrderDTO.DeliveryAddress,
@@ -244,7 +244,7 @@ namespace DeliveryManagementSystem.API.Controllers
             try
             {
                 var userOrders = _orderRepository.FindByCondition(o => o.UserID == userId)
-                    .Include(o => o.Resturant)
+                    .Include(o => o.Restaurant)
                     .Include(o => o.OrderItems)
                     .ThenInclude(oi => oi.Meal)
                     .OrderByDescending(o => o.OrderDate);
@@ -280,7 +280,7 @@ namespace DeliveryManagementSystem.API.Controllers
         {
             try
             {
-                var restaurantOrders = _orderRepository.FindByCondition(o => o.ResturantID == restaurantId)
+                var restaurantOrders = _orderRepository.FindByCondition(o => o.RestaurantID == restaurantId)
                     .Include(o => o.User)
                     .Include(o => o.OrderItems)
                     .ThenInclude(oi => oi.Meal)
@@ -307,7 +307,7 @@ namespace DeliveryManagementSystem.API.Controllers
             {
                 var orders = _orderRepository.FindByCondition(o => o.Status == status)
                     .Include(o => o.User)
-                    .Include(o => o.Resturant)
+                    .Include(o => o.Restaurant)
                     .Include(o => o.OrderItems)
                     .ThenInclude(oi => oi.Meal)
                     .OrderByDescending(o => o.OrderDate);
@@ -333,7 +333,7 @@ namespace DeliveryManagementSystem.API.Controllers
             {
                 var order = _orderRepository.GetAll()
                     .Include(o => o.User)
-                    .Include(o => o.Resturant)
+                    .Include(o => o.Restaurant)
                     .Include(o => o.OrderItems)
                     .ThenInclude(oi => oi.Meal)
                     .FirstOrDefault(o => o.ID == id);
@@ -436,7 +436,7 @@ namespace DeliveryManagementSystem.API.Controllers
 
                 if (restaurantId.HasValue)
                 {
-                    query = query.Where(o => o.ResturantID == restaurantId.Value);
+                    query = query.Where(o => o.RestaurantID == restaurantId.Value);
                 }
 
                 if (status.HasValue)

@@ -10,18 +10,12 @@ using SendGrid;
 
 namespace DeliveryManagementSystem.BLL.Services
 {
-    public class EmailServices
+    public class EmailServices(IConfiguration configuration)
     {
-        private readonly string apiKey;
-        private readonly string fromEmail;
-        private readonly string senderName;
+        private readonly string apiKey = configuration["SendGrid:ApiKey"]!;
+        private readonly string fromEmail = configuration["SendGrid:FromEmail"]!;
+        private readonly string senderName = configuration["SendGrid:SenderName"]!;
 
-        public EmailServices(IConfiguration configuration)
-        {
-            apiKey = configuration["SendGrid:ApiKey"]!;
-            fromEmail = configuration["SendGrid:FromEmail"]!;
-            senderName = configuration["SendGrid:SenderName"]!;
-        }
         // ""
         public async Task SendEmail
             (string subject, string toEmail, string userName, string message)

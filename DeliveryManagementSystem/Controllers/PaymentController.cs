@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using DeliveryManagementSystem.Core.DTOs;
 using DeliveryManagementSystem.Core.Entities;
 using DeliveryManagementSystem.Core.Interfaces;
@@ -19,19 +19,19 @@ namespace DeliveryManagementSystem.API.Controllers
         private readonly IGenericRepository<Order> _orderRepository;
         private readonly IMapper _mapper;
         private readonly IGenericRepository<User> _userRepository;
-        private readonly IGenericRepository<Restaurant> _resturantRepository;
+        private readonly IGenericRepository<Restaurant> _restaurantRepository;
         //  private readonly IPayment _paymentGatewayService;
 
         public PaymentController(IGenericRepository<Payment> paymentRepository,
             IMapper mapper, IGenericRepository<Order> orderRepository,
             IGenericRepository<User> userRepository,
-            IGenericRepository<Restaurant> resturantRepository)
+            IGenericRepository<Restaurant> restaurantRepository)
         {
             _paymentRepository = paymentRepository;
             _mapper = mapper;
             _orderRepository = orderRepository;
             _userRepository = userRepository;
-            _resturantRepository = resturantRepository;
+            _restaurantRepository = restaurantRepository;
         }
         // 1) Payment Processing
         #region 1) Payment Processing
@@ -389,14 +389,14 @@ namespace DeliveryManagementSystem.API.Controllers
         {
             try
             {
-                var ResturasntExists = await _resturantRepository
+                var ResturasntExists = await _restaurantRepository
                     .FindByCondition(b => b.ID == resturasntId)
                     .AnyAsync();
                 if (!ResturasntExists)
                     return NotFound($"No restaurant found with ID {resturasntId}");
 
                 var payments = await _paymentRepository
-                    .FindByCondition(p => p.Order.ResturantID == resturasntId)
+                    .FindByCondition(p => p.Order.RestaurantID == resturasntId)
                     .Include(p => p.Order)
                     .ToListAsync();
 

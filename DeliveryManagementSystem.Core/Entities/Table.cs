@@ -9,11 +9,12 @@ namespace DeliveryManagementSystem.Core.Entities
     public class Table
     {
         public int ID { get; set; }
-        public int ResturantID { get; set; }
+        public int RestaurantID { get; set; }
+        public string TableNumber { get;set; }
         public int Capacity { get; set; }
         public bool IsAvailable { get; set; }
         // Navigation property for relationships
-        public virtual Restaurant Resturant { get; set; }
+        public virtual Restaurant Restaurant { get; set; }
         public virtual ICollection<Reservation> Reservations { get; set; }
         public Table()
         {

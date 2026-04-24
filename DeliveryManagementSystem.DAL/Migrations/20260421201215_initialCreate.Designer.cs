@@ -12,15 +12,15 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DeliveryManagementSystem.DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250729203702_Edit Resturasnt")]
-    partial class EditResturasnt
+    [Migration("20260421201215_initialCreate")]
+    partial class initialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.0")
+                .HasAnnotation("ProductVersion", "8.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -70,9 +70,14 @@ namespace DeliveryManagementSystem.DAL.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
+                    b.Property<int>("RestaurantID")
+                        .HasColumnType("int");
+
                     b.HasKey("ID");
 
                     b.HasIndex("MealID");
+
+                    b.HasIndex("RestaurantID");
 
                     b.ToTable("Inventories");
                 });
@@ -99,7 +104,10 @@ namespace DeliveryManagementSystem.DAL.Migrations
                         .HasMaxLength(100000)
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("ResturantID")
+                    b.Property<int>("RestaurantID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RestaurantMenuCategoryID")
                         .HasColumnType("int");
 
                     b.Property<string>("URLPhoto")
@@ -108,7 +116,9 @@ namespace DeliveryManagementSystem.DAL.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("ResturantID");
+                    b.HasIndex("RestaurantID");
+
+                    b.HasIndex("RestaurantMenuCategoryID");
 
                     b.ToTable("Meals");
                 });
@@ -148,7 +158,7 @@ namespace DeliveryManagementSystem.DAL.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int>("ResturantID")
+                    b.Property<int>("RestaurantID")
                         .HasColumnType("int");
 
                     b.Property<int>("Status")
@@ -162,7 +172,7 @@ namespace DeliveryManagementSystem.DAL.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("ResturantID");
+                    b.HasIndex("RestaurantID");
 
                     b.HasIndex("UserID");
 
@@ -296,6 +306,9 @@ namespace DeliveryManagementSystem.DAL.Migrations
                     b.Property<DateTime>("ReservationDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("RestaurantID")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
@@ -310,6 +323,8 @@ namespace DeliveryManagementSystem.DAL.Migrations
 
                     b.HasKey("ID");
 
+                    b.HasIndex("RestaurantID");
+
                     b.HasIndex("TableID");
 
                     b.HasIndex("UserID");
@@ -317,33 +332,7 @@ namespace DeliveryManagementSystem.DAL.Migrations
                     b.ToTable("Reservations");
                 });
 
-            modelBuilder.Entity("DeliveryManagementSystem.Core.Entities.RestaurantMenuCategory", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ResturantID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("URLPhoto")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("ResturantID");
-
-                    b.ToTable("RestaurantMenuCategories");
-                });
-
-            modelBuilder.Entity("DeliveryManagementSystem.Core.Entities.Resturant", b =>
+            modelBuilder.Entity("DeliveryManagementSystem.Core.Entities.Restaurant", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -362,15 +351,33 @@ namespace DeliveryManagementSystem.DAL.Migrations
                     b.Property<int>("CategoryID")
                         .HasColumnType("int");
 
+                    b.Property<TimeSpan>("ClosingTime")
+                        .HasColumnType("time");
+
+                    b.Property<decimal>("DeliveryFee")
+                        .HasColumnType("decimal(8, 2)");
+
+                    b.Property<int>("MinimumOrderAmount")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<TimeSpan>("OpeningTime")
+                        .HasColumnType("time");
+
+                    b.Property<int>("OwnerID")
+                        .HasColumnType("int");
+
                     b.Property<string>("Phone")
                         .IsRequired()
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
+
+                    b.Property<int>("PreparationTime")
+                        .HasColumnType("int");
 
                     b.Property<string>("URLPhoto")
                         .HasMaxLength(200)
@@ -380,7 +387,33 @@ namespace DeliveryManagementSystem.DAL.Migrations
 
                     b.HasIndex("CategoryID");
 
-                    b.ToTable("Resturants");
+                    b.ToTable("Restaurants");
+                });
+
+            modelBuilder.Entity("DeliveryManagementSystem.Core.Entities.RestaurantMenuCategory", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RestaurantID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("URLPhoto")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("RestaurantID");
+
+                    b.ToTable("RestaurantMenuCategories");
                 });
 
             modelBuilder.Entity("DeliveryManagementSystem.Core.Entities.Review", b =>
@@ -402,7 +435,7 @@ namespace DeliveryManagementSystem.DAL.Migrations
                     b.Property<int>("Rating")
                         .HasColumnType("int");
 
-                    b.Property<int>("ResturantID")
+                    b.Property<int>("RestaurantID")
                         .HasColumnType("int");
 
                     b.Property<int>("UserID")
@@ -410,7 +443,7 @@ namespace DeliveryManagementSystem.DAL.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("ResturantID");
+                    b.HasIndex("RestaurantID");
 
                     b.HasIndex("UserID");
 
@@ -462,12 +495,16 @@ namespace DeliveryManagementSystem.DAL.Migrations
                     b.Property<bool>("IsAvailable")
                         .HasColumnType("bit");
 
-                    b.Property<int>("ResturantID")
+                    b.Property<int>("RestaurantID")
                         .HasColumnType("int");
+
+                    b.Property<string>("TableNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
 
-                    b.HasIndex("ResturantID");
+                    b.HasIndex("RestaurantID");
 
                     b.ToTable("Tables");
                 });
@@ -672,26 +709,42 @@ namespace DeliveryManagementSystem.DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("DeliveryManagementSystem.Core.Entities.Restaurant", "Restaurant")
+                        .WithMany("Inventories")
+                        .HasForeignKey("RestaurantID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.Navigation("Meal");
+
+                    b.Navigation("Restaurant");
                 });
 
             modelBuilder.Entity("DeliveryManagementSystem.Core.Entities.Meal", b =>
                 {
-                    b.HasOne("DeliveryManagementSystem.Core.Entities.Resturant", "Resturant")
+                    b.HasOne("DeliveryManagementSystem.Core.Entities.Restaurant", "Restaurant")
                         .WithMany("Meals")
-                        .HasForeignKey("ResturantID")
+                        .HasForeignKey("RestaurantID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Resturant");
+                    b.HasOne("DeliveryManagementSystem.Core.Entities.RestaurantMenuCategory", "RestaurantMenuCategory")
+                        .WithMany("Meals")
+                        .HasForeignKey("RestaurantMenuCategoryID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Restaurant");
+
+                    b.Navigation("RestaurantMenuCategory");
                 });
 
             modelBuilder.Entity("DeliveryManagementSystem.Core.Entities.Order", b =>
                 {
-                    b.HasOne("DeliveryManagementSystem.Core.Entities.Resturant", "Resturant")
+                    b.HasOne("DeliveryManagementSystem.Core.Entities.Restaurant", "Restaurant")
                         .WithMany("Orders")
-                        .HasForeignKey("ResturantID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("RestaurantID")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("DeliveryManagementSystem.Core.Entities.User", "User")
@@ -700,7 +753,7 @@ namespace DeliveryManagementSystem.DAL.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("Resturant");
+                    b.Navigation("Restaurant");
 
                     b.Navigation("User");
                 });
@@ -745,10 +798,16 @@ namespace DeliveryManagementSystem.DAL.Migrations
 
             modelBuilder.Entity("DeliveryManagementSystem.Core.Entities.Reservation", b =>
                 {
+                    b.HasOne("DeliveryManagementSystem.Core.Entities.Restaurant", "Restaurant")
+                        .WithMany()
+                        .HasForeignKey("RestaurantID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("DeliveryManagementSystem.Core.Entities.Table", "Table")
                         .WithMany("Reservations")
                         .HasForeignKey("TableID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("DeliveryManagementSystem.Core.Entities.User", "User")
@@ -757,26 +816,17 @@ namespace DeliveryManagementSystem.DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Restaurant");
+
                     b.Navigation("Table");
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("DeliveryManagementSystem.Core.Entities.RestaurantMenuCategory", b =>
-                {
-                    b.HasOne("DeliveryManagementSystem.Core.Entities.Resturant", "Resturant")
-                        .WithMany("ResturantCategories")
-                        .HasForeignKey("ResturantID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Resturant");
-                });
-
-            modelBuilder.Entity("DeliveryManagementSystem.Core.Entities.Resturant", b =>
+            modelBuilder.Entity("DeliveryManagementSystem.Core.Entities.Restaurant", b =>
                 {
                     b.HasOne("DeliveryManagementSystem.Core.Entities.Category", "Category")
-                        .WithMany("Resturants")
+                        .WithMany("Restaurants")
                         .HasForeignKey("CategoryID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -784,11 +834,22 @@ namespace DeliveryManagementSystem.DAL.Migrations
                     b.Navigation("Category");
                 });
 
+            modelBuilder.Entity("DeliveryManagementSystem.Core.Entities.RestaurantMenuCategory", b =>
+                {
+                    b.HasOne("DeliveryManagementSystem.Core.Entities.Restaurant", "Restaurant")
+                        .WithMany("RestaurantCategories")
+                        .HasForeignKey("RestaurantID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Restaurant");
+                });
+
             modelBuilder.Entity("DeliveryManagementSystem.Core.Entities.Review", b =>
                 {
-                    b.HasOne("DeliveryManagementSystem.Core.Entities.Resturant", "Resturant")
+                    b.HasOne("DeliveryManagementSystem.Core.Entities.Restaurant", "Restaurant")
                         .WithMany("Reviews")
-                        .HasForeignKey("ResturantID")
+                        .HasForeignKey("RestaurantID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -798,20 +859,20 @@ namespace DeliveryManagementSystem.DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Resturant");
+                    b.Navigation("Restaurant");
 
                     b.Navigation("User");
                 });
 
             modelBuilder.Entity("DeliveryManagementSystem.Core.Entities.Table", b =>
                 {
-                    b.HasOne("DeliveryManagementSystem.Core.Entities.Resturant", "Resturant")
+                    b.HasOne("DeliveryManagementSystem.Core.Entities.Restaurant", "Restaurant")
                         .WithMany("Tables")
-                        .HasForeignKey("ResturantID")
+                        .HasForeignKey("RestaurantID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Resturant");
+                    b.Navigation("Restaurant");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -867,7 +928,7 @@ namespace DeliveryManagementSystem.DAL.Migrations
 
             modelBuilder.Entity("DeliveryManagementSystem.Core.Entities.Category", b =>
                 {
-                    b.Navigation("Resturants");
+                    b.Navigation("Restaurants");
                 });
 
             modelBuilder.Entity("DeliveryManagementSystem.Core.Entities.Meal", b =>
@@ -885,17 +946,24 @@ namespace DeliveryManagementSystem.DAL.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("DeliveryManagementSystem.Core.Entities.Resturant", b =>
+            modelBuilder.Entity("DeliveryManagementSystem.Core.Entities.Restaurant", b =>
                 {
+                    b.Navigation("Inventories");
+
                     b.Navigation("Meals");
 
                     b.Navigation("Orders");
 
-                    b.Navigation("ResturantCategories");
+                    b.Navigation("RestaurantCategories");
 
                     b.Navigation("Reviews");
 
                     b.Navigation("Tables");
+                });
+
+            modelBuilder.Entity("DeliveryManagementSystem.Core.Entities.RestaurantMenuCategory", b =>
+                {
+                    b.Navigation("Meals");
                 });
 
             modelBuilder.Entity("DeliveryManagementSystem.Core.Entities.Table", b =>

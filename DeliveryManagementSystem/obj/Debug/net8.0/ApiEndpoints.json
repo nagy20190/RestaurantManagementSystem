@@ -189,6 +189,117 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "DeliveryManagementSystem.API.Controllers.InventoryController",
+    "Method": "GetAll",
+    "RelativePath": "api/Inventory",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "DeliveryManagementSystem.API.Controllers.InventoryController",
+    "Method": "Create",
+    "RelativePath": "api/Inventory",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "createDto",
+        "Type": "DeliveryManagementSystem.Core.DTOs.InventoryCreateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "DeliveryManagementSystem.API.Controllers.InventoryController",
+    "Method": "GetById",
+    "RelativePath": "api/Inventory/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "DeliveryManagementSystem.API.Controllers.InventoryController",
+    "Method": "Update",
+    "RelativePath": "api/Inventory/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "updateDto",
+        "Type": "DeliveryManagementSystem.Core.DTOs.InventoryUpdateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "DeliveryManagementSystem.API.Controllers.InventoryController",
+    "Method": "Delete",
+    "RelativePath": "api/Inventory/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "DeliveryManagementSystem.API.Controllers.InventoryController",
+    "Method": "GetByMealId",
+    "RelativePath": "api/Inventory/meal/{mealId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "mealId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "DeliveryManagementSystem.API.Controllers.InventoryController",
+    "Method": "GetInventoriesByRestaurantId",
+    "RelativePath": "api/Inventory/restaurant/{restaurantId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "restaurantId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "DeliveryManagementSystem.API.Controllers.MealController",
     "Method": "GetMeals",
     "RelativePath": "api/Meal",
@@ -999,6 +1110,80 @@
   },
   {
     "ContainingType": "DeliveryManagementSystem.API.Controllers.ReservationController",
+    "Method": "ReservationByID",
+    "RelativePath": "api/Reservation/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "DeliveryManagementSystem.API.Controllers.ReservationController",
+    "Method": "UpdateReservation",
+    "RelativePath": "api/Reservation/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "reservationDto",
+        "Type": "DeliveryManagementSystem.Core.DTOs.UpdateReservationDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "DeliveryManagementSystem.API.Controllers.ReservationController",
+    "Method": "DeleteReservation",
+    "RelativePath": "api/Reservation/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "DeliveryManagementSystem.API.Controllers.ReservationController",
+    "Method": "CheckAvailability",
+    "RelativePath": "api/Reservation/availability",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "restaurantId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "date",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "DeliveryManagementSystem.API.Controllers.ReservationController",
     "Method": "CreateReservation",
     "RelativePath": "api/Reservation/create",
     "HttpMethod": "POST",
@@ -1008,6 +1193,22 @@
       {
         "Name": "reservationDto",
         "Type": "DeliveryManagementSystem.Core.DTOs.ReservationDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "DeliveryManagementSystem.API.Controllers.ReservationController",
+    "Method": "GetReservationByUser",
+    "RelativePath": "api/Reservation/user/{userId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
         "IsRequired": true
       }
     ],
@@ -1305,13 +1506,119 @@
     ]
   },
   {
-    "ContainingType": "DeliveryManagementSystem.API.Controllers.TestController",
-    "Method": "SendTestEmail",
-    "RelativePath": "api/Test/test-email",
+    "ContainingType": "DeliveryManagementSystem.API.Controllers.TableController",
+    "Method": "GetAllTables",
+    "RelativePath": "api/Table",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "DeliveryManagementSystem.API.Controllers.TableController",
+    "Method": "CreateTable",
+    "RelativePath": "api/Table",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "createDto",
+        "Type": "DeliveryManagementSystem.Core.DTOs.CreateTableDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "DeliveryManagementSystem.API.Controllers.TableController",
+    "Method": "GetTableById",
+    "RelativePath": "api/Table/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "DeliveryManagementSystem.API.Controllers.TableController",
+    "Method": "UpdateTable",
+    "RelativePath": "api/Table/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "updateDto",
+        "Type": "DeliveryManagementSystem.Core.DTOs.UpdateTableDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "DeliveryManagementSystem.API.Controllers.TableController",
+    "Method": "DeleteTable",
+    "RelativePath": "api/Table/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "DeliveryManagementSystem.API.Controllers.TableController",
+    "Method": "GetTablesByRestaurant",
+    "RelativePath": "api/Table/restaurant/{restaurantId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "restaurantId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "DeliveryManagementSystem.API.Controllers.TableController",
+    "Method": "SearchTables",
+    "RelativePath": "api/Table/search",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "capacity",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "restaurantName",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
     "ReturnTypes": []
   },
   {

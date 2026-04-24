@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace DeliveryManagementSystem.Core.DTOs
 {
@@ -23,9 +24,9 @@ namespace DeliveryManagementSystem.Core.DTOs
     {
         public int RestaurantID { get; set; }
         public string TableNumber { get; set; }
+        [Range(0, 30, ErrorMessage = "Capacity must be between 0 and 30.")]
         public int Capacity { get; set; }
-        public string Location { get; set; }
-        public string Description { get; set; }
+        public bool IsAvailable { get; set; }
     }
 
     // DTO for updating table
@@ -33,8 +34,6 @@ namespace DeliveryManagementSystem.Core.DTOs
     {
         public string TableNumber { get; set; }
         public int Capacity { get; set; }
-        public string Location { get; set; }
-        public string Description { get; set; }
         public bool IsAvailable { get; set; }
     }
 

@@ -36,7 +36,7 @@ namespace DeliveryManagementSystem.API.Controllers
             try
             {
                 var meals = _mealRepository.GetPaged(page, pageSize)
-                    .Include(m => m.Resturant)
+                    .Include(m => m.Restaurant)
                     .Include(m => m.RestaurantMenuCategory);
 
                 var mealDTOs = _mapper.Map<IEnumerable<MealDTO>>(meals);
@@ -137,7 +137,7 @@ namespace DeliveryManagementSystem.API.Controllers
 
                 if (searchDTO.RestaurantID.HasValue)
                 {
-                    query = query.Where(m => m.ResturantID == searchDTO.RestaurantID.Value);
+                    query = query.Where(m => m.RestaurantID == searchDTO.RestaurantID.Value);
                 }
 
                 if (searchDTO.MenuCategoryID.HasValue)
@@ -192,8 +192,8 @@ namespace DeliveryManagementSystem.API.Controllers
         {
             try
             {
-                var meals = _mealRepository.FindByCondition(m => m.ResturantID == restaurantId)
-                    .Include(m => m.Resturant)
+                var meals = _mealRepository.FindByCondition(m => m.RestaurantID == restaurantId)
+                    .Include(m => m.Restaurant)
                     .Include(m => m.RestaurantMenuCategory);
 
                 var mealDTOs = _mapper.Map<IEnumerable<MealDTO>>(meals);
@@ -211,7 +211,7 @@ namespace DeliveryManagementSystem.API.Controllers
             try
             {
                 var meals = _mealRepository.FindByCondition(m => m.RestaurantMenuCategoryID == categoryId)
-                    .Include(m => m.Resturant)
+                    .Include(m => m.Restaurant)
                     .Include(m => m.RestaurantMenuCategory);
 
                 var mealDTOs = _mapper.Map<IEnumerable<MealDTO>>(meals);
@@ -237,7 +237,7 @@ namespace DeliveryManagementSystem.API.Controllers
                     })
                     .OrderByDescending(x => x.OrderCount)
                     .Take(count)
-                    .Join(_mealRepository.GetAll().Include(m => m.Resturant),
+                    .Join(_mealRepository.GetAll().Include(m => m.Restaurant),
                           popular => popular.MealID,
                           meal => meal.ID,
                           (popular, meal) => new { popular, meal })
@@ -247,8 +247,8 @@ namespace DeliveryManagementSystem.API.Controllers
                         Description = x.meal.Description,
                         Price = x.meal.Price,
                         URLPhoto = x.meal.URLPhoto,
-                        RestaurantID = x.meal.ResturantID,
-                        RestaurantName = x.meal.Resturant.Name,
+                        RestaurantID = x.meal.RestaurantID,
+                        RestaurantName = x.meal.Restaurant.Name,
                         IsAvailable = true, // You might want to add this field to your entity
                         PreparationTime = 30, // Default value, you might want to add this field
                         OrderCount = x.popular.OrderCount,
@@ -270,7 +270,7 @@ namespace DeliveryManagementSystem.API.Controllers
             try
             {
                 var meals = _mealRepository.GetAll()
-                    .Include(m => m.Resturant)
+                    .Include(m => m.Restaurant)
                     .Include(m => m.RestaurantMenuCategory);
 
                 var mealDTOs = _mapper.Map<IEnumerable<MealDTO>>(meals);

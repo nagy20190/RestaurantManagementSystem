@@ -43,8 +43,8 @@ namespace DeliveryManagementSystem.BLL.Healpers
             CreateMap<CreateRestaurantDTO, Restaurant>();
 
             CreateMap<Meal, MealDTO>()
-            .ForMember(dest => dest.RestaurantID, opt => opt.MapFrom(src => src.Resturant.ID))
-            .ForMember(dest => dest.RestaurantName, opt => opt.MapFrom(src => src.Resturant.Name));
+            .ForMember(dest => dest.RestaurantID, opt => opt.MapFrom(src => src.Restaurant.ID))
+            .ForMember(dest => dest.RestaurantName, opt => opt.MapFrom(src => src.Restaurant.Name));
 
             CreateMap<Meal, CreateMealDTO>().ReverseMap();
             CreateMap<Meal, UpdateMealDTO>().ReverseMap();
@@ -55,11 +55,21 @@ namespace DeliveryManagementSystem.BLL.Healpers
             CreateMap<Review, CreateReviewDTO>().ReverseMap();
 
             // Reservation Mappings
-            CreateMap<Reservation, ReservationDTO>().ReverseMap();
-            CreateMap<Reservation, ReservationDTO>()
-          .ForMember(dest => dest.TableNumber, opt => opt.MapFrom(src => src.Table.ID))
-            .ForMember(dest => dest.UserID, opt => opt.MapFrom(src => src.User.Id))
-            .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User.UserName));
+            CreateMap<Reservation, ReservationDTO>().
+                ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
+                .ForMember(dest => dest.TableNumber, opt => opt.MapFrom(src => src.Table.TableNumber))
+                .ReverseMap();
+
+            CreateMap<Reservation, CreateReservationDTO>().ReverseMap();
+
+            // Table Mappings
+            CreateMap<Table, TableDTO>().ReverseMap();
+            CreateMap<CreateTableDTO, Table>();
+
+
+            // invenory Mappings
+            CreateMap<Inventory, InventoryDto>().ReverseMap();
+
 
         }
     }

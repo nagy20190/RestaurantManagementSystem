@@ -316,6 +316,177 @@
         }
       }
     },
+    "/api/Inventory": {
+      "get": {
+        "tags": [
+          "Inventory"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Inventory"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InventoryCreateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InventoryCreateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/InventoryCreateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Inventory/{id}": {
+      "get": {
+        "tags": [
+          "Inventory"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Inventory"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InventoryUpdateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InventoryUpdateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/InventoryUpdateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Inventory"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Inventory/meal/{mealId}": {
+      "get": {
+        "tags": [
+          "Inventory"
+        ],
+        "parameters": [
+          {
+            "name": "mealId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Inventory/restaurant/{restaurantId}": {
+      "get": {
+        "tags": [
+          "Inventory"
+        ],
+        "parameters": [
+          {
+            "name": "restaurantId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Meal": {
       "get": {
         "tags": [
@@ -1710,6 +1881,143 @@
         }
       }
     },
+    "/api/Reservation/{id}": {
+      "get": {
+        "tags": [
+          "Reservation"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Reservation"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateReservationDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateReservationDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateReservationDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Reservation"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Reservation/user/{userId}": {
+      "get": {
+        "tags": [
+          "Reservation"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Reservation/availability": {
+      "get": {
+        "tags": [
+          "Reservation"
+        ],
+        "parameters": [
+          {
+            "name": "restaurantId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "date",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Restaurant/search": {
       "get": {
         "tags": [
@@ -2207,10 +2515,175 @@
         }
       }
     },
-    "/api/Test/test-email": {
+    "/api/Table": {
       "get": {
         "tags": [
-          "Test"
+          "Table"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Table"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTableDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTableDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTableDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Table/{id}": {
+      "get": {
+        "tags": [
+          "Table"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Table"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateTableDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateTableDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateTableDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Table"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Table/restaurant/{restaurantId}": {
+      "get": {
+        "tags": [
+          "Table"
+        ],
+        "parameters": [
+          {
+            "name": "restaurantId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Table/search": {
+      "get": {
+        "tags": [
+          "Table"
+        ],
+        "parameters": [
+          {
+            "name": "capacity",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "restaurantName",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
         ],
         "responses": {
           "200": {
@@ -2584,7 +3057,7 @@
             "type": "string",
             "nullable": true
           },
-          "resturants": {
+          "restaurants": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/Restaurant"
@@ -2837,6 +3310,29 @@
         },
         "additionalProperties": false
       },
+      "CreateTableDTO": {
+        "type": "object",
+        "properties": {
+          "restaurantID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tableNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "capacity": {
+            "maximum": 30,
+            "minimum": 0,
+            "type": "integer",
+            "format": "int32"
+          },
+          "isAvailable": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
       "Inventory": {
         "type": "object",
         "properties": {
@@ -2845,6 +3341,10 @@
             "format": "int32"
           },
           "mealID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "restaurantID": {
             "type": "integer",
             "format": "int32"
           },
@@ -2858,6 +3358,45 @@
           },
           "meal": {
             "$ref": "#/components/schemas/Meal"
+          },
+          "restaurant": {
+            "$ref": "#/components/schemas/Restaurant"
+          }
+        },
+        "additionalProperties": false
+      },
+      "InventoryCreateDto": {
+        "type": "object",
+        "properties": {
+          "mealID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "restaurantID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "InventoryUpdateDto": {
+        "type": "object",
+        "properties": {
+          "mealID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "restaurantID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -2904,7 +3443,7 @@
             "type": "string",
             "nullable": true
           },
-          "resturantID": {
+          "restaurantID": {
             "type": "integer",
             "format": "int32"
           },
@@ -2912,7 +3451,7 @@
             "type": "integer",
             "format": "int32"
           },
-          "resturant": {
+          "restaurant": {
             "$ref": "#/components/schemas/Restaurant"
           },
           "restaurantMenuCategory": {
@@ -3070,7 +3609,7 @@
             "type": "integer",
             "format": "int32"
           },
-          "resturantID": {
+          "restaurantID": {
             "type": "integer",
             "format": "int32"
           },
@@ -3121,7 +3660,7 @@
           "payment": {
             "$ref": "#/components/schemas/Payment"
           },
-          "resturant": {
+          "restaurant": {
             "$ref": "#/components/schemas/Restaurant"
           },
           "orderItems": {
@@ -3858,6 +4397,10 @@
             "type": "integer",
             "format": "int32"
           },
+          "restaurantID": {
+            "type": "integer",
+            "format": "int32"
+          },
           "numberOfPeople": {
             "type": "integer",
             "format": "int32"
@@ -3888,6 +4431,9 @@
           },
           "user": {
             "$ref": "#/components/schemas/User"
+          },
+          "restaurant": {
+            "$ref": "#/components/schemas/Restaurant"
           }
         },
         "additionalProperties": false
@@ -3910,10 +4456,6 @@
           "userID": {
             "type": "integer",
             "format": "int32"
-          },
-          "userName": {
-            "type": "string",
-            "nullable": true
           },
           "numberOfPeople": {
             "type": "integer",
@@ -3983,6 +4525,10 @@
             "type": "integer",
             "format": "int32"
           },
+          "ownerID": {
+            "type": "integer",
+            "format": "int32"
+          },
           "address": {
             "type": "string",
             "nullable": true
@@ -4022,7 +4568,7 @@
           "category": {
             "$ref": "#/components/schemas/Category"
           },
-          "resturantCategories": {
+          "restaurantCategories": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/RestaurantMenuCategory"
@@ -4056,6 +4602,13 @@
               "$ref": "#/components/schemas/Order"
             },
             "nullable": true
+          },
+          "inventories": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Inventory"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -4071,7 +4624,7 @@
             "type": "string",
             "nullable": true
           },
-          "resturantID": {
+          "restaurantID": {
             "type": "integer",
             "format": "int32"
           },
@@ -4086,7 +4639,7 @@
             },
             "nullable": true
           },
-          "resturant": {
+          "restaurant": {
             "$ref": "#/components/schemas/Restaurant"
           }
         },
@@ -4103,7 +4656,7 @@
             "type": "integer",
             "format": "int32"
           },
-          "resturantID": {
+          "restaurantID": {
             "type": "integer",
             "format": "int32"
           },
@@ -4122,7 +4675,7 @@
           "user": {
             "$ref": "#/components/schemas/User"
           },
-          "resturant": {
+          "restaurant": {
             "$ref": "#/components/schemas/Restaurant"
           }
         },
@@ -4135,9 +4688,13 @@
             "type": "integer",
             "format": "int32"
           },
-          "resturantID": {
+          "restaurantID": {
             "type": "integer",
             "format": "int32"
+          },
+          "tableNumber": {
+            "type": "string",
+            "nullable": true
           },
           "capacity": {
             "type": "integer",
@@ -4146,7 +4703,7 @@
           "isAvailable": {
             "type": "boolean"
           },
-          "resturant": {
+          "restaurant": {
             "$ref": "#/components/schemas/Restaurant"
           },
           "reservations": {
@@ -4264,6 +4821,28 @@
         },
         "additionalProperties": false
       },
+      "UpdateReservationDTO": {
+        "type": "object",
+        "properties": {
+          "reservationDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "numberOfPeople": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "specialRequests": {
+            "type": "string",
+            "nullable": true
+          },
+          "duration": {
+            "type": "string",
+            "format": "date-span"
+          }
+        },
+        "additionalProperties": false
+      },
       "UpdateRestaurantDTO": {
         "required": [
           "address",
@@ -4330,6 +4909,23 @@
           "closingTime": {
             "type": "string",
             "format": "date-span"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateTableDTO": {
+        "type": "object",
+        "properties": {
+          "tableNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "capacity": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "isAvailable": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false

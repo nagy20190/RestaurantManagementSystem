@@ -6,14 +6,15 @@ using Microsoft.Extensions.Logging;
 
 namespace DeliveryManagementSystem.Middleware.YourApp
 {
-    public class ExceptionHandlerMiddleware
+    public class ExceptionHandlerMiddleware(RequestDelegate next, ILogger<ExceptionHandlerMiddleware> logger)
     {
-        private readonly RequestDelegate _next;
+        private readonly RequestDelegate _next = next ?? throw new ArgumentNullException(nameof(next));
+        private readonly ILogger<ExceptionHandlerMiddleware> _logger = logger;
 
-        public ExceptionHandlerMiddleware(RequestDelegate next, ILogger<ExceptionHandlerMiddleware> logger)
+        private static readonly JsonSerializerOptions _jsonOptions = new()
         {
-            _next = next ?? throw new ArgumentNullException(nameof(next));
-        }
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+        };
 
         public async Task InvokeAsync(HttpContext context)
         {
@@ -23,6 +24,9 @@ namespace DeliveryManagementSystem.Middleware.YourApp
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Unhandled exception on {Method} {Path}", 
+                    context.Request.Method, context.Request.Path);
+
                 await HandleExceptionAsync(context, ex);
             }
         }
@@ -31,38 +35,68 @@ namespace DeliveryManagementSystem.Middleware.YourApp
         {
             context.Response.ContentType = "application/json";
 
-            var responseObj = new
-            {
-                Message = "An error occurred while processing the request.",
-            };
+            int statusCode;
+            string message;
 
             switch (exception)
             {
                 case KeyNotFoundException knf:
-                    context.Response.StatusCode = StatusCodes.Status404NotFound;
-                    responseObj = new { Message = knf.Message ?? "Resource not found." };
+                    statusCode = StatusCodes.Status404NotFound;
+                    message = knf.Message ?? "Resource not found.";
+                    break;
+
+                case UnauthorizedAccessException:
+                    statusCode = StatusCodes.Status401Unauthorized;
+                    message = "You are not authorized to perform this action.";
+                    break;
+
+                case InvalidOperationException ioe:
+                    statusCode = StatusCodes.Status400BadRequest;
+                    message = ioe.Message ?? "Invalid operation.";
                     break;
 
                 case ArgumentNullException ane:
-                    context.Response.StatusCode = StatusCodes.Status400BadRequest;
-                    responseObj = new { Message = ane.Message };
+                    statusCode = StatusCodes.Status400BadRequest;
+                    message = ane.Message ?? "A required argument was null.";
                     break;
 
-                case NullReferenceException nre:
-                    // NullReference indicates a server-side bug — return 500 but do not leak internals
-                    context.Response.StatusCode = StatusCodes.Status500InternalServerError;
-                    responseObj = new { Message = "A server error occurred (null reference)." };
+                case ArgumentException ae:
+                    statusCode = StatusCodes.Status400BadRequest;
+                    message = ae.Message ?? "Invalid argument provided.";
+                    break;
+
+                case NullReferenceException:
+                    statusCode = StatusCodes.Status500InternalServerError;
+                    message = "A server error occurred. Please try again later.";
                     break;
 
                 default:
-                    context.Response.StatusCode = StatusCodes.Status500InternalServerError;
-                    responseObj = new { Message = "An unexpected server error occurred." };
+                    statusCode = StatusCodes.Status500InternalServerError;
+                    message = "An unexpected server error occurred. Please try again later.";
                     break;
             }
 
-            var json = JsonSerializer.Serialize(responseObj);
+            context.Response.StatusCode = statusCode;
+
+            var response = new ErrorResponse
+            {
+                StatusCode = statusCode,
+                Message = message,
+                Path = context.Request.Path,
+                Timestamp = DateTime.UtcNow
+            };
+
+            var json = JsonSerializer.Serialize(response, _jsonOptions);
             await context.Response.WriteAsync(json);
         }
+    }
+
+    public class ErrorResponse
+    {
+        public int StatusCode { get; set; }
+        public string Message { get; set; } = string.Empty;
+        public string Path { get; set; } = string.Empty;
+        public DateTime Timestamp { get; set; }
     }
 }
 

@@ -27,6 +27,14 @@ namespace DeliveryManagementSystem.Core.EntitiesConfigs
                 .HasForeignKey(i => i.MealID)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            // configure relationship with Restaurant 
+            builder.HasOne(i => i.Restaurant)
+                .WithMany(r => r.Inventories)  
+                .HasForeignKey(i => i.RestaurantID)
+                .OnDelete(DeleteBehavior.Restrict);
+
+
+
         }
     }
 }

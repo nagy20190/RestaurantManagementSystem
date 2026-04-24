@@ -4,7 +4,9 @@
 *.suo
 *.userosscache
 *.sln.docstates
-
+.cursor\plans
 # Build results
 bin/
 obj/
+
+.fake

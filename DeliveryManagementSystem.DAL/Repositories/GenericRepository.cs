@@ -1,4 +1,4 @@
-﻿using DeliveryManagementSystem.Core.Interfaces;
+using DeliveryManagementSystem.Core.Interfaces;
 using DeliveryManagementSystem.DAL.Contexts;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -40,7 +40,7 @@ namespace DeliveryManagementSystem.DAL.Repositories
         public async Task<T> GetByIdAsync(int id)
         {
             var entity = await _context.Set<T>().FindAsync(id);
-            return entity ?? throw new KeyNotFoundException("Key not found");
+            return entity ?? throw new KeyNotFoundException($"{typeof(T).Name} with id {id} was not found.");
         }
 
         public async Task UpdateAsync(T entity)

@@ -23,14 +23,14 @@ namespace DeliveryManagementSystem.Core.EntitiesConfigs
             builder.Property(t => t.IsAvailable)
                 .IsRequired();
 
-            builder.Property(t => t.ResturantID)
+            builder.Property(t => t.RestaurantID)
                 .IsRequired();
 
             // Configure relationships
-            builder.HasOne(t => t.Resturant)
+            builder.HasOne(t => t.Restaurant)
                 .WithMany(r => r.Tables)
-                .HasForeignKey(t => t.ResturantID)
-                .OnDelete(DeleteBehavior.Cascade); // Cascade delete if Resturant is deleted
+                .HasForeignKey(t => t.RestaurantID)
+                .OnDelete(DeleteBehavior.Cascade); // Cascade delete if Restaurant is deleted
 
         }
     }

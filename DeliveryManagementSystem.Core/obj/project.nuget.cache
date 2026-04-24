@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "kRKM7FR/dRY=",
+  "dgSpecHash": "IMUprB6vpII=",
   "success": true,
   "projectFilePath": "D:\\1 - DotNet\\DEPI & Courses\\10 - Projects\\5 - DeliveryManagmentSystem\\RestaurantManagementSystem\\DeliveryManagementSystem.Core\\DeliveryManagementSystem.Core.csproj",
   "expectedPackageFiles": [
@@ -24,15 +24,5 @@
     "C:\\Users\\MG\\.nuget\\packages\\microsoft.extensions.primitives\\8.0.0\\microsoft.extensions.primitives.8.0.0.nupkg.sha512",
     "C:\\Users\\MG\\.nuget\\packages\\system.componentmodel.annotations\\5.0.0\\system.componentmodel.annotations.5.0.0.nupkg.sha512"
   ],
-  "logs": [
-    {
-      "code": "NU1900",
-      "level": "Warning",
-      "message": "Error occurred while getting package vulnerability data: Unable to load the service index for source https://api.nuget.org/v3/index.json.",
-      "projectPath": "D:\\1 - DotNet\\DEPI & Courses\\10 - Projects\\5 - DeliveryManagmentSystem\\RestaurantManagementSystem\\DeliveryManagementSystem.Core\\DeliveryManagementSystem.Core.csproj",
-      "warningLevel": 1,
-      "filePath": "D:\\1 - DotNet\\DEPI & Courses\\10 - Projects\\5 - DeliveryManagmentSystem\\RestaurantManagementSystem\\DeliveryManagementSystem.Core\\DeliveryManagementSystem.Core.csproj",
-      "targetGraphs": []
-    }
-  ]
+  "logs": []
 }

@@ -65,7 +65,7 @@ namespace DeliveryManagementSystem.API.Controllers
             var totalCount = await query.CountAsync();
             var pagedRestaurants = await query
                 .Include(r => r.Meals)
-                .Include(r => r.ResturantCategories)
+                .Include(r => r.RestaurantCategories)
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
                 .ToListAsync();
@@ -136,7 +136,7 @@ namespace DeliveryManagementSystem.API.Controllers
                 var restaurant = await _restaurantRepository
                     .FindByCondition(r => r.ID == id)
                     .Include(r => r.Meals)
-                    .Include(r => r.ResturantCategories)
+                    .Include(r => r.RestaurantCategories)
                     .FirstOrDefaultAsync();
 
                 if (restaurant == null)
@@ -314,13 +314,13 @@ namespace DeliveryManagementSystem.API.Controllers
             {
                 var restaurant = await _restaurantRepository
                            .FindByCondition(r => r.ID == id)
-                           .Include(r => r.ResturantCategories)
+                           .Include(r => r.RestaurantCategories)
                            .Include(r => r.Meals)
                            .FirstOrDefaultAsync();
                 if (restaurant == null)
                     return NotFound($"Restaurant with ID {id} not found.");
 
-                var result = restaurant.ResturantCategories.Select
+                var result = restaurant.RestaurantCategories.Select
                     (rc => new RestaurantMenuCategoryDTO
                 {
                     Name = rc.Name,
@@ -355,7 +355,7 @@ namespace DeliveryManagementSystem.API.Controllers
 
                 var review = _mapper.Map<Review>(reviewDto);
                 review.UserID = userId;
-                review.ResturantID = id;
+                review.RestaurantID = id;
 
                 await _reviewRepository.AddAsync(review);
                 return Ok(reviewDto);

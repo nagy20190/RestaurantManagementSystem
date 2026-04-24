@@ -1,13 +1,7 @@
 ﻿using DeliveryManagementSystem.Core.Entities;
 using DeliveryManagementSystem.Core.EntitiesConfigs;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DeliveryManagementSystem.DAL.Contexts
 {
@@ -25,7 +19,7 @@ namespace DeliveryManagementSystem.DAL.Contexts
         public DbSet<Payment> Payments { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<RestaurantMenuCategory> RestaurantMenuCategories { get; set; }
-        public DbSet<Restaurant> Resturants { get; set; }
+        public DbSet<Restaurant> Restaurants { get; set; }
         public DbSet<Review> Reviews { get; set; }
         public DbSet<Table> Tables { get; set; }
         public DbSet<User> Users { get; set; }
@@ -43,7 +37,7 @@ namespace DeliveryManagementSystem.DAL.Contexts
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(OrderItemConfiguration).Assembly);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(PaymentConfiguration).Assembly);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ReservationConfiguration).Assembly);
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(ResturantConfiguration).Assembly);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(RestaurantConfiguration).Assembly);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ReviewConfiguration).Assembly);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(TableConfiguration).Assembly);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(UserConfiguration).Assembly);

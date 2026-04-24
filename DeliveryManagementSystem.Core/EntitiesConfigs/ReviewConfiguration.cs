@@ -32,10 +32,10 @@ namespace DeliveryManagementSystem.Core.EntitiesConfigs
                 .HasForeignKey(r => r.UserID)
                 .OnDelete(DeleteBehavior.Cascade); // Cascade delete if User is deleted
 
-            builder.HasOne(r => r.Resturant)
-                .WithMany(rest => rest.Reviews) // Assuming Resturant has a collection of Reviews
-                .HasForeignKey(r => r.ResturantID)
-                .OnDelete(DeleteBehavior.Cascade); // Cascade delete if Resturant is deleted
+            builder.HasOne(r => r.Restaurant)
+                .WithMany(rest => rest.Reviews) // Assuming Restaurant has a collection of Reviews
+                .HasForeignKey(r => r.RestaurantID)
+                .OnDelete(DeleteBehavior.Cascade); // Cascade delete if Restaurant is deleted
         }
     }
 }

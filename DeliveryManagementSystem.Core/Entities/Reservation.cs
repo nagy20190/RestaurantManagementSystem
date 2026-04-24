@@ -12,6 +12,7 @@ namespace DeliveryManagementSystem.Core.Entities
         public DateTime ReservationDate { get; set; }
         public int TableID { get; set; }
         public int UserID { get; set; }
+        public int RestaurantID { get; set; }
         public int NumberOfPeople { get; set; }
         public string QRCode { get; set; }
         public ReservationStatus Status { get; set; }
@@ -21,7 +22,7 @@ namespace DeliveryManagementSystem.Core.Entities
         // Navigation properties for relationships
         public virtual Table Table { get; set; }
         public virtual User User { get; set; }
-        
+        public virtual Restaurant Restaurant { get; set; }
     }
     public enum ReservationStatus
     {

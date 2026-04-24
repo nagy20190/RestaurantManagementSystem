@@ -44,7 +44,7 @@ namespace DeliveryManagementSystem.Core.EntitiesConfigs
             builder.HasOne(r => r.Table)
                 .WithMany(t => t.Reservations)
                 .HasForeignKey(r => r.TableID)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.NoAction);
 
             builder.HasOne(r => r.User)
                 .WithMany(u => u.Reservations)

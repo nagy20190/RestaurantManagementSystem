@@ -779,10 +779,10 @@ D:\1 - DotNet\DEPI & Courses\10 - Projects\5 - DeliveryManagmentSystem\Restauran
 D:\1 - DotNet\DEPI & Courses\10 - Projects\5 - DeliveryManagmentSystem\RestaurantManagementSystem\DeliveryManagementSystem\obj\Debug\net8.0\staticwebassets.development.json
 D:\1 - DotNet\DEPI & Courses\10 - Projects\5 - DeliveryManagmentSystem\RestaurantManagementSystem\DeliveryManagementSystem\obj\Debug\net8.0\staticwebassets.build.endpoints.json
 D:\1 - DotNet\DEPI & Courses\10 - Projects\5 - DeliveryManagmentSystem\RestaurantManagementSystem\DeliveryManagementSystem\obj\Debug\net8.0\swae.build.ex.cache
-D:\1 - DotNet\DEPI & Courses\10 - Projects\5 - DeliveryManagmentSystem\RestaurantManagementSystem\DeliveryManagementSystem\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 D:\1 - DotNet\DEPI & Courses\10 - Projects\5 - DeliveryManagmentSystem\RestaurantManagementSystem\DeliveryManagementSystem\obj\Debug\net8.0\Delivery.A3F2D449.Up2Date
 D:\1 - DotNet\DEPI & Courses\10 - Projects\5 - DeliveryManagmentSystem\RestaurantManagementSystem\DeliveryManagementSystem\obj\Debug\net8.0\DeliveryManagementSystem.API.dll
 D:\1 - DotNet\DEPI & Courses\10 - Projects\5 - DeliveryManagmentSystem\RestaurantManagementSystem\DeliveryManagementSystem\obj\Debug\net8.0\refint\DeliveryManagementSystem.API.dll
 D:\1 - DotNet\DEPI & Courses\10 - Projects\5 - DeliveryManagmentSystem\RestaurantManagementSystem\DeliveryManagementSystem\obj\Debug\net8.0\DeliveryManagementSystem.API.pdb
 D:\1 - DotNet\DEPI & Courses\10 - Projects\5 - DeliveryManagmentSystem\RestaurantManagementSystem\DeliveryManagementSystem\obj\Debug\net8.0\DeliveryManagementSystem.API.genruntimeconfig.cache
 D:\1 - DotNet\DEPI & Courses\10 - Projects\5 - DeliveryManagmentSystem\RestaurantManagementSystem\DeliveryManagementSystem\obj\Debug\net8.0\ref\DeliveryManagementSystem.API.dll
+D:\1 - DotNet\DEPI & Courses\10 - Projects\5 - DeliveryManagmentSystem\RestaurantManagementSystem\DeliveryManagementSystem\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt

@@ -11,6 +11,7 @@ namespace DeliveryManagementSystem.Core.Entities
         public int ID { get; set; }
         public string Name { get; set; }
         public int CategoryID { get; set; }
+        public int OwnerID { get; set; }
         public string Address { get; set; }
         public string Phone { get; set; }
         public string URLPhoto { get; set; }
@@ -23,11 +24,12 @@ namespace DeliveryManagementSystem.Core.Entities
 
         // navigation properties for relationships
         public virtual Category Category { get; set; }
-        public virtual ICollection<RestaurantMenuCategory> ResturantCategories { get; set; }
+        public virtual ICollection<RestaurantMenuCategory> RestaurantCategories { get; set; }
         public virtual ICollection<Table> Tables { get; set; }
         public virtual ICollection<Review> Reviews { get; set; }
         public virtual ICollection<Meal> Meals { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
+        public virtual ICollection<Inventory> Inventories { get; set; }
 
     }
 }

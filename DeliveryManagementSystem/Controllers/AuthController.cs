@@ -18,7 +18,6 @@ namespace DeliveryManagementSystem.API.Controllers
     [ApiController]
     public class AuthController(
         IGenericRepository<User> userRepository,
-        IGenericRepository<Roles> roleRepository,
         EmailServices emailServices,
         IMapper mapper,
         UserManager<User> userManager,
@@ -30,7 +29,6 @@ namespace DeliveryManagementSystem.API.Controllers
         private readonly SignInManager<User> _signInManager = signInManager;
         private readonly RoleManager<Roles> _roleManager = roleManager;
         private readonly IGenericRepository<User> _userRepository = userRepository;
-        private readonly IGenericRepository<Roles> _roleRepository = roleRepository;
         private readonly EmailServices _emailServices = emailServices;
         private readonly JwtSettings _jwtSettings = jwtOptions.Value;
 
@@ -39,6 +37,7 @@ namespace DeliveryManagementSystem.API.Controllers
         public async Task<IActionResult> Login(LoginUserDTO loginUserDTO)
         {
             var user = await _userManager.FindByEmailAsync(loginUserDTO.Email);
+
             if (user == null || !await _userManager.CheckPasswordAsync(user, loginUserDTO.Password))
             {
                 // rate limiting
@@ -74,40 +73,6 @@ namespace DeliveryManagementSystem.API.Controllers
             }
         }
         
-        private async Task<string> GenerateJwtTokenAsync(User user)
-        {
-            var userClaims = new List<Claim>
-            {
-                new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(JwtRegisteredClaimNames
-                .Iat, DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString(),
-                ClaimValueTypes.Integer64),
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimTypes.Name, user.UserName),
-                new Claim(ClaimTypes.Email, user.Email)
-            };
-
-            // Add user roles
-            var userRoles = await _userManager.GetRolesAsync(user);
-            userClaims.AddRange(userRoles.Select(role => new Claim(ClaimTypes.Role, role)));
-            // Get signing key from configuration (not hardcoded)
-            var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Key));
-            var credentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
-            var expiration = DateTime.UtcNow.AddDays(3);
-
-            var token = new JwtSecurityToken(
-                issuer: _jwtSettings.Issuer,
-                audience: _jwtSettings.Audience,
-                claims: userClaims,
-                expires: expiration,
-                signingCredentials: credentials,
-                notBefore: DateTime.UtcNow // Token not valid before this time
-            );
-            var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
-            return tokenString;
-        }
-
         // Register
         [HttpPost("Register")]
         public async Task<IActionResult> Register(RegisterUserDTO registerUserDTO)
@@ -305,8 +270,45 @@ namespace DeliveryManagementSystem.API.Controllers
                 });
             }
 
-        }   
-    
-    
+        }
+
+
+        // private helper methods 
+        private async Task<string> GenerateJwtTokenAsync(User user)
+        {
+            var userClaims = new List<Claim>
+            {
+                new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim(JwtRegisteredClaimNames
+                .Iat, DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString(),
+                ClaimValueTypes.Integer64),
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.Name, user.UserName),
+                new Claim(ClaimTypes.Email, user.Email)
+            };
+
+            // Add user roles
+            var userRoles = await _userManager.GetRolesAsync(user);
+            userClaims.AddRange(userRoles.Select(role => new Claim(ClaimTypes.Role, role)));
+            // Get signing key from configuration (not hardcoded)
+            var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Key));
+            var credentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
+            var expiration = DateTime.UtcNow.AddDays(3);
+
+            var token = new JwtSecurityToken(
+                issuer: _jwtSettings.Issuer,
+                audience: _jwtSettings.Audience,
+                claims: userClaims,
+                expires: expiration,
+                signingCredentials: credentials,
+                notBefore: DateTime.UtcNow // Token not valid before this time
+            );
+            var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
+            return tokenString;
+        }
+
+
+
     }
 }

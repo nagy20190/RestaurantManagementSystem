@@ -10,7 +10,6 @@ namespace DeliveryManagementSystem.Core.DTOs
         public int TableID { get; set; }
         public string TableNumber { get; set; }
         public int UserID { get; set; }
-        public string UserName { get; set; }
         public int NumberOfPeople { get; set; }
         public string QRCode { get; set; }
         public ReservationStatus Status { get; set; }

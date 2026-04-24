@@ -15,7 +15,7 @@ namespace DeliveryManagementSystem.Core.EntitiesConfigs
         {
             builder.HasKey(p => p.ID);
 
-            builder.Property(p => p.ResturantID).IsRequired();
+            builder.Property(p => p.RestaurantID).IsRequired();
 
             builder.Property(p => p.Price).IsRequired().HasMaxLength(100000);
 
@@ -29,9 +29,9 @@ namespace DeliveryManagementSystem.Core.EntitiesConfigs
                 .HasConversion<string>()
                 .HasMaxLength(50);
 
-            builder.HasOne(p => p.Resturant)
+            builder.HasOne(p => p.Restaurant)
                 .WithMany(c => c.Meals)
-                .HasForeignKey(e => e.ResturantID)
+                .HasForeignKey(e => e.RestaurantID)
                 .OnDelete(DeleteBehavior.Cascade);
 
 

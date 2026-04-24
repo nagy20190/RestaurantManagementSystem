@@ -1,24 +1,14 @@
 ﻿using DeliveryManagementSystem.Core.Entities;
 using DeliveryManagementSystem.Core.Interfaces;
 using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DeliveryManagementSystem.BLL.Healpers
 {
-    public class JWTReader
+    public class JWTReader(IGenericRepository<User> userRepository, IHttpContextAccessor httpContextAccessor)
     {
-        private readonly IGenericRepository<User> _userRepository;
-        private readonly IHttpContextAccessor _httpContextAccessor;
-        public JWTReader(IGenericRepository<User> userRepository, IHttpContextAccessor httpContextAccessor)
-        {
-            _userRepository = userRepository;
-            _httpContextAccessor = httpContextAccessor;
-        }
+        private readonly IGenericRepository<User> _userRepository = userRepository;
+        private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
 
         public async Task<int> GetCurrentUserId()
         {
@@ -49,5 +39,10 @@ namespace DeliveryManagementSystem.BLL.Healpers
             return user.Id;
         }
 
+        public bool IsInRole(string role)
+        {
+            var roles = _httpContextAccessor.HttpContext?.User?.FindAll(ClaimTypes.Role).Select(c => c.Value);
+            return roles != null && roles.Contains(role);
+        }
     }
 }

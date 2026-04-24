@@ -32,7 +32,7 @@ namespace DeliveryManagementSystem.Core.EntitiesConfigs
                 .IsRequired()
                 .HasMaxLength(255);
 
-            builder.HasMany(p => p.Resturants)
+            builder.HasMany(p => p.Restaurants)
                 .WithOne(c => c.Category)
                 .HasForeignKey(x => x.CategoryID)
                 .OnDelete(DeleteBehavior.Restrict);

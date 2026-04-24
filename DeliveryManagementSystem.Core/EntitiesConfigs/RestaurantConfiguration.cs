@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DeliveryManagementSystem.Core.EntitiesConfigs
 {
-    public class ResturantConfiguration : IEntityTypeConfiguration<Restaurant>
+    public class RestaurantConfiguration : IEntityTypeConfiguration<Restaurant>
     {
         public void Configure(EntityTypeBuilder<Restaurant> builder)
         {
@@ -56,33 +56,33 @@ namespace DeliveryManagementSystem.Core.EntitiesConfigs
                    .IsRequired();
 
             builder.HasOne(r => r.Category)
-                .WithMany(c => c.Resturants)
+                .WithMany(c => c.Restaurants)
                 .HasForeignKey(r => r.CategoryID)
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasMany(r => r.Tables)
-                .WithOne(t => t.Resturant)
-                .HasForeignKey(t => t.ResturantID)
+                .WithOne(t => t.Restaurant)
+                .HasForeignKey(t => t.RestaurantID)
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasMany(r => r.Reviews)
-                .WithOne(rv => rv.Resturant)
-                .HasForeignKey(rv => rv.ResturantID)
+                .WithOne(rv => rv.Restaurant)
+                .HasForeignKey(rv => rv.RestaurantID)
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasMany(r => r.Meals)
-                .WithOne(m => m.Resturant)
-                .HasForeignKey(m => m.ResturantID)
+                .WithOne(m => m.Restaurant)
+                .HasForeignKey(m => m.RestaurantID)
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasMany(r => r.Orders)
-                .WithOne(o => o.Resturant)
-                .HasForeignKey(o => o.ResturantID)
+                .WithOne(o => o.Restaurant)
+                .HasForeignKey(o => o.RestaurantID)
                 .OnDelete(DeleteBehavior.NoAction);
 
-            builder.HasMany(r => r.ResturantCategories)
-                .WithOne(rc => rc.Resturant)
-                .HasForeignKey(rc => rc.ResturantID)
+            builder.HasMany(r => r.RestaurantCategories)
+                .WithOne(rc => rc.Restaurant)
+                .HasForeignKey(rc => rc.RestaurantID)
                 .OnDelete(DeleteBehavior.Cascade);
 
 

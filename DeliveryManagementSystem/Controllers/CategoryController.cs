@@ -11,21 +11,13 @@ namespace DeliveryManagementSystem.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CategoryController : ControllerBase
+    public class CategoryController(IGenericRepository<Category> categoryRepository,
+        IMapper mapper,
+        ILogger<CategoryController> logger) : ControllerBase
     {
-        private readonly IGenericRepository<Category> _categoryRepository;
-        private readonly IMapper _mapper;
-        private readonly ILogger<CategoryController> _logger;
-
-
-        public CategoryController(IGenericRepository<Category> categoryRepository,
-            IMapper mapper,
-            ILogger<CategoryController> logger)
-        {
-            _categoryRepository = categoryRepository;
-            _mapper = mapper;
-            _logger = logger;
-        }
+        private readonly IGenericRepository<Category> _categoryRepository = categoryRepository;
+        private readonly IMapper _mapper = mapper;
+        private readonly ILogger<CategoryController> _logger = logger;
 
         [Authorize(Roles = "SuperAdmin")]
         [HttpPost]
@@ -132,15 +124,6 @@ namespace DeliveryManagementSystem.API.Controllers
         public async Task<IActionResult>
             UpdateCategory([FromRoute] int id, [FromBody] UpdateCategoryDTO updateCategoryDTO)
         {
-            if (id <= 0)
-            {
-                return BadRequest(new { Message = "Invalid category ID." });
-            }
-
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
 
             try
             {
@@ -182,17 +165,9 @@ namespace DeliveryManagementSystem.API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> HardDeleteCategory([FromRoute] int id)
         {
-            if (id <= 0)
-            {
-                return BadRequest(new { Message = "Invalid category ID." });
-            }
             try
             {
                 var category = await _categoryRepository.GetByIdAsync(id);
-                if (category == null)
-                {
-                    return NotFound(new { Message = $"No category found with ID {id}." });
-                }
                 await _categoryRepository.DeleteAsync(category);
                 _logger.LogWarning("Category hard deleted with ID: {CategoryId}", id);
 

@@ -10,13 +10,13 @@ namespace DeliveryManagementSystem.Core.Entities
     {
         public int ID { get; set; }
         public int UserID { get; set; } // Foreign key to User
-        public int ResturantID { get; set; } // Foreign key to Resturant
+        public int RestaurantID { get; set; } // Foreign key to Restaurant
         public string Comment { get; set; }
         public int Rating { get; set; } // Rating out of 5
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         // Navigation properties for relationships
         public virtual User User { get; set; }
-        public virtual Restaurant Resturant { get; set; }
+        public virtual Restaurant Restaurant { get; set; }
         
     }
 }
