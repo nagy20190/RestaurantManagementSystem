@@ -4,7 +4,9 @@
 *.suo
 *.userosscache
 *.sln.docstates
-.cursor\plans
+
+.cursor/
+
 # Build results
 bin/
 obj/
