@@ -1,16 +1,65 @@
-# Ignore Visual Studio files
+# Visual Studio / VS Code / Cursor
 .vs/
+.vscode/
+.cursor/
 *.user
 *.suo
 *.userosscache
 *.sln.docstates
 
-.cursor/
-
 # Build results
-bin/
-obj/
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
 
-.appsettings.Development.json/
+# .NET generated files
+TestResults/
+*.trx
+*.coverage
+*.coveragexml
+*.nupkg
+*.snupkg
+project.lock.json
+project.assets.json
+artifacts/
 
+# Logs and local databases
+*.log
+logs/
+*.db
+*.sqlite
+*.sqlite3
+
+# Local environment files and API keys
+.env
+.env.*
+!.env.example
+!.env.*.example
+**/appsettings.*.json
+!**/appsettings.json
+!**/appsettings.Example.json
+!**/appsettings.example.json
+**/secrets.json
+**/*secret*.json
+**/*secrets*.json
+**/*apikey*.json
+**/*api-key*.json
+**/*keys*.json
+
+# Certificates and private keys
+*.pem
+*.key
+*.pfx
+*.p12
+*.crt
+*.cer
+
+# Temporary files
+*.tmp
+*.temp
 .fake
