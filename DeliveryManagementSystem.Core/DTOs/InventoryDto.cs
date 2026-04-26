@@ -1,9 +1,4 @@
-﻿using DeliveryManagementSystem.Core.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace DeliveryManagementSystem.Core.DTOs
 {
@@ -21,6 +16,7 @@ namespace DeliveryManagementSystem.Core.DTOs
         public int RestaurantID { get; set; }
         public int Quantity { get; set; }
     }
+ 
     public class InventoryUpdateDto
     {
         public int MealID { get; set; }
@@ -30,4 +26,15 @@ namespace DeliveryManagementSystem.Core.DTOs
         // functionality to update availability can be added later if needed
 
     }
+
+     public class InventoryAdjustDto
+     {
+        [Required]
+        [Range(-10000, 10000, ErrorMessage = "Delta must be between -10000 and 10000")]
+        public int Delta { get; set; }
+        public int RestaurantID { get; set; }
+        public int MealID { get; set; }
+    }
+
+
 }

@@ -161,35 +161,156 @@ namespace DeliveryManagementSystem.API.Controllers
         }
 
 
+        //GET /restaurant/{restaurantId}/meal/{mealId} —fetch the single inventory record for a meal within a restaurant. 
+        [HttpGet("restaurant/{restaurantId}/meal/{mealId}")]
+        [Authorize(Roles = "SuperAdmin,RestaurantOwner")]
+        public async Task<IActionResult> GetInventoryByRestaurantAndMealId(int restaurantId, int mealId)
+        {
+            var isAuthorized = await CheckIsAuthorized(restaurantId);
+            if (!isAuthorized)
+                return StatusCode(403, "Unauthorized access");
 
-        //GET /restaurant/{restaurantId}/meal/{mealId} — 
-        //fetch the single inventory record for a meal within a restaurant. 
-        //Today the only meal lookup is GET /meal/{mealId} which returns every restaurant's stock of that meal.
+            var inventory = await _repository.GetAll()
+                .Include(i => i.Meal)
+                .Include(i => i.Restaurant)
+                .Where(i => i.RestaurantID == restaurantId && i.MealID == mealId)
+                .FirstOrDefaultAsync();
 
+            var dto = _mapper.Map<InventoryDto>(inventory);
+            return Ok(dto);
+        }
 
 
         //PATCH /{id}/adjust (or /increment, /decrement) — change quantity by a delta (+/- N). Critical for orders,
-        //restocks, and to avoid the race condition in bug #9. Right now the only way to reduce stock is an absolute PUT, 
-        //which is unsafe when orders are placed concurrently.
+        [HttpPatch("{id}/adjust")]
+        [Authorize(Roles = "RestaurantOwner")]
+        public async Task<IActionResult> AdjustQuantity(int id, [FromBody] InventoryAdjustDto adjustDto)
+        {
+            try
+            {
+                var inventory = 
+                    await _repository.GetAll().FirstOrDefaultAsync( i => i.RestaurantID == adjustDto.RestaurantID 
+                    && i.ID == id && i.MealID == adjustDto.MealID);
 
+                var isAuthorized = await CheckIsAuthorized(inventory.RestaurantID);
+                if (!isAuthorized)
+                    return StatusCode(403, "Unauthorized access");
+                inventory.Quantity += adjustDto.Delta;
+                inventory.LastUpdated = DateTime.UtcNow;
+                await _repository.UpdateAsync(inventory);
+                return Ok("Inventory quantity adjusted successfully");
+            }
+            catch
+            {
+                return StatusCode(500, "An error occurred while adjusting the inventory quantity");
+            }
+        }
 
-        //GET /low-stock?threshold=N (scoped by restaurant for owners, global for SuperAdmin) — core inventory‑management feature.
-
+        //GET /low-stock?threshold=N (scoped by restaurant for owners, global for SuperAdmin).
+        [HttpGet("low-stock")]
+        [Authorize(Roles = "SuperAdmin,RestaurantOwner")]
+        public async Task<IActionResult> GetLowStock([FromQuery] int threshold)
+        {
+            var userId = await _jwtReader.GetCurrentUserId();
+            if (userId == -1)
+                return Unauthorized();
+            var query = _repository.GetAll()
+                .Include(i => i.Meal)
+                .Include(i => i.Restaurant)
+                .Where(i => i.Quantity <= threshold);
+            // RestaurantOwner only sees inventory for restaurants they own
+            if (!_jwtReader.IsInRole("SuperAdmin"))
+                query = query.Where(i => i.Restaurant.OwnerID == userId);
+            var lowStockItems = await query.ToListAsync();
+            var dtos = _mapper.Map<List<InventoryDto>>(lowStockItems);
+            return Ok(dtos);
+        }
 
         //GET /out-of-stock — items with Quantity == 0, again scoped by role.
-
+        [HttpGet("out-of-stock")]
+        [Authorize(Roles = "SuperAdmin,RestaurantOwner")]
+        public async Task<IActionResult> GetOutOfStock()
+        {
+            var userId = await _jwtReader.GetCurrentUserId();
+            if (userId == -1)
+                return Unauthorized();
+            var query = _repository.GetAll()
+                .Include(i => i.Meal)
+                .Include(i => i.Restaurant)
+                .Where(i => i.Quantity == 0);
+            // RestaurantOwner only sees inventory for restaurants they own
+            if (!_jwtReader.IsInRole("SuperAdmin"))
+                query = query.Where(i => i.Restaurant.OwnerID == userId);
+            var outOfStockItems = await query.ToListAsync();
+            var dtos = _mapper.Map<List<InventoryDto>>(outOfStockItems);
+            return Ok(dtos);
+        }
 
         //POST /bulk — bulk seed of inventory rows when a restaurant onboards meals, otherwise an owner must call POST / for every meal.
+        [HttpPost("bulk/{restaurantId}")]
+        [Authorize(Roles = "RestaurantOwner")]
+        public async Task<IActionResult> BulkCreate(int restaurantId, [FromBody] List<InventoryCreateDto> createDtos)
+        {
+            try
+            {
+                if (createDtos == null || !createDtos.Any())
+                    return BadRequest("No inventory data provided");
 
+                var isAuthorized = await CheckIsAuthorized(restaurantId);
+                if (!isAuthorized)
+                    return StatusCode(403, "Unauthorized access");
+                var inventories = _mapper.Map<List<Inventory>>(createDtos);
+                foreach (var inventory in inventories)
+                { 
+                    inventory.LastUpdated = DateTime.Now;
+                    inventory.RestaurantID = restaurantId;
+                }
+                await _repository.AddRangeAsync(inventories);
+                return Ok("Bulk inventory created successfully");
+            }
+            catch(Exception ex) 
+            {
+                return StatusCode(500, "An error occurred while creating the bulk inventory");
+            }
+        }
 
         //Order‑integration hook / internal decrement — when an order is placed, nothing in this controller decrements stock.
         //Either this happens in the order service (confirm it does) or you need an explicit endpoint invoked by the order flow.
-        //Without it, Quantity will drift out of sync with reality.
+        [HttpPost("{id}/decrement")]
+        [Authorize(Roles = "RestaurantOwner")]
+        public async Task<IActionResult> DecrementStock(int id, [FromBody] InventoryAdjustDto decrementDto)
+        {
+            try
+            {
+                var inventory = await _repository.GetByIdAsync(id);
+                var isAuthorized = await CheckIsAuthorized(inventory.RestaurantID);
+                if (!isAuthorized)
+                    return StatusCode(403, "Unauthorized access");
+                if (inventory.Quantity < decrementDto.Delta)
+                    return BadRequest("Insufficient stock to decrement");
+                if (decrementDto.Delta <= 0)
+                    return BadRequest("Invalid decrement amount");
+                inventory.Quantity -= decrementDto.Delta;
+                inventory.LastUpdated = DateTime.UtcNow;
+                await _repository.UpdateAsync(inventory);
+                return Ok("Inventory stock decremented successfully");
+            }
+            catch
+            {
+                return StatusCode(500, "An error occurred while decrementing the inventory stock");
+            }
+        }
+
 
         //Restore/soft‑delete or audit — DELETE is hard delete; 
         //stock history is lost. If business rules require audit of stock changes,
-        //you need either a history endpoint or an InventoryHistory table plus a GET /{id}/history endpoint.
-
+        [HttpGet("{id}/history")]
+        [Authorize(Roles = "SuperAdmin,RestaurantOwner")]
+        public async Task<IActionResult> GetInventoryHistory(int id)
+        {
+            // This is a placeholder implementation. In a real application, would query an InventoryHistory table.
+            return Ok("Inventory history endpoint is not implemented yet.");
+        }
 
 
         // private helper methods 

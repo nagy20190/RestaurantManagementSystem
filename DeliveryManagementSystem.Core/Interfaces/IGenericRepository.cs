@@ -17,6 +17,10 @@ namespace DeliveryManagementSystem.Core.Interfaces
          IQueryable<T> FindByCondition(Expression<Func<T, bool>> predicate);
          Task<int> CountAsync();
          IQueryable<T> GetPaged(int pageNumber, int pageSize);
+        // AddRangeAsync, DeleteRangeAsync, etc. can be added later if needed
+        Task AddRangeAsync(List<T> entities);
+        Task DeleteRangeAsync(List<T> entities);
+
     }
 
 }

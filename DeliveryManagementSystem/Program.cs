@@ -114,6 +114,8 @@ namespace DeliveryManagementSystem
             // JWT Settings
             builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("JwtSettings"));
             var key = Encoding.UTF8.GetBytes(jwtSettings["Key"]);
+            // i put the apiKeys in dotnet user secrets in local development , but you can also put them in appsettings.json or environment variables
+            // dotnet user-secrets set "JwtSettings : "your secret key" .. etc
 
             // AutoMapper - Manual configuration (NO AddAutoMapper method)
             builder.Services.AddSingleton<IMapper>(serviceProvider =>

@@ -19,15 +19,6 @@
 
 ## Missing Endpoints to Implement
 
-### InventoryController (does not exist — entity + DbSet both exist)
-
-- `GET /` — Get all inventory
-- `GET /{id}` — Get by ID
-- `POST /` — Create entry (SuperAdmin, RestaurantOwner)
-- `PUT /{id}` — Update quantity (SuperAdmin, RestaurantOwner)
-- `DELETE /{id}` — Delete entry (SuperAdmin)
-- `GET /meal/{mealId}` — Inventory for a meal
-
 ### ReviewController (no dedicated controller)
 
 - Reviews are only addable via `RestaurantController`

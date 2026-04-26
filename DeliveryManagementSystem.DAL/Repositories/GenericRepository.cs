@@ -64,5 +64,18 @@ namespace DeliveryManagementSystem.DAL.Repositories
                 .Take(pageSize)
                 .AsNoTracking();
         }
+
+        public async Task AddRangeAsync(List<T> entities)
+        {
+            await _context.Set<T>().AddRangeAsync(entities);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteRangeAsync(List<T> entities)
+        {
+            _context.Set<T>().RemoveRange(entities);
+            await _context.SaveChangesAsync();
+        }
+        
     }
 }

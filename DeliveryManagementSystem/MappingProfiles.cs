@@ -69,6 +69,7 @@ namespace DeliveryManagementSystem.BLL.Healpers
 
             // invenory Mappings
             CreateMap<Inventory, InventoryDto>().ReverseMap();
+            CreateMap<InventoryCreateDto, Inventory>();
 
 
         }
