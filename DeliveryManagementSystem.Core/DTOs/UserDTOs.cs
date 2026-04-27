@@ -148,7 +148,7 @@ namespace DeliveryManagementSystem.Core.DTOs
         public int TotalReviews { get; set; }
         public int TotalReservations { get; set; }
         public List<OrderDTO> RecentOrders { get; set; }
-        public List<ReviewDTO> RecentReviews { get; set; }
+        public List<ReviewDto> RecentReviews { get; set; }
     }
 
     public enum Role

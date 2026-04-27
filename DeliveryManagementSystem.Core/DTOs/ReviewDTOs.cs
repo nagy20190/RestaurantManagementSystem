@@ -5,8 +5,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DeliveryManagementSystem.Core.DTOs
 {
-    // Basic Review DTO
-    public class ReviewDTO
+    // Basic Review Dto
+    public class ReviewDto
     {
         public int UserID { get; set; }
         public string UserName { get; set; }
@@ -21,12 +21,10 @@ namespace DeliveryManagementSystem.Core.DTOs
         public int UnhelpfulCount { get; set; }
     }
 
-    // DTO for creating a new review
+    // Dto for creating a new review
 
-    public class CreateReviewDTO
+    public class CreateReviewDto
     {
-
-
         [Required(ErrorMessage = "Comment is required.")]
         [StringLength(500, ErrorMessage = "Comment cannot exceed 500 characters.")]
         public string Comment { get; set; }
@@ -35,37 +33,39 @@ namespace DeliveryManagementSystem.Core.DTOs
         [Range(1, 5, ErrorMessage = "Rating must be between 1 and 5.")]
         public int Rating { get; set; }
 
+        public int RestaurantID { get; set; }
+
         // Optional: You can add a custom validation later if needed.
         public int? OrderID { get; set; }
     }
 
 
-    // DTO for updating review
-    public class UpdateReviewDTO
+    // Dto for updating review
+    public class UpdateReviewDto
     {
         public string Comment { get; set; }
         public int Rating { get; set; }
     }
 
-    // DTO for review with order details
-    public class ReviewWithOrderDTO : ReviewDTO
+    // Dto for review with order details
+    public class ReviewWithOrderDto : ReviewDto
     {
         public OrderDTO Order { get; set; }
         public List<MealDTO> OrderedMeals { get; set; }
     }
 
-    // DTO for restaurant reviews
-    public class RestaurantReviewsDTO
+    // Dto for restaurant reviews
+    public class RestaurantReviewsDto
     {
         public int RestaurantID { get; set; }
         public string RestaurantName { get; set; }
         public decimal AverageRating { get; set; }
         public int TotalReviews { get; set; }
-        public List<ReviewDTO> Reviews { get; set; }
+        public List<ReviewDto> Reviews { get; set; }
     }
 
-    // DTO for review search/filtering
-    public class ReviewSearchDTO
+    // Dto for review search/filtering
+    public class ReviewSearchDto
     {
         public int? RestaurantID { get; set; }
         public int? UserID { get; set; }
@@ -78,8 +78,8 @@ namespace DeliveryManagementSystem.Core.DTOs
         public bool SortDescending { get; set; }
     }
 
-    // DTO for review helpful/unhelpful
-    public class ReviewFeedbackDTO
+    // Dto for review helpful/unhelpful
+    public class ReviewFeedbackDto
     {
         public int ReviewID { get; set; }
         public int UserID { get; set; }

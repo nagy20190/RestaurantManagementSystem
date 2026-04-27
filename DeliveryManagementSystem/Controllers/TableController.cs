@@ -151,7 +151,7 @@ namespace DeliveryManagementSystem.API.Controllers
             {
                 return false;
             }
-            if (restaurant.OwnerID != userId && !_jwtReader.IsInRole("SuperAdmin"))
+            if (restaurant.OwnerID != userId && !await _jwtReader.IsInRoleAsyn("SuperAdmin"))
             {
                 return false;
             }

@@ -114,7 +114,7 @@ public class CreateRestaurantDTO
     // DTO for restaurant details with reviews
     public class RestaurantDetailsDTO : RestaurantDTO
     {
-        public List<ReviewDTO> Reviews { get; set; }
+        public List<ReviewDto> Reviews { get; set; }
         public List<RestaurantMenuCategoryDTO> MenuCategories { get; set; }
         public List<TableDTO> Tables { get; set; }
         public int TotalReviews { get; set; }

@@ -136,7 +136,7 @@ namespace DeliveryManagementSystem.API.Controllers
                 .Where(i => i.MealID == mealId);
 
             // RestaurantOwner only sees inventory for restaurants they own
-            if (!_jwtReader.IsInRole("SuperAdmin"))
+            if (!await _jwtReader.IsInRoleAsyn("SuperAdmin"))
                 query = query.Where(i => i.Restaurant.OwnerID == userId);
 
             var inventories = await query.ToListAsync();
@@ -219,7 +219,7 @@ namespace DeliveryManagementSystem.API.Controllers
                 .Include(i => i.Restaurant)
                 .Where(i => i.Quantity <= threshold);
             // RestaurantOwner only sees inventory for restaurants they own
-            if (!_jwtReader.IsInRole("SuperAdmin"))
+            if (!await _jwtReader.IsInRoleAsyn("SuperAdmin"))
                 query = query.Where(i => i.Restaurant.OwnerID == userId);
             var lowStockItems = await query.ToListAsync();
             var dtos = _mapper.Map<List<InventoryDto>>(lowStockItems);
@@ -239,7 +239,7 @@ namespace DeliveryManagementSystem.API.Controllers
                 .Include(i => i.Restaurant)
                 .Where(i => i.Quantity == 0);
             // RestaurantOwner only sees inventory for restaurants they own
-            if (!_jwtReader.IsInRole("SuperAdmin"))
+            if (!await _jwtReader.IsInRoleAsyn("SuperAdmin"))
                 query = query.Where(i => i.Restaurant.OwnerID == userId);
             var outOfStockItems = await query.ToListAsync();
             var dtos = _mapper.Map<List<InventoryDto>>(outOfStockItems);
@@ -324,7 +324,7 @@ namespace DeliveryManagementSystem.API.Controllers
             if (restaurant is null)
                 return false;
 
-            if (_jwtReader.IsInRole("SuperAdmin"))
+            if (await _jwtReader.IsInRoleAsyn("SuperAdmin"))
                 return true;
 
             return restaurant.OwnerID == userId;

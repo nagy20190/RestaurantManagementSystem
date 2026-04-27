@@ -39,7 +39,7 @@ namespace DeliveryManagementSystem.BLL.Healpers
             CreateMap<Restaurant, CreateRestaurantDTO>().ReverseMap();
             CreateMap<Restaurant, UpdateRestaurantDTO>().ReverseMap();
             CreateMap<Restaurant, RestaurantWithMenuDTO>();
-            CreateMap<Restaurant, RestaurantReviewsDTO>();
+            CreateMap<Restaurant, RestaurantReviewsDto>();
             CreateMap<CreateRestaurantDTO, Restaurant>();
 
             CreateMap<Meal, MealDTO>()
@@ -51,8 +51,8 @@ namespace DeliveryManagementSystem.BLL.Healpers
             CreateMap<Meal, MealDetailsDTO>();
             CreateMap<Meal, PopularMealDTO>();
             CreateMap<RestaurantMenuCategory, RestaurantMenuCategoryDTO>();
-            CreateMap<Review, ReviewDTO>();
-            CreateMap<Review, CreateReviewDTO>().ReverseMap();
+            CreateMap<Review, ReviewDto>().ReverseMap();
+            CreateMap<Review, CreateReviewDto>().ReverseMap();
 
             // Reservation Mappings
             CreateMap<Reservation, ReservationDTO>().
@@ -70,6 +70,13 @@ namespace DeliveryManagementSystem.BLL.Healpers
             // invenory Mappings
             CreateMap<Inventory, InventoryDto>().ReverseMap();
             CreateMap<InventoryCreateDto, Inventory>();
+
+
+
+
+            // Review Mappings
+            CreateMap<Review, ReviewDto>().ReverseMap();
+
 
 
         }

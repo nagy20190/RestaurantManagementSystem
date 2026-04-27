@@ -198,13 +198,13 @@ namespace DeliveryManagementSystem.API.Controllers
 
                 var restaurantReviews = new
                 {
-                    RestaurantReviewsDTO = restaurant.Reviews.Select(r => new RestaurantReviewsDTO
+                    RestaurantReviewsDto = restaurant.Reviews.Select(r => new RestaurantReviewsDto
                     {
                         AverageRating = (decimal)(restaurant.Reviews.Any() ? restaurant.Reviews.Average(r => r.Rating) : 0),
                         TotalReviews = restaurant.Reviews.Count,
                         RestaurantName = restaurant.Name,
                         RestaurantID = restaurant.ID,
-                        Reviews = restaurant.Reviews.Select(review => new ReviewDTO
+                        Reviews = restaurant.Reviews.Select(review => new ReviewDto
                         {
                             UserID = review.User.Id,
                             UserName = review.User.UserName,
@@ -338,7 +338,7 @@ namespace DeliveryManagementSystem.API.Controllers
 
         [Authorize]
         [HttpPost("{id}/reviews")]
-        public async Task<ActionResult<Review>> AddReview(int id, [FromBody] CreateReviewDTO reviewDto)
+        public async Task<ActionResult<Review>> AddReview(int id, [FromBody] CreateReviewDto reviewDto)
         {
             if (id <= 0)
                 return BadRequest("Invalid restaurant ID.");
