@@ -1,3 +1,4 @@
+using DeliveryManagementSystem.Core.Entities;
 using System;
 using System.Collections.Generic;
 
@@ -83,14 +84,4 @@ namespace DeliveryManagementSystem.Core.DTOs
         public decimal AverageOrderValue { get; set; }
     }
 
-    public enum OrderStatus
-    {
-        Pending,
-        Confirmed,
-        InPreparation,
-        PickedUp,
-        OutForDelivery,
-        Delivered,
-        Cancelled
-    }
 }

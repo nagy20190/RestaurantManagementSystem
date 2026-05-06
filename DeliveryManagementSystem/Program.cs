@@ -13,7 +13,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using System.Text;
-namespace DeliveryManagementSystem
+using Hangfire;
+using Hangfire.SqlServer;
+
+namespace DeliveryManagementSystem.API
 {
     public class Program
     {
@@ -27,7 +30,7 @@ namespace DeliveryManagementSystem
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            builder.Services.AddAutoMapper(typeof(DeliveryManagementSystem.BLL.Healpers.MappingProfiles).Assembly);
+            builder.Services.AddAutoMapper(typeof(MappingProfiles).Assembly);
 
 
             builder.Services.AddScoped<EmailServices>();
@@ -36,6 +39,19 @@ namespace DeliveryManagementSystem
             builder.Configuration
               .SetBasePath(Directory.GetCurrentDirectory())
             .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+
+            var hangfireConnection = builder.Configuration.GetConnectionString("HangfireConnection")
+                ?? builder.Configuration.GetConnectionString("Connection")
+                ?? throw new InvalidOperationException(
+                    "Configure ConnectionStrings:HangfireConnection or Connection for Hangfire SQL storage.");
+
+            builder.Services.AddHangfire(configuration => configuration
+                .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
+                .UseSimpleAssemblyNameTypeSerializer()
+                .UseRecommendedSerializerSettings()
+                .UseSqlServerStorage(hangfireConnection));
+
+            builder.Services.AddHangfireServer();
 
             var jwtSettings = builder.Configuration.GetSection("JwtSettings");
             builder.Services.Configure<JwtSettings>(jwtSettings);
@@ -225,6 +241,7 @@ namespace DeliveryManagementSystem
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
+                app.UseHangfireDashboard("/hangfire");
             }
 
 

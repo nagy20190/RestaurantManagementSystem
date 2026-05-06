@@ -153,7 +153,7 @@ namespace DeliveryManagementSystem.API.Controllers
                     UserID = createOrderDTO.UserID,
                     RestaurantID = restaurantId,
                     TotalAmount = totalAmount,
-                    Status = Core.Entities.OrderStatus.Pending,
+                    Status = OrderStatus.Pending,
                     DeliveryAddress = createOrderDTO.DeliveryAddress,
                     PaymentMethod = createOrderDTO.PaymentMethod,
                     OrderItems = orderItems
@@ -350,7 +350,7 @@ namespace DeliveryManagementSystem.API.Controllers
                 {
                     new OrderStatusUpdateDTO
                     {
-                        Status = (Core.DTOs.OrderStatus)order.Status,
+                        Status = (OrderStatus)order.Status,
                         Timestamp = order.OrderDate,
                         Notes = "Order created"
                     }

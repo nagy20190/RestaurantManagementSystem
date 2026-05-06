@@ -15,17 +15,6 @@
 
 - **Empty** — no endpoints at all
 
----
-
-## Missing Endpoints to Implement
-
-### ReviewController (no dedicated controller)
-
-- Reviews are only addable via `RestaurantController`
-- Missing: `GET /{id}`, `PUT /{id}`, `DELETE /{id}`
-
-### SheduleOffersControllers (empty)
-
 - `POST /schedule` — Schedule email offer job via HangFire
 
 ---

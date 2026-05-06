@@ -28,16 +28,6 @@ namespace DeliveryManagementSystem.API.Controllers
             _reviewRepository = reviewRepository;
         }
 
-        /// <summary>
-        ///  TODO :- Enhance this method by SearchDTo
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="location"></param>
-        /// <param name="meal"></param>
-        /// <param name="page"></param>
-        /// <param name="pageSize"></param>
-        /// <returns></returns>
-
 
         [HttpGet("search")]
         public async Task<ActionResult<List<Restaurant>>> SearchRestaurants(
@@ -154,20 +144,20 @@ namespace DeliveryManagementSystem.API.Controllers
         }
 
         
-        [HttpGet("{restaurantid}/menu")]
-        public async Task<ActionResult<Meal>> GetRestaurantMenu(int restaurantid)
+        [HttpGet("{restaurantId}/menu")]
+        public async Task<ActionResult<Meal>> GetRestaurantMenu(int restaurantId)
         {
-            if (restaurantid <= 0)
+            if (restaurantId <= 0)
                 return BadRequest("Invalid restaurant ID.");
 
             try
             {
                 var restaurant = await _restaurantRepository
-                    .FindByCondition(r => r.ID == restaurantid)
+                    .FindByCondition(r => r.ID == restaurantId)
                     .Include(r => r.Meals)
                     .FirstOrDefaultAsync();
                 if (restaurant == null)
-                    return NotFound($"Restaurant with ID {restaurantid} not found.");
+                    return NotFound($"Restaurant with ID {restaurantId} not found.");
                 var restaurantMenuDto = _mapper.Map<RestaurantWithMenuDTO>(restaurant);
                 return Ok(restaurantMenuDto);
             }
@@ -176,54 +166,6 @@ namespace DeliveryManagementSystem.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while retrieving the restaurant menu.");
             }
             
-        }
-
-        [HttpGet("{restaurantid}/reviews")]
-        public async Task<IActionResult> GetRestaurantReviews(int restaurantid)
-        {
-            if (restaurantid <= 0) 
-                  return BadRequest("Invalid restaurant ID.");
-
-            try
-            {
-                var restaurant = await _restaurantRepository
-                .FindByCondition(r => r.ID == restaurantid)
-                .Include(r => r.Reviews)
-                .ThenInclude(r => r.User)
-                .AsNoTracking() // .AsNoTracking() to improve performance.
-                .FirstOrDefaultAsync();
-
-                if (restaurant == null)
-                    return NotFound($"Restaurant with ID {restaurantid} not found.");
-
-                var restaurantReviews = new
-                {
-                    RestaurantReviewsDto = restaurant.Reviews.Select(r => new RestaurantReviewsDto
-                    {
-                        AverageRating = (decimal)(restaurant.Reviews.Any() ? restaurant.Reviews.Average(r => r.Rating) : 0),
-                        TotalReviews = restaurant.Reviews.Count,
-                        RestaurantName = restaurant.Name,
-                        RestaurantID = restaurant.ID,
-                        Reviews = restaurant.Reviews.Select(review => new ReviewDto
-                        {
-                            UserID = review.User.Id,
-                            UserName = review.User.UserName,
-                            UserProfileImage = review.User.ProfileImageUrl,
-                            Comment = review.Comment,
-                            Rating = review.Rating,
-                            CreatedAt = review.CreatedAt,
-                        }).ToList(),
-
-                    }).ToList()
-
-                };
-                return Ok(restaurantReviews);
-            }
-            catch (Exception ex)
-            {
-                // Log the exception (not implemented here)
-                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while retrieving restaurant reviews.");
-            }
         }
 
 
@@ -336,35 +278,6 @@ namespace DeliveryManagementSystem.API.Controllers
             }
         }
 
-        [Authorize]
-        [HttpPost("{id}/reviews")]
-        public async Task<ActionResult<Review>> AddReview(int id, [FromBody] CreateReviewDto reviewDto)
-        {
-            if (id <= 0)
-                return BadRequest("Invalid restaurant ID.");
-            if (reviewDto == null)
-                return BadRequest("Data cannot be null");
-
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-            try
-            {
-                var userId = await _jWTReader.GetCurrentUserId();
-                if (userId <= 0)
-                    return Unauthorized("Invalid user ID.");
-
-                var review = _mapper.Map<Review>(reviewDto);
-                review.UserID = userId;
-                review.RestaurantID = id;
-
-                await _reviewRepository.AddAsync(review);
-                return Ok(reviewDto);
-            }
-            catch
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while adding the review.");
-            }
-        }
 
         [HttpGet("{id}/reservations")]
         public async Task<ActionResult<IEnumerable<Reservation>>> GetRrestaurantReservations(int id)

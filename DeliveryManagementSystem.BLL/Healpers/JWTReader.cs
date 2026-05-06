@@ -39,7 +39,7 @@ namespace DeliveryManagementSystem.BLL.Healpers
             return user.Id;
         }
 
-        public async Task<bool> IsInRoleAsyn(string role)
+        public async Task<bool> IsInRoleAsync(string role)
         {
             var roles = _httpContextAccessor.HttpContext?.User?.FindAll(ClaimTypes.Role).Select(c => c.Value);
             return roles != null && roles.Contains(role);

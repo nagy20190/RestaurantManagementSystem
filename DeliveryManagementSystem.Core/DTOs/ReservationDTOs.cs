@@ -1,3 +1,4 @@
+using DeliveryManagementSystem.Core.Entities;
 using System;
 using System.Collections.Generic;
 
@@ -97,12 +98,5 @@ namespace DeliveryManagementSystem.Core.DTOs
         public string CustomerName { get; set; }
     }
 
-    public enum ReservationStatus
-    {
-        Pending,
-        Confirmed,
-        Cancelled,
-        Completed,
-        NoShow
-    }
+    
 }
