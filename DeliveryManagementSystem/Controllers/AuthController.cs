@@ -37,8 +37,8 @@ namespace DeliveryManagementSystem.API.Controllers
         public async Task<IActionResult> Login(LoginUserDTO loginUserDTO)
         {
             var user = await _userManager.FindByEmailAsync(loginUserDTO.Email);
-
-            if (user == null || !await _userManager.CheckPasswordAsync(user, loginUserDTO.Password))
+            var isPasswordValid = await _userManager.CheckPasswordAsync(user, loginUserDTO.Password);
+            if (user == null || !isPasswordValid)
             {
                 // rate limiting
                 await Task.Delay(1000); // Small delay to prevent timing attacks
@@ -75,79 +75,42 @@ namespace DeliveryManagementSystem.API.Controllers
         
         // Register
         [HttpPost("Register")]
-        public async Task<IActionResult> Register(RegisterUserDTO registerUserDTO)
+        public async Task<IActionResult> Register(RegisterUserDTO dto)
         {
             try
             {
-                var isUserExist =
-                _userRepository.FindByCondition(u => u.Email == registerUserDTO.Email)
-                .FirstOrDefault();
-
-                if (isUserExist != null)
-                {
+                if (await IsEmailExists(dto.Email))
                     return BadRequest(new { Message = "User already exists" });
-                }
-                var user = _mapper.Map<User>(registerUserDTO);
-                var result = await _userManager.CreateAsync(user, registerUserDTO.Password);
+
+                var user = _mapper.Map<User>(dto);
+
+                var result = await _userManager.CreateAsync(user, dto.Password);
+
                 if (!result.Succeeded)
-                {
-                    // Return detailed validation errors
-                    var errors = result.Errors.Select(e => e.Description).ToArray();
                     return BadRequest(new
                     {
                         Message = "User registration failed",
-                        Errors = errors
+                        Errors = result.Errors.Select(e => e.Description)
                     });
-                }
-                else
-                {
-                    // Assign default role
-                    if (!await _roleManager.RoleExistsAsync("User"))
-                    {
-                        await _roleManager.CreateAsync(new Roles { Name = "User" });
-                    }
-                    await _userManager.AddToRoleAsync(user, "User");
-                }
-                var emailConfirmationToken = await _userManager.GenerateEmailConfirmationTokenAsync(user);
 
-                if (string.IsNullOrEmpty(emailConfirmationToken))
-                {
-                   // _logger.LogError("Failed to generate email confirmation token for user {UserId}", user.Id);
-                    return StatusCode(500, new { Message = "Error generating email confirmation token" });
-                }
+                await AssignUserRole(user);
 
-                // URL encode the token to handle special characters
-                var encodedToken = Uri.EscapeDataString(emailConfirmationToken);
-                var encodedEmail = Uri.EscapeDataString(user.Email);
+                await SendConfirmationEmail(user);
 
-                // Create confirmation link with proper URL construction
-                var baseUrl = $"{Request.Scheme}://{Request.Host}";
-                var confirmationLink = $"{baseUrl}/api/Auth/confirm-email?token={encodedToken}&email={encodedEmail}";
-                try
-                {
-                    await _emailServices.SendEmailConfirmationAsync(user.Email, user.UserName, confirmationLink);
-                }
-                catch (Exception ex)
-                {
-                  //  _logger.LogError(ex, "Failed to send confirmation email to {Email}", user.Email);
-                    // Don't fail registration if email sending fails
-                }
-                // _logger.LogInformation("User {Email} registered successfully", user.Email);
-
-                // Return success response (DON'T return the token in production for security)
                 return Ok(new
                 {
-                    Message = "User registered successfully. Please check your email to confirm your registration.",
+                    Message = "User registered successfully. Please check your email.",
                     UserId = user.Id,
                     Email = user.Email
-                    // Remove token from response for security - only send via email
                 });
             }
-            catch(Exception)
+            catch
             {
-                return StatusCode(500, new { Message = "An error occurred during registration. Please try again later." });
+                return StatusCode(500,
+                    new { Message = "An error occurred during registration." });
             }
         }
+       
         
         // Email confirmation endpoint
         [HttpGet("confirm-email")]
@@ -217,11 +180,16 @@ namespace DeliveryManagementSystem.API.Controllers
                 var baseUrl = $"{Request.Scheme}://{Request.Host}";
                 var confirmationLink = $"{baseUrl}/api/Auth/confirm-email?token={encodedToken}&email={encodedEmail}";
 
-                await _emailServices.SendEmailConfirmationAsync(user.Email, user.UserName, confirmationLink);
+               bool emailSent = await _emailServices.SendEmailConfirmationAsync(user.Email, user.UserName, confirmationLink);
+
+               if (!emailSent)
+               {
+                    return StatusCode(500, new { Message = "Failed to send confirmation email. Please try again later." });
+               }
 
                 return Ok(new { Message = "Confirmation email has been resent. Please check your email." });
             }
-            catch (Exception ex)
+            catch 
             {
                // _logger.LogError(ex, "Error resending confirmation email for {Email}", resendDto.Email);
                 return StatusCode(500, new { Message = "An error occurred. Please try again later." });
@@ -236,10 +204,6 @@ namespace DeliveryManagementSystem.API.Controllers
             {
                 // Sign out the user
                 await _signInManager.SignOutAsync();
-
-                // Optional: Log the logout event
-                // _logger.LogInformation("User {UserId} ({UserName}) logged out successfully at {Timestamp}",
-                // userId, userName, DateTime.UtcNow);
 
                 foreach (var cookieName in new[] { "RememberMe", "PreferredLanguage", "Theme" })
                 {
@@ -256,13 +220,8 @@ namespace DeliveryManagementSystem.API.Controllers
                 });
             }
 
-            catch (Exception ex)
+            catch 
             {
-                // _logger.LogError(ex, "Error occurred during logout for user {UserId}",
-                // User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-
-                // Even if logout fails, we should still return success to prevent user confusion
-                // The client should treat this as successful logout
                 return Ok(new
                 {
                     message = "Logout completed",
@@ -271,7 +230,6 @@ namespace DeliveryManagementSystem.API.Controllers
             }
 
         }
-
 
         // private helper methods 
         private async Task<string> GenerateJwtTokenAsync(User user)
@@ -301,14 +259,53 @@ namespace DeliveryManagementSystem.API.Controllers
                 audience: _jwtSettings.Audience,
                 claims: userClaims,
                 expires: expiration,
-                signingCredentials: credentials,
-                notBefore: DateTime.UtcNow // Token not valid before this time
+                signingCredentials: credentials
             );
             var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
             return tokenString;
         }
 
 
+        private async Task<bool> IsEmailExists(string email)
+        {
+            return _userRepository
+                .FindByCondition(u => u.Email == email)
+                .Any();
+        }
+
+        private async Task AssignUserRole(User user)
+        {
+            if (!await _roleManager.RoleExistsAsync("User"))
+            {
+                await _roleManager.CreateAsync(new Roles
+                {
+                    Name = "User"
+                });
+            }
+
+            await _userManager.AddToRoleAsync(user, "User");
+        }
+
+
+        private async Task SendConfirmationEmail(User user)
+        {
+            var token =
+                await _userManager.GenerateEmailConfirmationTokenAsync(user);
+
+            var encodedToken = Uri.EscapeDataString(token);
+            var encodedEmail = Uri.EscapeDataString(user.Email);
+
+            var baseUrl = $"{Request.Scheme}://{Request.Host}";
+
+            var confirmationLink =
+                $"{baseUrl}/api/Auth/confirm-email?token={encodedToken}&email={encodedEmail}";
+
+            await _emailServices.SendEmailConfirmationAsync(
+                user.Email!,
+                user.UserName!,
+                confirmationLink
+            );
+        }
 
     }
 }

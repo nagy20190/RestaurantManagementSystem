@@ -2,21 +2,6 @@
 
 ## Existing Endpoints (What is need to refactor)
 
-### AuthController `api/Auth`
-
-- `POST /Login`
-- `POST /Register`
-- `GET /confirm-email`
-- `POST /resend-confirmation`
-- `POST /logout`
-
-
-### SheduleOffersControllers `api/SheduleOffers`
-
-- **Empty** — no endpoints at all
-
-- `POST /schedule` — Schedule email offer job via HangFire
-
 ---
 
 ## Bugs & Issues Found

@@ -4,13 +4,18 @@ using SendGrid;
 
 namespace DeliveryManagementSystem.BLL.Services
 {
-    public class EmailServices(IConfiguration configuration)
+    public class EmailServices
     {
-        private readonly string apiKey = configuration["SendGrid:ApiKey"]!;
-        private readonly string fromEmail = configuration["SendGrid:FromEmail"]!;
-        private readonly string senderName = configuration["SendGrid:SenderName"]!;
+        private readonly string apiKey;
+        private readonly string fromEmail;
+        private readonly string senderName;
 
-        // ""
+        public EmailServices(IConfiguration configuration)
+        {
+            apiKey = configuration["SendGrid:ApiKey"]!;
+            fromEmail = configuration["SendGrid:FromEmail"]!;
+            senderName = configuration["SendGrid:SenderName"]!;
+        }
         public async Task SendEmail
             (string subject, string toEmail, string userName, string message)
         {
@@ -28,7 +33,7 @@ namespace DeliveryManagementSystem.BLL.Services
             Console.WriteLine(response.StatusCode);
         }
 
-        public async Task SendEmailConfirmationAsync(string email, string userName, string confirmationLink)
+        public async Task<bool> SendEmailConfirmationAsync(string email, string userName, string confirmationLink)
         {
             try
             {
@@ -52,15 +57,23 @@ namespace DeliveryManagementSystem.BLL.Services
                 var to = new EmailAddress(email, userName);
                 var msg = MailHelper.CreateSingleEmail(from, to, subject, "", htmlContent);
                 var response = await client.SendEmailAsync(msg);
+                var body = await response.Body.ReadAsStringAsync();
 
                 // Optionally, check response.StatusCode for success/failure
-                Console.WriteLine(response.StatusCode);
+                Console.WriteLine($"{response.StatusCode} ,, {body}");
+                if (response.StatusCode != System.Net.HttpStatusCode.Accepted)
+                {
+                    // Log the failure or handle it as needed
+                    Console.WriteLine($"Failed to send email: {response.StatusCode}");
+                    return false;
+                }
             }
-            catch (Exception ex)
+            catch 
             {
                 // Optionally log the error
                 throw;
             }
+            return true;
         }
 
 
