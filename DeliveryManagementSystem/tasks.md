@@ -1,36 +1,7 @@
 # Project Analysis Report
 
-## Existing Endpoints (What is need to refactor)
-
----
-
 ## Bugs & Issues Found
 
-### Critical (may cause compile errors or crashes)
-
-**UserController — `.Include(userRole)` compile error**
-
-```csharp
-var user = await _userRepository
-    .FindByCondition(u => u.Id == id)
-    .Include(userRole)   // ERROR: userRole is a string, Include() needs a lambda
-    .FirstOrDefaultAsync();
-```
-
-Fix: Remove the `.Include(userRole)` line — `User` has no navigation property to include with a string.
-
----
-
-**UserController — `DeleteUser` missing route param and `[Authorize]`**
-
-```csharp
-[HttpDelete]  // Missing /{id} route — id will never be bound from the request
-public async Task<IActionResult> DeleteUser(int id)
-```
-
-Fix: Change to `[HttpDelete("{id}")]` and add `[Authorize(Roles = "SuperAdmin")]`.
-
----
 
 **PaymentController — `.Result` on async method (deadlock risk)**
 

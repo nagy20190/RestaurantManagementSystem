@@ -3,6 +3,7 @@ using DeliveryManagementSystem.BLL.Services;
 using DeliveryManagementSystem.Core.DTOs;
 using DeliveryManagementSystem.Core.Entities;
 using DeliveryManagementSystem.Core.Interfaces;
+using Hangfire;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -14,32 +15,24 @@ namespace DeliveryManagementSystem.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class UserController(IGenericRepository<User> userRepository,
+        ILogger<UserController> logger, IMapper mapper, IPasswordHasher<User> passwordHasher,
+        IGenericRepository<Roles> roleRepository, UserManager<User> userManager,
+        RoleManager<Roles> roleManager, IConfiguration configuration, EmailServices emailService) : ControllerBase
     {
-        private readonly IGenericRepository<User> _userRepository;
-        private readonly IGenericRepository<Roles> _roleRepository;
-        private readonly ILogger<UserController> _logger;
-        private readonly IMapper _mapper;
-        private readonly IPasswordHasher<User> _passwordHasher;
-        private readonly UserManager<User> _userManager;
-        private readonly RoleManager<Roles> _roleManager;
-        private readonly IConfiguration _configuration;
-        private readonly EmailServices _emailService;
-        public UserController(IGenericRepository<User> userRepository,
-            ILogger<UserController> logger, IMapper mapper, IPasswordHasher<User> passwordHasher, 
-            IGenericRepository<Roles> roleRepository, UserManager<User> userManager,
-            RoleManager<Roles> roleManager, IConfiguration configuration, EmailServices emailService)
-        {
-            _userRepository = userRepository;
-            _logger = logger;
-            _mapper = mapper;
-            _passwordHasher = passwordHasher;
-            _roleRepository = roleRepository;
-            _userManager = userManager;
-            _roleManager = roleManager;
-            _configuration = configuration;
-            _emailService = emailService;
-        }
+        private readonly IGenericRepository<User> _userRepo = userRepository;
+        private readonly IGenericRepository<Roles> _roleRepository = roleRepository;
+        private readonly ILogger<UserController> _logger = logger;
+        private readonly IMapper _mapper = mapper;
+        private readonly IPasswordHasher<User> _passwordHasher = passwordHasher;
+        private readonly UserManager<User> _userManager = userManager;
+        private readonly RoleManager<Roles> _roleManager = roleManager;
+        private readonly IConfiguration _configuration = configuration;
+        private readonly EmailServices _emailService = emailService;
+
+
+
+        #region Not Completed
         [Authorize]
         [HttpGet("current")]
         public async Task<IActionResult> GetCurrentUser()
@@ -63,7 +56,7 @@ namespace DeliveryManagementSystem.API.Controllers
                 }
 
                 // Get user from database
-                var user = await _userRepository.GetByIdAsync(userId);
+                var user = await _userRepo.GetByIdAsync(userId);
 
                 if (user == null)
                 {
@@ -91,7 +84,7 @@ namespace DeliveryManagementSystem.API.Controllers
                 return StatusCode(500, new { Message = "An error occurred while retrieving user profile" });
             }
         }
-        
+
         [Authorize]
         [HttpPut("current")]
         public async Task<IActionResult> UpdateCurrentUser([FromBody] UpdateUserProfileDTO updateUserDTO)
@@ -110,7 +103,7 @@ namespace DeliveryManagementSystem.API.Controllers
                     return Unauthorized(new { Message = "Invalid authentication token" });
                 }
 
-                var user = await _userRepository.GetByIdAsync(userId);
+                var user = await _userRepo.GetByIdAsync(userId);
                 if (user == null)
                 {
                     return NotFound(new { Message = "User not found" });
@@ -120,7 +113,7 @@ namespace DeliveryManagementSystem.API.Controllers
                 if (!string.IsNullOrEmpty(updateUserDTO.Email) &&
                     updateUserDTO.Email != user.Email)
                 {
-                    var existingUser = await _userRepository
+                    var existingUser = await _userRepo
                         .FindByCondition(u => u.Email.ToLower() == updateUserDTO.Email.ToLower()
                         && u.Id != userId)
                         .FirstOrDefaultAsync();
@@ -134,7 +127,7 @@ namespace DeliveryManagementSystem.API.Controllers
                 // Map updates to user entity
                 _mapper.Map(updateUserDTO, user);
 
-                await _userRepository.UpdateAsync(user);
+                await _userRepo.UpdateAsync(user);
 
                 var updatedUserDTO = _mapper.Map<UserDTO>(user);
 
@@ -149,7 +142,6 @@ namespace DeliveryManagementSystem.API.Controllers
             }
         }
 
-        
         [Authorize]
         [HttpPost("current/change-password")]
         public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDTO changePasswordDTO)
@@ -191,7 +183,7 @@ namespace DeliveryManagementSystem.API.Controllers
                 // Hash new password
                 user.PasswordHash = _passwordHasher.HashPassword(user, changePasswordDTO.NewPassword);
 
-                await _userRepository.UpdateAsync(user);
+                await _userRepo.UpdateAsync(user);
 
                 _logger.LogInformation("Password changed successfully for user: {UserId}", userId);
 
@@ -203,8 +195,6 @@ namespace DeliveryManagementSystem.API.Controllers
                 return StatusCode(500, new { Message = "An error occurred while changing password" });
             }
         }
-
-        #region Not Completed
 
         [HttpPost("forgot-password")]
         public async Task<IActionResult> ForgotPassword([FromBody] string  Email)
@@ -240,6 +230,7 @@ namespace DeliveryManagementSystem.API.Controllers
         }
         #endregion
 
+
         // soft Delete current user account
         [Authorize]
         [HttpDelete("current")]
@@ -254,25 +245,22 @@ namespace DeliveryManagementSystem.API.Controllers
                     return Unauthorized(new { Message = "Invalid authentication token" });
                 }
 
-                var user = await _userRepository.GetByIdAsync(userId);
-                if (user == null)
-                {
-                    return NotFound(new { Message = "User not found" });
-                }
-
+                var user = await _userRepo.GetByIdAsync(userId);
                 // Soft delete - mark as inactive
                 user.IsActive = false;
-                await _userRepository.UpdateAsync(user);
-                _logger.LogInformation("User account deactivated: {UserId}", userId);
+                BackgroundJob.Schedule(() => _userRepo.DeleteAsync(user),
+                    TimeSpan.FromDays(30)); // Schedule actual deletion after 30 days
+                await _userRepo.UpdateAsync(user);
 
                 return Ok(new { Message = "Account deactivated successfully" });
             }
-            catch (Exception ex)
+            catch
             {
-                _logger.LogError(ex, "Error deactivating current user account");
                 return StatusCode(500, new { Message = "An error occurred while deactivating account" });
             }
         }
+
+        #region Admin Operations
 
         [HttpGet("GetAll")]
         [Authorize(Roles = "SuperAdmin")]
@@ -291,7 +279,7 @@ namespace DeliveryManagementSystem.API.Controllers
                 pageNumber = Math.Max(1, pageNumber);
                 pageSize = Math.Min(100, Math.Max(1, pageSize));
 
-                var query = _userRepository.GetAll();
+                var query = _userRepo.GetAll();
 
                 // Apply filters
                 if (isActive.HasValue)
@@ -351,15 +339,10 @@ namespace DeliveryManagementSystem.API.Controllers
                     PageSize = pageSize,
                     TotalPages = (int)Math.Ceiling((double)totalCount / pageSize)
                 };
-
-                _logger.LogInformation("Retrieved {Count} users (page {Page} of {TotalPages})",
-                    userDTOs.Count, pageNumber, result.TotalPages);
-
                 return Ok(result);
             }
-            catch (Exception ex)
+            catch 
             {
-                _logger.LogError(ex, "Error retrieving all users");
                 return StatusCode(500, new { Message = "An error occurred while retrieving users" });
             }
         }
@@ -368,102 +351,65 @@ namespace DeliveryManagementSystem.API.Controllers
         [Authorize(Roles = "SuperAdmin")]
         public async Task<IActionResult> GetActiveUsers()
         {
-            try
-            {
-                var users = await _userRepository
-                    .FindByCondition(u => u.IsActive)
-                    .ToListAsync();
+           var users = await _userRepo
+               .FindByCondition(u => u.IsActive)
+               .ToListAsync();
 
-                var userSummaries = users.Select(u => new UserSummaryDTO
-                {
-                    Id = u.Id.ToString(),
-                    UserName = u.UserName,
-                    Email = u.Email,
-                }).ToList();
+           var userProfiles = users.Select(u => new UserSummaryDTO
+           {
+               Id = u.Id.ToString(),
+               UserName = u.UserName,
+               Email = u.Email,
+           }).ToList();
 
-                return Ok(userSummaries);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error retrieving active users");
-                return StatusCode(500, new { Message = "An error occurred while retrieving active users" });
-            }
+           return Ok(userProfiles);
         }
 
         [HttpGet("{id}")]
         [Authorize(Roles = "SuperAdmin, RestaurantOwner")]
-        public async Task<IActionResult> GetUserById([FromRoute] int id, [FromQuery] bool includeInactive = false)
+        public async Task<IActionResult> GetUserById([FromRoute] int id)
         {
-            if (id <= 0)
+            var user = await _userRepo.GetByIdAsync(id);
+
+            if (!user.IsActive)
             {
-                return BadRequest(new { Message = "Invalid user ID" });
+                return NotFound(new { Message = $"User with ID {id} not found" });
             }
 
-            try
+            var userDTO = _mapper.Map<UserDTO>(user);
+
+            // Remove sensitive information for non-admin users viewing other profiles
+            if (!User.IsInRole("SuperAdmin"))
             {
-                // Get current user ID to allow users to view their own profile
-                var currentUserIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-                var isViewingOwnProfile = int.TryParse(currentUserIdClaim, out int currentUserId) && currentUserId == id;
-
-                var userRole = User.FindFirst(ClaimTypes.Role)?.Value;
-
-                var user = await _userRepository
-                    .FindByCondition(u => u.Id == id)
-                    .Include(userRole)
-                    .FirstOrDefaultAsync();
-
-                if (user == null)
-                {
-                    return NotFound(new { Message = $"User with ID {id} not found" });
-                }
-
-                // Check if user is inactive and caller doesn't have permission to view inactive users
-                if (!user.IsActive && !includeInactive && !isViewingOwnProfile)
-                {
-                    return NotFound(new { Message = $"User with ID {id} not found" });
-                }
-
-                var userDTO = _mapper.Map<UserDTO>(user);
-
-                // Remove sensitive information for non-admin users viewing other profiles
-                if (!User.IsInRole("Admin") && !isViewingOwnProfile)
-                {
-                    userDTO.Email = string.Empty; // Hide email from non-admin users
-                    userDTO.Phone = null;   // Hide phone from non-admin users
-                }
-
-                _logger.LogInformation("User profile retrieved for ID: {UserId} by user: {RequesterId}",
-                    id, currentUserId);
-
-                return Ok(userDTO);
+                userDTO.Email = string.Empty; // Hide email from non-admin users
+                userDTO.Phone = null;   // Hide phone from non-admin users
             }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error retrieving user by ID: {UserId}", id);
-                return StatusCode(500, new { Message = "An error occurred while retrieving user" });
-            }
+            return Ok(userDTO);
         }
 
         // soft delete user account
-        [HttpDelete]
-        public async Task<IActionResult> DeleteUser(int id)
+        [HttpDelete("{id:int}")]
+        [Authorize(Roles = "SuperAdmin")]
+        public async Task<IActionResult> DeleteUser([FromRoute] int id)
         {
             try
             {
-                var user = await _userRepository.GetByIdAsync(id);
-                if (user == null)
-                {
-                    return NotFound(new { Message = "User not found" });
-                }
+                // A SuperAdmin could accidentally (or intentionally) delete their own account
+                var currentUserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+                if (currentUserId == id.ToString())
+                    return BadRequest(new { Message = "You cannot delete your own account" });
+
+                var user = await _userRepo.GetByIdAsync(id);
                 // Soft delete - mark as inactive
                 user.IsActive = false;
-                await _userRepository.UpdateAsync(user);
-                _logger.LogInformation("User account deleted: {UserId}", id);
+                await _userRepo.UpdateAsync(user);
+                BackgroundJob.Schedule(() => _userRepo.DeleteAsync(user),
+                    TimeSpan.FromDays(30)); // Schedule actual deletion after 30 days
+
                 return Ok(new { Message = "User account deleted successfully" });
             }
-            catch (Exception ex)
+            catch 
             {
-                _logger.LogError(ex, "Error deleting user account: {UserId}", id);
                 return StatusCode(500, new { Message = "An error occurred while deleting user account" });
             }
         }
@@ -472,57 +418,38 @@ namespace DeliveryManagementSystem.API.Controllers
         [Authorize(Roles = "SuperAdmin")]
         public async Task<IActionResult> RestoreUser([FromRoute] int id)
         {
-            if (id <= 0)
-            {
-                return BadRequest(new { Message = "Invalid user ID" });
-            }
-
             try
             {
-                var user = await _userRepository.GetByIdAsync(id);
-                if (user == null)
-                {
-                    return NotFound(new { Message = $"User with ID {id} not found" });
-                }
-
+                var user = await _userRepo.GetByIdAsync(id);
                 if (user.IsActive)
                 {
                     return BadRequest(new { Message = "User is already active" });
                 }
-
                 user.IsActive = true;
-                await _userRepository.UpdateAsync(user);
+                await _userRepo.UpdateAsync(user);
+                BackgroundJob.Delete($"DeleteUser:{id}"); // Cancel scheduled deletion if it exists
 
                 var userDTO = _mapper.Map<UserDTO>(user);
 
-                var currentUserIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-                _logger.LogInformation("User account restored: {UserId} by admin: {AdminId}",
-                    id, currentUserIdClaim);
-
                 return Ok(userDTO);
             }
-            catch (Exception ex)
+            catch
             {
-                _logger.LogError(ex, "Error restoring user account: {UserId}", id);
                 return StatusCode(500, new { Message = "An error occurred while restoring user account" });
             }
         }
 
 
         [HttpPut("{id:int}/roles")]
-       // [Authorize(Roles = "SuperAdmin")]
+        [Authorize(Roles = "SuperAdmin")]
         public async Task<IActionResult> UpdateUserRoles
             ([FromRoute] int id, [FromBody] UpdateUserRolesDTO updateRolesDTO)
         {
-            if (id <= 0) return BadRequest(new { Message = "Invalid user ID" });
             if (!ModelState.IsValid) return BadRequest(ModelState);
-
             try
             {
                 var user = await _userManager.FindByIdAsync(id.ToString());
-                if (user == null) return NotFound(new { Message = $"User with ID {id} not found" });
-
-                if (updateRolesDTO.RoleNames == null || !updateRolesDTO.RoleNames.Any())
+                if (updateRolesDTO.RoleNames == null || updateRolesDTO.RoleNames.Count == 0)
                 {
                     return BadRequest(new { Message = "At least one role must be specified" });
                 }
@@ -551,13 +478,12 @@ namespace DeliveryManagementSystem.API.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error updating user roles for ID: {UserId}", id);
                 return StatusCode(500, new { Message = "An error occurred while updating user roles" });
             }
         }
-   
-    
-    
-    
+
+        #endregion
+
+
     }
 }
